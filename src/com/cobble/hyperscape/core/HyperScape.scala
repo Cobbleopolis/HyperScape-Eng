@@ -12,7 +12,11 @@ class HyperScape {
     val modelArray: Array[Float] = Array(
         -1.0f, -1.0f, -1.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
          1.0f, -1.0f, -1.0f,      1.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-         1.0f,  1.0f, -1.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f
+         1.0f,  1.0f, -1.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
+
+        -1.0f, -1.0f, -1.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
+         1.0f,  1.0f, -1.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
+        -1.0f,  1.0f, -1.0f,      0.0f, 0.0f,      0.0f, 0.0f, 1.0f
     )
 
     var model: RenderModel = null
