@@ -1,12 +1,14 @@
 package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
+import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.util.MathUtil
 import org.lwjgl.opengl.{Display, GL20}
 import org.lwjgl.util.vector.{Vector3f, Matrix4f}
 
 class Camera {
+    var mode: Int = Reference.Camera.PERSPECTIVE_MODE
     var fov: Float = 70
     var nearClip: Float = 0.1f
     var farClip: Float = 30000
@@ -14,7 +16,7 @@ class Camera {
     var view = new Matrix4f()
     var pos = new Vector3f()
 
-    private def frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix4f = {
+    def frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix4f = {
         val width = right - left
         val height = top - bottom
         val length = far - near
@@ -29,6 +31,21 @@ class Camera {
         new Matrix4f(dest)
     }
 
+    def orthographicFrustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix4f = {
+        val width = right - left
+        val height = top - bottom
+        val length = far - near
+        val dest = new Matrix4f()
+        dest.m00 = 2 / width
+        dest.m03 = -((right + left) / width)
+        dest.m11 = 2 / height
+        dest.m13 = -((top + bottom) / height)
+        dest.m22 = -2 / length
+        dest.m23 = -((far + near) / length)
+        dest.m33 = 1
+        new Matrix4f(dest)
+    }
+
     /**
      * Updates the camera's perspective matrix. Used when the window is resized.
      */
@@ -40,7 +57,11 @@ class Camera {
     private def perspective(fovInDegrees: Float, aspectRatio: Float, near: Float, far: Float): Matrix4f = {
         val top = (near * Math.tan(fovInDegrees * MathUtil.PI360)).toFloat
         val right = top * aspectRatio
-        frustum(-right, right, -top, top, near, far)
+        if(mode == Reference.Camera.PERSPECTIVE_MODE) {
+            frustum(-right, right, -top, top, near, far)
+        } else {
+            orthographicFrustum(-right, right, -top, top, near, far)
+        }
     }
 
     /**

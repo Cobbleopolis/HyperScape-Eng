@@ -87,12 +87,12 @@ object ShaderRegistry {
     }
 
     /**
-     * Destroies all loaded shaders
+     * Destroys all loaded shaders
      */
     def destroyAllShaders(): Unit = {
         println("Destroying all registered shaders...")
         for(shader <- programs) {
-            shader._2.destroy()
+            destroyShader(shader._1)
         }
         println("Finished destroying all registered shaders")
     }

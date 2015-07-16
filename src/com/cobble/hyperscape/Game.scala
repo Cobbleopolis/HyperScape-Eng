@@ -2,7 +2,7 @@ package com.cobble.hyperscape
 
 import java.io._
 
-import com.cobble.hyperscape.core.Init
+import com.cobble.hyperscape.core.{HyperScape, Init}
 import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
 import org.lwjgl.{LWJGLException, Sys}
 import org.lwjgl.opengl._
@@ -12,7 +12,7 @@ object Game {
     val WIDTH = 1080
     val HEIGHT = 720
 
-//    var hyperScape: HyperScape = null
+    var hyperScape: HyperScape = null
 
     var lastFrame: Long = 0
 
@@ -26,26 +26,31 @@ object Game {
         setNatives()
         initGL()
         Init.loadAssets()
-        ShaderRegistry.bindShader("terrain")
-        TextureRegistry.bindTexture("terrain")
+        ShaderRegistry.bindShader("mainMenu")
+        //        TextureRegistry.bindTexture("terrain")
 
         lastFrame = getTime
-//        HyperScape.debug = args.contains("--debug")
+        HyperScape.debug = args.contains("--debug")
 
-//        hyperScape = new HyperScape
-//        hyperScape.init()
+        hyperScape = new HyperScape
+        hyperScape.init()
 
         while (!Display.isCloseRequested) {
-//            hyperScape.tick()
+            if (Display.wasResized()) {
+                HyperScape.mainCamera.updatePerspective()
+                HyperScape.mainCamera.uploadPerspective()
+                GL11.glViewport(0, 0, Display.getWidth, Display.getHeight)
+            }
+            hyperScape.tick()
             // Map the internal OpenGL coordinate system to the entire screen
-//            hyperScape.render()
+            hyperScape.render()
             val err = GL11.glGetError()
             if (err != 0)
                 println(err)
             Display.sync(60)
             Display.update()
         }
-//        hyperScape.destroy()
+        hyperScape.destroy()
         ShaderRegistry.destroyAllShaders()
         TextureRegistry.destroyAllTextures()
         Display.destroy()
@@ -83,7 +88,7 @@ object Game {
 
             Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT))
             Display.setTitle(WINDOW_TITLE)
-            //            Display.setResizable(true)
+            Display.setResizable(true)
             Display.create(pixelFormat, contextAtrributes)
         } catch {
             case e: LWJGLException => e.printStackTrace(); System.exit(-1)
