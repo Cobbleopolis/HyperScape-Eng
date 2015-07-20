@@ -10,6 +10,7 @@ import org.lwjgl.util.vector.{Vector3f, Matrix4f}
 class Camera {
     var mode: Int = Reference.Camera.PERSPECTIVE_MODE
     var fov: Float = 70
+    var orthographicFov: Float = 160
     var nearClip: Float = 0.1f
     var farClip: Float = 30000
     var perspective: Matrix4f = perspective(fov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
@@ -50,7 +51,11 @@ class Camera {
      * Updates the camera's perspective matrix. Used when the window is resized.
      */
     def updatePerspective(): Unit = {
-        perspective = perspective(fov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
+//        if(mode == Reference.Camera.PERSPECTIVE_MODE) {
+            perspective = perspective(fov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
+//        } else {
+//            perspective = perspective(orthographicFov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
+//        }
     }
 
 

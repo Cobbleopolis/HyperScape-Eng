@@ -8,5 +8,10 @@ object Reference {
 
         val ORTHOGRAPHIC_MODE: Int = 1
     }
+
+    object GameState {
+
+        val MAIN_MENU: String = "mainMenu"
+    }
     
 }

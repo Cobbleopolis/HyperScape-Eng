@@ -1,58 +1,49 @@
 package com.cobble.hyperscape.core
 
-import com.cobble.hyperscape.core.GameState.GameState
+import com.cobble.hyperscape.Game
+import com.cobble.hyperscape.core.gamestate.{GameStates, GameState}
 import com.cobble.hyperscape.reference.Reference
-import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
+import com.cobble.hyperscape.registry.{GameStateRegistry, TextureRegistry, ShaderRegistry}
 import com.cobble.hyperscape.render.{RenderModel, Camera}
+import com.cobble.hyperscape.util.MathUtil
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.{GL20, GL11}
-import org.lwjgl.util.vector.Matrix4f
+import org.lwjgl.util.vector.{Vector3f, Matrix4f}
 
 class HyperScape {
-    val modelArray: Array[Float] = Array(
-        -1.0f, -1.0f, -1.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-         1.0f, -1.0f, -1.0f,      1.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-         1.0f,  1.0f, -1.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
 
-        -1.0f, -1.0f, -1.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-         1.0f,  1.0f, -1.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
-        -1.0f,  1.0f, -1.0f,      0.0f, 0.0f,      0.0f, 0.0f, 1.0f
-    )
-
-    var model: RenderModel = null
 
     def init(): Unit = {
-        changeState(GameState.MAIN_MENU)
-        HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
-        HyperScape.mainCamera.fov = 160
-        HyperScape.mainCamera.updatePerspective()
-        HyperScape.mainCamera.uploadPerspective()
-        HyperScape.mainCamera.uploadView()
-        model = new RenderModel(modelArray)
+        GameStates.registerGameStates()
+        changeState(Reference.GameState.MAIN_MENU)
     }
 
-    def changeState(newState: GameState): Unit = {
-        HyperScape.currentGameState = newState
+    def changeState(newState: String): Unit = {
+        if (HyperScape.currentGameState != null) HyperScape.currentGameState.destroy()
+        HyperScape.currentGameState = GameStateRegistry.getGameState(newState)
+        HyperScape.currentGameState.changeTo()
     }
 
     def tick(): Unit = {
-        ShaderRegistry.bindShader("mainMenu")
-        TextureRegistry.bindTexture("terrain")
+        HyperScape.currentGameState.tick()
     }
 
     def render(): Unit = {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT)
-        var modelMatrix = new Matrix4f()
-        HyperScape.uploadBuffer.clear()
-        modelMatrix.store(HyperScape.uploadBuffer)
-        HyperScape.uploadBuffer.flip()
-        val modelMatrixLoc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
-        GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
-        model.render()
+        HyperScape.mainCamera.mode = Reference.Camera.PERSPECTIVE_MODE
+        HyperScape.mainCamera.updatePerspective()
+        HyperScape.mainCamera.uploadPerspective()
+        HyperScape.currentGameState.perspectiveRender()
+
+        HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
+        HyperScape.mainCamera.fov = 160
+        HyperScape.mainCamera.updatePerspective()
+        HyperScape.mainCamera.uploadPerspective()
+        HyperScape.currentGameState.orthographicRender()
     }
 
     def destroy(): Unit = {
-        model.destroy()
+        HyperScape.currentGameState.destroy()
     }
 }
 

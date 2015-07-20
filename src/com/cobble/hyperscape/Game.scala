@@ -37,9 +37,9 @@ object Game {
 
         while (!Display.isCloseRequested) {
             if (Display.wasResized()) {
+                GL11.glViewport(0, 0, Display.getWidth, Display.getHeight)
                 HyperScape.mainCamera.updatePerspective()
                 HyperScape.mainCamera.uploadPerspective()
-                GL11.glViewport(0, 0, Display.getWidth, Display.getHeight)
             }
             hyperScape.tick()
             // Map the internal OpenGL coordinate system to the entire screen
