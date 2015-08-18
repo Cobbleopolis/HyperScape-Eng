@@ -2,8 +2,10 @@ package com.cobble.hyperscape.gui
 
 trait GuiScreen {
 
+
+
     /** A list of the buttons in the Gui **/
-    def buttonList: List[GuiButton] = List()
+    val buttonList: List[GuiButton] = List()
 
     def initGui(): Unit = {
 

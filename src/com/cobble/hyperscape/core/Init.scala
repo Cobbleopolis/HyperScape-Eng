@@ -22,6 +22,7 @@ object Init {
         println("Loading Shaders...")
         ShaderRegistry.loadShader("res/shader/mainMenu.vert", "res/shader/mainMenu.frag", "mainMenu")
         ShaderRegistry.loadShader("res/shader/terrain.vert", "res/shader/terrain.frag", "terrain")
+        ShaderRegistry.loadShader("res/shader/gui.vert", "res/shader/gui.frag", "gui")
         println("Finished Loading Shaders")
     }
 
