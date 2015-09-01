@@ -1,5 +1,11 @@
 package com.cobble.hyperscape.gui
 
-class GuiElement {
+/**
+ * Used by various GUI elements so that they can be used by GUIs
+ */
+abstract class GuiElement {
 
+    def render(): Unit
+
+    def destroy(): Unit
 }

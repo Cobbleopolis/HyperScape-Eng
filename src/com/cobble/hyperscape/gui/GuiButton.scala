@@ -5,14 +5,14 @@ import com.cobble.hyperscape.render.{RenderModel, GuiModel}
 import org.lwjgl.opengl.{GL30, GL15, GL20}
 
 /**
- * This is a class used by GUI's to render buttons
+ * Used by GUI's to render buttons
  * @param text The text displayed on the button
  * @param x The x location of the button (default is 0)
  * @param y The y location of the button (default is 0)
  * @param height The height of the button (default is 0.2)
  * @param width The width of the button (default is 0.2)
  */
-class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, height: Float = 0.2f, width: Float = 0.2f) {
+class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, height: Float = 0.2f, width: Float = 0.2f) extends GuiElement {
     val verts: Array[Float] = Array(
         x,          y,         0.0f,      0.4f, 0.0f, 0.3f, 1.0f,
         x,          y + width, 0.0f,      0.4f, 0.0f, 0.3f, 1.0f,
