@@ -10,7 +10,7 @@ class GuiMainMenu extends GuiScreen {
     var guiButton: GuiButton = null
 
     override def initGui(): Unit = {
-        guiButton = new GuiButton(0, "Thing")
+        guiButton = new GuiButton("Thing")
         buttonList = buttonList :+ guiButton
     }
 
