@@ -26,7 +26,7 @@ object Game {
         setNatives()
         initGL()
         Init.loadAssets()
-        ShaderRegistry.bindShader("mainMenu")
+        ShaderRegistry.bindShader("gui")
         //        TextureRegistry.bindTexture("terrain")
 
         lastFrame = getTime
@@ -45,8 +45,10 @@ object Game {
             // Map the internal OpenGL coordinate system to the entire screen
             hyperScape.render()
             val err = GL11.glGetError()
-            if (err != 0)
+            if (err != 0) {
                 println(err)
+                System.exit(1)
+            }
             Display.sync(60)
             Display.update()
         }

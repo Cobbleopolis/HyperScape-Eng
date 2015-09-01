@@ -25,9 +25,9 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
     GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
     GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.SIZE_IN_BYTES, Vertex.UV_OFFSET_IN_BYTES)
     GL20.glVertexAttribPointer(2, Vertex.NORMAL_SIZE, GL11.GL_FLOAT, false, Vertex.SIZE_IN_BYTES, Vertex.NORMAL_OFFSET_IN_BYTES)
-    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
 
     GL30.glBindVertexArray(0)
+    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
 
     /**
      * Renders the model
@@ -38,6 +38,7 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
         GL20.glEnableVertexAttribArray(0)
         GL20.glEnableVertexAttribArray(1)
         GL20.glEnableVertexAttribArray(2)
+        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
 
         // Draw the vertices
         if (drawLines)
@@ -48,6 +49,7 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
         // Put everything back to default (deselect)
         GL20.glDisableVertexAttribArray(0)
         GL20.glDisableVertexAttribArray(1)
+        GL20.glDisableVertexAttribArray(2)
         GL30.glBindVertexArray(0)
     }
 

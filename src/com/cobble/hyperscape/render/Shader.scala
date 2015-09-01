@@ -1,6 +1,6 @@
 package com.cobble.hyperscape.render
 
-import org.lwjgl.opengl.GL20
+import org.lwjgl.opengl.{GL11, GL20}
 
 /**
  * Creates a shader object
@@ -28,11 +28,23 @@ class Shader(programId: Int, vertexId: Int, fragmentId: Int)  {
     }
 
 
+    def getProgramId: Int = programId
+
+    def getVertexId: Int = vertexId
+
+    def getFragmentId: Int = fragmentId
+
+
     /**
      * Binds the shader
      */
     def bind(): Unit = {
         GL20.glUseProgram(programId)
+        val err = GL11.glGetError()
+        if (err != 0) {
+            println("In Shader | " + err)
+            System.exit(1)
+        }
     }
 
     /**

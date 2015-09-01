@@ -8,6 +8,9 @@ object Vertex {
     /** The amount of elements in one vertex */
     val ELEMENT_COUNT = 8
 
+    /** The amount of elements in one gui vertex */
+    val GUI_ELEMENT_COUNT = 7
+
     /** The amount of elements in the x, y, z location */
     val VERTEX_SIZE = 3
 
@@ -36,5 +39,5 @@ object Vertex {
     val COLOR_SIZE = 4
 
     /** The amount of bytes in a color vertex */
-    val COLOR_VERTEX_SIZE_IN_BYTES = 7 * BYTES_IN_FLOAT
+    val COLOR_VERTEX_SIZE_IN_BYTES = GUI_ELEMENT_COUNT * BYTES_IN_FLOAT
 }

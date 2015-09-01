@@ -13,7 +13,7 @@ object ShaderRegistry {
      * @param fragPath Path to the fragment shader
      * @param shaderName Name to store the shader with
      */
-    def loadShader(vertPath: String, fragPath: String, shaderName: String): Unit = {
+    def loadShader(vertPath: String, fragPath: String, shaderName: String, atribLocation: Array[(Int, String)]): Unit = {
         // Load the vertex shader
         val vsId = this.loadShader(vertPath, GL20.GL_VERTEX_SHADER)
         // Load the fragment shader
@@ -25,9 +25,12 @@ object ShaderRegistry {
         GL20.glAttachShader(pId, fsId)
 
         // Position information will be attribute 0
-        GL20.glBindAttribLocation(pId, 0, "in_Position")
-        // Color information will be attribute 1
-        GL20.glBindAttribLocation(pId, 1, "in_TextureCoord")
+        atribLocation.foreach(loc => {
+            GL20.glBindAttribLocation(pId, loc._1, loc._2)
+        })
+//        GL20.glBindAttribLocation(pId, 0, "in_Position")
+//        // Color information will be attribute 1
+//        GL20.glBindAttribLocation(pId, 1, "in_TextureCoord")
 
         GL20.glLinkProgram(pId)
         GL20.glValidateProgram(pId)
@@ -39,6 +42,8 @@ object ShaderRegistry {
         }
         programs += (shaderName -> new Shader(pId, vsId, fsId))
         println("\tShader Id | " + shaderName + " | " + pId + ", " + vsId + ", " + fsId)
+        val shader = programs(shaderName)
+        println("\t\tShader | " + shader.getProgramId + ", " + shader.getVertexId + ", " + shader.getFragmentId)
     }
 
 
@@ -61,9 +66,21 @@ object ShaderRegistry {
      * @param shaderName Name of the shader to bind
      */
     def bindShader(shaderName: String): Unit = {
-        if(!shaderName.equals(currShader)){
+//        println(shaderName + " | " + currShader + " | " + (shaderName != currShader))
+        if(shaderName != currShader){
             programs(shaderName).bind()
             currShader = shaderName
+            val err = GL11.glGetError()
+            if (err != 0) {
+                println("In Shader Registry Change | " + shaderName + " | " + err)
+                System.exit(1)
+            }
+        } else {
+            val err = GL11.glGetError()
+            if (err != 0) {
+                println("In Shader Registry No Change | " + shaderName + " | " + err)
+                System.exit(1)
+            }
         }
     }
 

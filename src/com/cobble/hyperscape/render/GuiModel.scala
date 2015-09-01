@@ -9,6 +9,7 @@ import org.lwjgl.util.vector.Matrix4f
  * @param verts an array of verts used to define the model for a GUI must be in format of (x, y, z, r, g, b, a)
  */
 class GuiModel(verts: Array[Float]) {
+    println("Creating Gui Model...")
     val modelMatrix = new Matrix4f()
 
     HyperScape.uploadBuffer.clear()
@@ -24,9 +25,10 @@ class GuiModel(verts: Array[Float]) {
 
     GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.COLOR_VERTEX_SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
     GL20.glVertexAttribPointer(1, Vertex.COLOR_SIZE, GL11.GL_FLOAT, false, Vertex.COLOR_VERTEX_SIZE_IN_BYTES, Vertex.COLOR_OFFSET)
-    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
 
     GL30.glBindVertexArray(0)
+    GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
+    println("Created Gui Model")
 
     /**
      * Renders the model
@@ -36,9 +38,11 @@ class GuiModel(verts: Array[Float]) {
         GL30.glBindVertexArray(vao)
         GL20.glEnableVertexAttribArray(0)
         GL20.glEnableVertexAttribArray(1)
+        GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
 
         // Draw the vertices
-        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.ELEMENT_COUNT)
+        GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
+//        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
 
         // Put everything back to default (deselect)
         GL20.glDisableVertexAttribArray(0)
