@@ -26,7 +26,7 @@ class GameStateMainMenu extends GameState {
     var offset: Float = 0.0f
 
     var vel: Float = 0.01f
-9
+
     override def changeTo(): Unit = {
         model = new RenderModel(modelArray)
         gui = new GuiMainMenu
@@ -42,7 +42,7 @@ class GameStateMainMenu extends GameState {
 //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
-        modelMatrix.translate(new Vector3f(offset, 0, -1))
+        modelMatrix.translate(new Vector3f(0, 0, -1))
         HyperScape.uploadBuffer.clear()
         modelMatrix.store(HyperScape.uploadBuffer)
         HyperScape.uploadBuffer.flip()
@@ -50,7 +50,7 @@ class GameStateMainMenu extends GameState {
         GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
         model.render()
         gui.render()
-        if (offset > 1.5 || offset < -1) vel = -vel
+        if (offset > 1 || offset < -1) vel = -vel
         offset -= vel
     }
 
