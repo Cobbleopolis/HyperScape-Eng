@@ -22,7 +22,7 @@ trait GuiScreen {
         ShaderRegistry.bindShader("gui")
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
-        modelMatrix.translate(new Vector3f(0, 0, -1f))
+        modelMatrix.translate(new Vector3f(0, 0, 0))
         HyperScape.uploadBuffer.clear()
         modelMatrix.store(HyperScape.uploadBuffer)
         HyperScape.uploadBuffer.flip()

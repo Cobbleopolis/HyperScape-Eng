@@ -13,18 +13,20 @@ class GameStateMainMenu extends GameState {
 
     val modelArray: Array[Float] = Array(
         -1.0f, -1.0f, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-        1.0f, -1.0f, 0.0f,      1.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-        1.0f,  1.0f, 0.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
+        1.0f, -1.0f, 0.0f,       1.0f, 1.0f,      0.0f, 0.0f, 1.0f,
+        1.0f,  1.0f, 0.0f,       1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
 
         -1.0f, -1.0f, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-        1.0f,  1.0f, 0.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
-        -1.0f,  1.0f, 0.0f,      0.0f, 0.0f,      0.0f, 0.0f, 1.0f
+        1.0f,  1.0f,  0.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
+        -1.0f, 1.0f,  0.0f,      0.0f, 0.0f,      0.0f, 0.0f, 1.0f
     )
 
     var model: RenderModel = null
 
     var offset: Float = 0.0f
 
+    var vel: Float = 0.01f
+9
     override def changeTo(): Unit = {
         model = new RenderModel(modelArray)
         gui = new GuiMainMenu
@@ -37,9 +39,10 @@ class GameStateMainMenu extends GameState {
     }
 
     override def orthographicRender(): Unit = {
+//        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
-        modelMatrix.translate(new Vector3f(0, 0, -1))
+        modelMatrix.translate(new Vector3f(offset, 0, -1))
         HyperScape.uploadBuffer.clear()
         modelMatrix.store(HyperScape.uploadBuffer)
         HyperScape.uploadBuffer.flip()
@@ -47,7 +50,8 @@ class GameStateMainMenu extends GameState {
         GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
         model.render()
         gui.render()
-        offset += 0.1f
+        if (offset > 1.5 || offset < -1) vel = -vel
+        offset -= vel
     }
 
     override def destroy(): Unit = {

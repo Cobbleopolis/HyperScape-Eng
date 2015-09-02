@@ -37,13 +37,21 @@ class Camera {
         val height = top - bottom
         val length = far - near
         val dest = new Matrix4f()
+//        dest.m00 = 2 / width
+//        dest.m03 = -((right + left) / width)
+//        dest.m11 = 2 / height
+//        dest.m13 = -((top + bottom) / height)
+//        dest.m22 = -2 / length
+//        dest.m23 = -((far + near) / length)
+//        dest.m33 = 1
         dest.m00 = 2 / width
         dest.m03 = -((right + left) / width)
         dest.m11 = 2 / height
         dest.m13 = -((top + bottom) / height)
         dest.m22 = -2 / length
-        dest.m23 = -((far + near) / length)
+//        dest.m23 = near/ length
         dest.m33 = 1
+
         new Matrix4f(dest)
     }
 

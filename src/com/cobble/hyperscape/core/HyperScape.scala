@@ -31,13 +31,13 @@ class HyperScape {
         HyperScape.mainCamera.uploadPerspective()
         HyperScape.currentGameState.perspectiveRender()
 
-        GL11.glDisable(GL11.GL_DEPTH_TEST)
+//        GL11.glDisable(GL11.GL_DEPTH_TEST)
         HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
 //        HyperScape.mainCamera.fov = 160
         HyperScape.mainCamera.updatePerspective()
         HyperScape.mainCamera.uploadPerspective()
         HyperScape.currentGameState.orthographicRender()
-        GL11.glEnable(GL11.GL_DEPTH_TEST)
+//        GL11.glEnable(GL11.GL_DEPTH_TEST)
     }
 
     def destroy(): Unit = {
