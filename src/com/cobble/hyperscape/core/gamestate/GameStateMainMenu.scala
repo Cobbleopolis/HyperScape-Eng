@@ -23,6 +23,8 @@ class GameStateMainMenu extends GameState {
 
     var model: RenderModel = null
 
+    var offset: Float = 0.0f
+
     override def changeTo(): Unit = {
         model = new RenderModel(modelArray)
         gui = new GuiMainMenu
@@ -30,21 +32,22 @@ class GameStateMainMenu extends GameState {
     }
 
     override def tick(): Unit = {
-        ShaderRegistry.bindShader("gui")
+        ShaderRegistry.bindShader("terrain")
         TextureRegistry.bindTexture("terrain")
     }
 
     override def orthographicRender(): Unit = {
-//        HyperScape.mainCamera.view.translate(new Vector3f(.1F, 0F, 0F))
-//        HyperScape.mainCamera.uploadView()
-//        val modelMatrix = new Matrix4f()
-//        modelMatrix.translate(new Vector3f(0, 0, -1))
-//        HyperScape.uploadBuffer.clear()
-//        modelMatrix.store(HyperScape.uploadBuffer)
-//        HyperScape.uploadBuffer.flip()
-//        var modelMatrixLoc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
-//        GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
+        HyperScape.mainCamera.uploadView()
+        val modelMatrix = new Matrix4f()
+        modelMatrix.translate(new Vector3f(0, 0, -1))
+        HyperScape.uploadBuffer.clear()
+        modelMatrix.store(HyperScape.uploadBuffer)
+        HyperScape.uploadBuffer.flip()
+        val modelMatrixLoc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
+        GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
+        model.render()
         gui.render()
+        offset += 0.1f
     }
 
     override def destroy(): Unit = {

@@ -52,7 +52,7 @@ class Camera {
      */
     def updatePerspective(): Unit = {
 //        if(mode == Reference.Camera.PERSPECTIVE_MODE) {
-            perspective = perspective(fov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
+            perspective = perspective(if (mode == Reference.Camera.PERSPECTIVE_MODE) fov else orthographicFov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
 //        } else {
 //            perspective = perspective(orthographicFov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
 //        }
