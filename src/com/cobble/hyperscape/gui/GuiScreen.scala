@@ -26,7 +26,7 @@ trait GuiScreen {
         HyperScape.uploadBuffer.clear()
         modelMatrix.store(HyperScape.uploadBuffer)
         HyperScape.uploadBuffer.flip()
-        var modelMatrixLoc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
+        val modelMatrixLoc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
         GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
         buttonList.foreach(button => {
             button.render()

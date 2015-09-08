@@ -26,7 +26,7 @@ class GameStateMainMenu extends GameState {
     var offset: Float = 0.0f
 
     var vel: Float = 0.01f
-
+9
     override def changeTo(): Unit = {
         model = new RenderModel(modelArray)
         gui = new GuiMainMenu
@@ -50,8 +50,8 @@ class GameStateMainMenu extends GameState {
         GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
         model.render()
         gui.render()
-        if (offset > 1 || offset < -1) vel = -vel
-        offset -= vel
+//        if (offset > 1.5 || offset < -1) vel = -vel
+//        offset -= vel
     }
 
     override def destroy(): Unit = {
