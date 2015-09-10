@@ -9,6 +9,8 @@ import org.lwjgl.util.vector.{Vector3f, Matrix4f}
 
 class GameStateMainMenu extends GameState {
 
+    val defaultShader: String = "terrain"
+
     var gui: GuiScreen= null
 
     val modelArray: Array[Float] = Array(
@@ -28,7 +30,7 @@ class GameStateMainMenu extends GameState {
     var vel: Float = 0.01f
 
     override def changeTo(): Unit = {
-        ShaderRegistry.bindShader("terrain")
+        super.changeTo()
         model = new RenderModel(modelArray)
         gui = new GuiMainMenu
         gui.initGui()

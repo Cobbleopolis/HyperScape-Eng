@@ -1,12 +1,16 @@
 package com.cobble.hyperscape.core.gamestate
 
+import com.cobble.hyperscape.registry.ShaderRegistry
+
 trait GameState {
+
+    val defaultShader: String
 
     /**
      * Called when the game switches to the game state.
      */
     def changeTo(): Unit = {
-
+        ShaderRegistry.bindShader(defaultShader)
     }
 
     /**
