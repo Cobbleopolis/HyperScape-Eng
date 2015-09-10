@@ -26,20 +26,20 @@ class GameStateMainMenu extends GameState {
     var offset: Float = 0.0f
 
     var vel: Float = 0.01f
-9
+
     override def changeTo(): Unit = {
+        ShaderRegistry.bindShader("terrain")
         model = new RenderModel(modelArray)
         gui = new GuiMainMenu
         gui.initGui()
     }
 
-    override def tick(): Unit = {
-        ShaderRegistry.bindShader("terrain")
-        TextureRegistry.bindTexture("terrain")
-    }
+    override def tick(): Unit = {}
 
     override def orthographicRender(): Unit = {
 //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
+        ShaderRegistry.bindShader("terrain")
+        TextureRegistry.bindTexture("terrain")
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, -1))
