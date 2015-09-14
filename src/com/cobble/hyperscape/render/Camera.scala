@@ -37,31 +37,24 @@ class Camera {
         val height = top - bottom
         val length = far - near
         val dest = new Matrix4f()
-        dest.m00 = 2 / width
-        //        dest.m03 = -((right + left) / width)
-        dest.m11 = 2 / height
-        //        dest.m13 = -((top + bottom) / height)
-        dest.m22 = -2 / length
-        //        dest.m23 = -((far + near) / length)
-        //        dest.m33 = 1
-        dest.m00 = 2 / width
-
-        new Matrix4f(dest)
-    }
-
-    def orthographicFrustumOld(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix4f = {
-        val width = right - left
-        val height = top - bottom
-        val length = far - near
-        val dest = new Matrix4f()
-        dest.m00 = 2 / width
+//        println(width + " | " + height + " | " + length)
+//        dest.m00 = 2 / width
 //        dest.m03 = -((right + left) / width)
-        dest.m11 = 2 / height
+//        dest.m11 = 2 / height
 //        dest.m13 = -((top + bottom) / height)
-        dest.m22 = -2 / length
+//        dest.m22 = -2 / length
 //        dest.m23 = -((far + near) / length)
 //        dest.m33 = 1
-        dest.m00 = 2 / width
+
+
+
+        dest.m00 = 1 / width
+        dest.m03 = -(right + left) / width
+        dest.m11 = 1 / height
+        dest.m13 = -(top + bottom) / height
+        dest.m22 = -1 / length
+        dest.m23 = near/ length
+        dest.m33 = 1
 
         new Matrix4f(dest)
     }

@@ -42,6 +42,7 @@ class GameStateMainMenu extends GameState {
 //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
         ShaderRegistry.bindShader("terrain")
         TextureRegistry.bindTexture("terrain")
+        HyperScape.mainCamera.uploadPerspective()
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, -1))
