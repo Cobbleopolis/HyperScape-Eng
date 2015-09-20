@@ -41,7 +41,7 @@ class GameStateMainMenu extends GameState {
     override def orthographicRender(): Unit = {
 //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
         ShaderRegistry.bindShader("terrain")
-        TextureRegistry.bindTexture("terrain")
+        TextureRegistry.bindTexture("font")
         HyperScape.mainCamera.uploadPerspective()
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
@@ -52,7 +52,7 @@ class GameStateMainMenu extends GameState {
         val modelMatrixLoc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
         GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
         model.render()
-        gui.render()
+//        gui.render()
 //        if (offset > 1.5 || offset < -1) vel = -vel
 //        offset -= vel
     }

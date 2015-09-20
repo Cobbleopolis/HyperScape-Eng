@@ -34,7 +34,7 @@ object Init {
         TextureRegistry.loadTexture("res/blocks.png", "terrain")
         TextureRegistry.loadTexture("res/player.png", "player")
         TextureRegistry.loadTexture("res/gui.png", "gui")
-        TextureRegistry.loadTexture("res/font.png", "font")
+        TextureRegistry.loadTexture("res/font3.png", "font")
         println("Finished Loading Textures")
     }
 }
