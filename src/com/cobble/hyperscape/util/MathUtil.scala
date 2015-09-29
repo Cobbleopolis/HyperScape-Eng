@@ -7,11 +7,23 @@ object MathUtil {
     val PI180 = PI / 180f
     val PI360 = PI / 360f
     val TAU = PI * 2
-    
+
+    /**
+     * Adds two vectors
+     * @param vec1 The first vector to be added
+     * @param vec2 The second vector to be added
+     * @return The resultant vector from the addition of vec1 and vec2
+     */
     def addVectors(vec1: Vector3f, vec2: Vector3f): Vector3f = {
         new Vector3f(vec1.getX + vec2.getX, vec1.getY + vec2.getY, vec1.getZ + vec2.getZ)
     }
-    
+
+    /**
+     * Subtracts two vectors
+     * @param vec1 The first vector to be subtracted
+     * @param vec2 The second vector to be subtracted
+     * @return The resultant vector from the subtraction of vec1 and vec2
+     */
     def subtractVectors(vec1: Vector3f, vec2: Vector3f): Vector3f = {
         new Vector3f(vec1.getX - vec2.getX, vec1.getY - vec2.getY, vec1.getZ - vec2.getZ)
     }

@@ -4,6 +4,9 @@ import com.cobble.hyperscape.registry.ShaderRegistry
 
 trait GameState {
 
+    /**
+     * The default shader used by the shader when it is switched to.
+     */
     val defaultShader: String
 
     /**

@@ -35,6 +35,9 @@ trait GuiScreen {
     }
 
 
+    /**
+     * Destroies the GUI and removes all the models from the Graphics card.
+     */
     def destroy(): Unit = {
         buttonList.foreach(button => {
             button.destroy()

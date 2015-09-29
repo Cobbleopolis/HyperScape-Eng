@@ -28,10 +28,19 @@ class Shader(programId: Int, vertexId: Int, fragmentId: Int)  {
     }
 
 
+    /**
+     * @return The shader's program ID
+     */
     def getProgramId: Int = programId
 
+    /**
+     * @return The shader's vertex shader ID
+     */
     def getVertexId: Int = vertexId
 
+    /**
+     * @return The shader's fragment shader ID
+     */
     def getFragmentId: Int = fragmentId
 
 
