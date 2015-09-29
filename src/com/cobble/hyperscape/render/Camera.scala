@@ -47,7 +47,7 @@ class Camera {
 //        dest.m33 = 1
 
 
-
+        //Custom Orhto
         dest.m00 = 1 / width
         dest.m03 = -(right + left) / width
         dest.m11 = 1 / height
@@ -55,6 +55,15 @@ class Camera {
         dest.m22 = -1 / length
         dest.m23 = near/ length
         dest.m33 = 1
+
+        //Real Ortho
+//        dest.m00 = 2 / (right - left)
+//        dest.m03 = -(right + left) / (right - left)
+//        dest.m11 = 2 / (top - bottom)
+//        dest.m13 = -(top + bottom) / (top - bottom)
+//        dest.m22 = -2 / (far - near)
+//        dest.m23 = -(far + near) / (far - near)
+//        dest.m33 = 1
 
         new Matrix4f(dest)
     }
@@ -77,6 +86,8 @@ class Camera {
         if(mode == Reference.Camera.PERSPECTIVE_MODE) {
             frustum(-right, right, -top, top, near, far)
         } else {
+            val width = Display.getWidth
+            val height = Display.getHeight
             orthographicFrustum(-right, right, -top, top, near, far)
         }
     }

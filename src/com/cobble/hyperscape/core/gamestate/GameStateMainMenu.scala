@@ -41,7 +41,7 @@ class GameStateMainMenu extends GameState {
     override def orthographicRender(): Unit = {
 //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
         ShaderRegistry.bindShader("terrain")
-        TextureRegistry.bindTexture("font")
+        TextureRegistry.bindTexture("terrain")
         HyperScape.mainCamera.uploadPerspective()
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
