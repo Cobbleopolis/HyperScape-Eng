@@ -9,7 +9,6 @@ import org.lwjgl.util.vector.Matrix4f
  * @param verts An array of floats used to define a model object (must be ordered x, y, z, u, v, normalX, normalY, normalZ)
  */
 class RenderModel(verts: Array[Float]) extends Model(verts) {
-    val modelMatrix = new Matrix4f()
 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
