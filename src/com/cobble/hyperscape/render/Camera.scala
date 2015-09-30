@@ -63,8 +63,6 @@ class Camera {
         dest.m32 = -1f * near
         dest.m33 = 1f
 
-//        val tx = -.5f * Display.getWidth
-
         new Matrix4f(dest)
     }
 
