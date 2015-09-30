@@ -4,6 +4,7 @@ import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.gui.{GuiMainMenu, GuiScreen, GuiButton}
 import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
 import com.cobble.hyperscape.render.RenderModel
+import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.opengl.{GL11, GL20}
 import org.lwjgl.util.vector.{Vector3f, Matrix4f}
 
@@ -47,13 +48,9 @@ class GameStateMainMenu extends GameState {
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, -1))
-        HyperScape.uploadBuffer.clear()
-        modelMatrix.store(HyperScape.uploadBuffer)
-        HyperScape.uploadBuffer.flip()
-        val modelMatrixLoc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
-        GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
+        GLUtil.uploadModelMatrix(modelMatrix)
         model.render()
-//        gui.render()
+        gui.render()
 //        if (offset > 1.5 || offset < -1) vel = -vel
 //        offset -= vel
     }

@@ -2,6 +2,7 @@ package com.cobble.hyperscape.gui
 
 import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.registry.ShaderRegistry
+import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.{Vector3f, Matrix4f}
 
@@ -23,11 +24,7 @@ trait GuiScreen {
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, 0))
-        HyperScape.uploadBuffer.clear()
-        modelMatrix.store(HyperScape.uploadBuffer)
-        HyperScape.uploadBuffer.flip()
-        val modelMatrixLoc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
-        GL20.glUniformMatrix4(modelMatrixLoc, false, HyperScape.uploadBuffer)
+        GLUtil.uploadModelMatrix(modelMatrix)
         buttonList.foreach(button => {
             button.render()
         })
