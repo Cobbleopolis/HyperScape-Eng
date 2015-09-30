@@ -15,7 +15,7 @@ class Model(verts: Array[Float]) {
         translate(vector.getX, vector.getY, vector.getX)
     }
     /**
-     * Translates the model
+     * Translates the model relative to the objects origin
      * @param x Amount to translate in the x
      * @param y Amount to translate in the y
      * @param z Amount to translate in the z
