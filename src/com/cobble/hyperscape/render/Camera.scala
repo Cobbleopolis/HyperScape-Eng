@@ -48,13 +48,13 @@ class Camera {
 
 
         //Custom Orhto
-        dest.m00 = 1 / width
-        dest.m03 = -(right + left) / width
-        dest.m11 = 1 / height
-        dest.m13 = -(top + bottom) / height
-        dest.m22 = -1 / length
-        dest.m23 = near/ length
-        dest.m33 = 1
+//        dest.m00 = 1 / width
+//        dest.m03 = -(right + left) / width
+//        dest.m11 = 1 / height
+//        dest.m13 = -(top + bottom) / height
+//        dest.m22 = -1 / length
+//        dest.m23 = near/ length
+//        dest.m33 = 1
 
         //Real Ortho
 //        dest.m00 = 2 / (right - left)
@@ -64,6 +64,15 @@ class Camera {
 //        dest.m22 = -2 / (far - near)
 //        dest.m23 = -(far + near) / (far - near)
 //        dest.m33 = 1
+
+        //Test Ortho
+        dest.m00 = 2f / Display.getWidth.asInstanceOf[Float]
+        dest.m11 = 2f / Display.getHeight.asInstanceOf[Float]
+        dest.m22 = -2f / (far - near)
+        dest.m32 = -1f * near
+        dest.m33 = 1f
+
+//        val tx = -.5f * Display.getWidth
 
         new Matrix4f(dest)
     }

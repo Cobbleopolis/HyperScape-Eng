@@ -13,14 +13,15 @@ class GameStateMainMenu extends GameState {
 
     var gui: GuiScreen= null
 
+    val size: Float = 360f
     val modelArray: Array[Float] = Array(
-        -1.0f, -1.0f, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-        1.0f, -1.0f, 0.0f,       1.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-        1.0f,  1.0f, 0.0f,       1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
+        -size, -size, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
+         size, -size, 0.0f,       1.0f, 1.0f,      0.0f, 0.0f, 1.0f,
+         size,  size, 0.0f,       1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
 
-        -1.0f, -1.0f, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-        1.0f,  1.0f,  0.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
-        -1.0f, 1.0f,  0.0f,      0.0f, 0.0f,      0.0f, 0.0f, 1.0f
+        -size, -size, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
+         size,  size,  0.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
+        -size,  size,  0.0f,      0.0f, 0.0f,      0.0f, 0.0f, 1.0f
     )
 
     var model: RenderModel = null
