@@ -33,8 +33,8 @@ class Camera {
     }
 
     def orthographicFrustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix4f = {
-        val width = right - left
-        val height = top - bottom
+        val width = Display.getWidth.asInstanceOf[Float]
+        val height = Display.getHeight.asInstanceOf[Float]
         val length = far - near
         val dest = new Matrix4f()
 //        println(width + " | " + height + " | " + length)
@@ -57,10 +57,10 @@ class Camera {
 //        dest.m33 = 1
 
         //Real Ortho
-        dest.m00 = 2f / Display.getWidth.asInstanceOf[Float]
-        dest.m11 = 2f / Display.getHeight.asInstanceOf[Float]
-        dest.m22 = -2f / (far - near)
-        dest.m32 = -1f * near
+        dest.m00 = 2f / (width / VirtualResolution.getScale)
+        dest.m11 = 2f / (height / VirtualResolution.getScale)
+        dest.m22 = -2f / length
+        dest.m32 = -near
         dest.m33 = 1f
 
         new Matrix4f(dest)

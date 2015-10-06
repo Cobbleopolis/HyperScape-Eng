@@ -14,5 +14,14 @@ object Reference {
         val MAIN_MENU: String = "mainMenu"
     }
 
+    object VirtualResolution {
+
+        val NORMAL_SCALE: Float = 1f
+
+        val SMALL_SCALE: Float = .5f
+
+        val LARGE_SCALE: Float = 2f
+
+    }
 
 }

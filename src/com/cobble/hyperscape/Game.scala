@@ -4,6 +4,7 @@ import java.io._
 
 import com.cobble.hyperscape.core.{HyperScape, Init}
 import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
+import com.cobble.hyperscape.render.VirtualResolution
 import org.lwjgl.{LWJGLException, Sys}
 import org.lwjgl.opengl._
 
