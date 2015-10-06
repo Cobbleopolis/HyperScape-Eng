@@ -2,7 +2,6 @@ package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
 import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
-import org.lwjgl.util.vector.Matrix4f
 
 /**
  * Creates a renderable model

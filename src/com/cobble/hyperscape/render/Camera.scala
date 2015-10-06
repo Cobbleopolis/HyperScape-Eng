@@ -5,7 +5,7 @@ import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.util.MathUtil
 import org.lwjgl.opengl.{Display, GL20}
-import org.lwjgl.util.vector.{Vector3f, Matrix4f}
+import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 
 class Camera {
     var mode: Int = Reference.Camera.PERSPECTIVE_MODE

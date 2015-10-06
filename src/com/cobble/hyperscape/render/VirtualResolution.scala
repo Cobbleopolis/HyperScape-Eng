@@ -1,7 +1,5 @@
 package com.cobble.hyperscape.render
 
-import org.lwjgl.opengl.Display
-
 /**
  *
  */

@@ -1,9 +1,8 @@
 package com.cobble.hyperscape.gui
 
 import com.cobble.hyperscape.registry.ShaderRegistry
-import com.cobble.hyperscape.render.{RenderModel, GuiModel}
-import org.lwjgl.opengl.{GL30, GL15, GL20}
-import org.lwjgl.util.vector.{Vector4f, Vector3f}
+import com.cobble.hyperscape.render.GuiModel
+import org.lwjgl.util.vector.Vector4f
 
 /**
  * Used by GUI's to render buttons

@@ -1,12 +1,11 @@
 package com.cobble.hyperscape.core.gamestate
 
 import com.cobble.hyperscape.core.HyperScape
-import com.cobble.hyperscape.gui.{GuiMainMenu, GuiScreen, GuiButton}
-import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
+import com.cobble.hyperscape.gui.{GuiMainMenu, GuiScreen}
+import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
 import com.cobble.hyperscape.render.RenderModel
 import com.cobble.hyperscape.util.GLUtil
-import org.lwjgl.opengl.{GL11, GL20}
-import org.lwjgl.util.vector.{Vector3f, Matrix4f}
+import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 
 class GameStateMainMenu extends GameState {
 

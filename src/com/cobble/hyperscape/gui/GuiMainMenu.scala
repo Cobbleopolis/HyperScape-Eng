@@ -1,9 +1,7 @@
 package com.cobble.hyperscape.gui
 
-import com.cobble.hyperscape.core.HyperScape
-import com.cobble.hyperscape.registry.ShaderRegistry
-import org.lwjgl.opengl.{Display, GL20}
-import org.lwjgl.util.vector.{Vector4f, Vector3f, Matrix4f}
+import org.lwjgl.opengl.Display
+import org.lwjgl.util.vector.Vector4f
 
 class GuiMainMenu extends GuiScreen {
 

@@ -3,10 +3,9 @@ package com.cobble.hyperscape
 import java.io._
 
 import com.cobble.hyperscape.core.{HyperScape, Init}
-import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
-import com.cobble.hyperscape.render.VirtualResolution
-import org.lwjgl.{LWJGLException, Sys}
+import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
 import org.lwjgl.opengl._
+import org.lwjgl.{LWJGLException, Sys}
 
 object Game {
     val WINDOW_TITLE = "HyperScape - Indev"

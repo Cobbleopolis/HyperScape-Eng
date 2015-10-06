@@ -1,7 +1,6 @@
 package com.cobble.hyperscape.registry
 
 import com.cobble.hyperscape.core.gamestate.GameState
-import com.cobble.hyperscape.render.Shader
 
 object GameStateRegistry {
     private var states: Map[String, GameState] = Map()
