@@ -5,6 +5,7 @@ import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.GameStateRegistry
 import com.cobble.hyperscape.render.Camera
 import org.lwjgl.BufferUtils
+import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl.GL11
 
 class HyperScape {
@@ -22,6 +23,16 @@ class HyperScape {
 
     def tick(): Unit = {
         HyperScape.currentGameState.tick()
+        while (Keyboard.next()) {
+            println(Keyboard.getEventCharacter)
+//            if (Keyboard.getEventKeyState) {
+//
+//            } else {
+//                if (Keyboard.getEventKey == Keyboard.KEY_A) {
+//                    println("A Key Released")
+//                }
+//            }
+        }
     }
 
     def render(): Unit = {

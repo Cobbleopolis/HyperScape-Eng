@@ -4,6 +4,7 @@ import java.io._
 
 import com.cobble.hyperscape.core.{HyperScape, Init}
 import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
+import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl._
 import org.lwjgl.{LWJGLException, Sys}
 
@@ -36,6 +37,8 @@ object Game {
 
         hyperScape = new HyperScape
         hyperScape.init()
+
+        Keyboard.enableRepeatEvents(true)
 
 //        GL11.glViewport(0, 0, Display.getWidth, Display.getHeight)
 //        HyperScape.mainCamera.updatePerspective()
