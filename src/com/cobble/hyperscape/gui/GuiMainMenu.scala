@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector4f
 class GuiMainMenu extends GuiScreen {
 
     override def initGui(): Unit = {
-        val size: Float = Display.getHeight.asInstanceOf[Float] / 8f
+        val size: Float = 720f/ 8f
         val halfSize: Float = size / 2f
         val doubleSize: Float = size * 2f
         buttonList = buttonList :+ new GuiButton("Thing", -halfSize, -halfSize, size, size)
