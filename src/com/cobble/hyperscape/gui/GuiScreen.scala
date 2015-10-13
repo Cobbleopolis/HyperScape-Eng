@@ -21,8 +21,6 @@ trait GuiScreen {
      */
     def render(): Unit = {
         ShaderRegistry.bindShader("gui")
-        GL11.glEnable(GL11.GL_BLEND)
-        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, 0))
