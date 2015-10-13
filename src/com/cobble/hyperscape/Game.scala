@@ -63,7 +63,7 @@ object Game {
             hyperScape.render()
             val err = GL11.glGetError()
             if (err != 0) {
-                println(err)
+                println("Error in shader" + ShaderRegistry.getCurrentShader + " | " + err)
                 System.exit(1)
             }
             Display.sync(60)

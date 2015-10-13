@@ -24,4 +24,11 @@ object Reference {
 
     }
 
+    object Font {
+
+        val FONT_WIDTH = 6
+
+        val FONT_HEIGHT = 8
+    }
+
 }

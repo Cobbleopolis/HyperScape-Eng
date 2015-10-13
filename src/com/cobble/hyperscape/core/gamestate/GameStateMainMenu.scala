@@ -48,7 +48,7 @@ class GameStateMainMenu extends GameState {
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, -1))
         GLUtil.uploadModelMatrix(modelMatrix)
-        model.render()
+//        model.render()
         gui.render()
 //        if (offset > 1.5 || offset < -1) vel = -vel
 //        offset -= vel

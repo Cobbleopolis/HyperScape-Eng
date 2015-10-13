@@ -3,6 +3,7 @@ package com.cobble.hyperscape.gui
 import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.util.GLUtil
+import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 
 trait GuiScreen {
@@ -20,6 +21,8 @@ trait GuiScreen {
      */
     def render(): Unit = {
         ShaderRegistry.bindShader("gui")
+        GL11.glEnable(GL11.GL_BLEND)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         HyperScape.mainCamera.uploadView()
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, 0))

@@ -58,6 +58,11 @@ object ShaderRegistry {
             println("Shader Log:")
             println(log)
         }
+        val err = GL11.glGetError()
+        if (err != 0) {
+            println("Error in " + filename + " | " + err)
+            System.exit(1)
+        }
         shaderID
     }
 
@@ -112,5 +117,11 @@ object ShaderRegistry {
             destroyShader(shader._1)
         }
         println("Finished destroying all registered shaders")
+    }
+
+    def printAllShaders(): Unit = {
+        for(shader <- programs){
+            println(shader._1 + " | " +  shader._2.toString)
+        }
     }
 }

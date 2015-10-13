@@ -68,4 +68,8 @@ class Shader(programId: Int, vertexId: Int, fragmentId: Int)  {
         GL20.glDeleteShader(vertexId)
         GL20.glDeleteProgram(programId)
     }
+
+    override def toString: String ={
+        programId + " | " + vertexId + fragmentId
+    }
 }

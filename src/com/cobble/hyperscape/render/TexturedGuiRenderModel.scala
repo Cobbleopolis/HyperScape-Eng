@@ -1,15 +1,14 @@
 package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
-import com.cobble.hyperscape.registry.ShaderRegistry
 import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
 import org.lwjgl.util.vector.Matrix4f
 
 /**
  * The model useed in rendering GUI's. These models can not be manipulated after initialization
- * @param verts an array of verts used to define the model for a GUI must be in format of (x, y, z, r, g, b, a)
+ * @param verts an array of verts used to define the model for a GUI must be in format of (x, y, z, u, v)
  */
-class GuiModel(verts: Array[Float]) {
+class TexturedGuiRenderModel(verts: Array[Float]) {
     println("Creating Gui Model...")
     val modelMatrix = new Matrix4f()
 
@@ -25,7 +24,7 @@ class GuiModel(verts: Array[Float]) {
     GL15.glBufferData(GL15.GL_ARRAY_BUFFER, HyperScape.uploadBuffer, GL15.GL_STATIC_DRAW)
 
     GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.COLOR_VERTEX_SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
-    GL20.glVertexAttribPointer(1, Vertex.COLOR_SIZE, GL11.GL_FLOAT, false, Vertex.COLOR_VERTEX_SIZE_IN_BYTES, Vertex.COLOR_OFFSET)
+    GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.TEXTURE_VERTEX_SIZE_IN_BYTES, Vertex.TEXTURE_OFFSET)
 
     GL30.glBindVertexArray(0)
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
@@ -35,9 +34,6 @@ class GuiModel(verts: Array[Float]) {
      * Renders the model
      */
     def render(drawLines: Boolean = false): Unit = {
-        // Bind the gui shader
-        ShaderRegistry.bindShader("gui")
-
         // Bind to the VAO that has all the information about the quad vertices
         GL30.glBindVertexArray(vao)
         GL20.glEnableVertexAttribArray(0)
@@ -75,7 +71,7 @@ class GuiModel(verts: Array[Float]) {
      * Gets a copy of the model
      * @return A copy of the model
      */
-    def copy: GuiModel = {
-        new GuiModel(verts)
+    def copy: TexturedGuiRenderModel = {
+        new TexturedGuiRenderModel(verts)
     }
 }
