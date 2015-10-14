@@ -24,7 +24,7 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, height: Float = 0.2
         x + width, y + height, 0f,      color.getX, color.getY, color.getZ, 1.0f
     ) //new Array[Float](72)
 
-    val fontModel = new FontModel(text, x, y, textScale)
+    val fontModel = new FontModel(text, x + (width / 2) - (GLUtil.getFontWidth(text, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
 
     val guiModel = new GuiModel(verts)
 
