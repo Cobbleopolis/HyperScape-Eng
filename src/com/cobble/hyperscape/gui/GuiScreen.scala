@@ -3,7 +3,6 @@ package com.cobble.hyperscape.gui
 import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.util.GLUtil
-import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 
 trait GuiScreen {

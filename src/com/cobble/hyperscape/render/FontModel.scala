@@ -2,10 +2,10 @@ package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.reference.Reference
-import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
+import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
 import com.cobble.hyperscape.util.GLUtil
-import org.lwjgl.opengl.{GL11, GL20, GL15, GL30}
-import org.lwjgl.util.vector.{Vector2f, Matrix4f}
+import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
+import org.lwjgl.util.vector.{Matrix4f, Vector2f}
 
 //6 * 8
 //0.0625
