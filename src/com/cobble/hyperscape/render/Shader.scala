@@ -70,6 +70,6 @@ class Shader(programId: Int, vertexId: Int, fragmentId: Int)  {
     }
 
     override def toString: String ={
-        programId + " | " + vertexId + fragmentId
+        programId + " | " + vertexId + " | " + fragmentId
     }
 }
