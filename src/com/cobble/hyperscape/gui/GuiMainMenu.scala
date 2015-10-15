@@ -6,7 +6,8 @@ class GuiMainMenu extends GuiScreen {
 
     override def initGui(): Unit = {
         buttonList = buttonList :+ new GuiButton("Thing", -100, -75, 100, 100, new Vector3f(1f, 0f, 0f))
-        buttonList = buttonList :+ new GuiButton("Hello World!", 0, 0, 340, 340, new Vector3f(0.4f, 0.0f, 0.3f), 7)
+//        buttonList = buttonList :+ new GuiButton("Hello World!", 0, 0, 340, 340, new Vector3f(0.4f, 0.0f, 0.3f), 7)
+        buttonList = buttonList :+ new GuiButton("Hello World!", 0, 0, 340, 340, new Vector3f(0.4f, 0.0f, 0.3f))
     }
 
     //    override def render(): Unit = {

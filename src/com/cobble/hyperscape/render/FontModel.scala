@@ -32,16 +32,10 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
 
         val height = Reference.Font.FONT_HEIGHT * scale
 
-//        val localVerts: Array[Array[Float]] = Array(
-//            Array(i * width           , 0      , zIndex, UV * xLoc      , UV * yLoc + UV ), //Bottom Left
-//            Array(i * width           , height , zIndex, UV * xLoc      , UV * yLoc      ), //Top Left
-//            Array((i * width) + width , height , zIndex, UV * xLoc + UV , UV * yLoc      ), //Top Right
-//            Array((i * width) + width , 0      , zIndex, UV * xLoc + UV , UV * yLoc + UV )  //Bottom Right
-//        )
         val xOff = width * i
         val localVerts: Array[Array[Float]] = Array(
-            Array(xOff     , 0      , zIndex, UVx      , UVy + UV ), //Bottom Left
-            Array(xOff     , height , zIndex, UVx      , UVy      ), //Top Left
+            Array(xOff         , 0      , zIndex, UVx      , UVy + UV ), //Bottom Left
+            Array(xOff         , height , zIndex, UVx      , UVy      ), //Top Left
             Array(xOff + width , height , zIndex, UVx + UV , UVy      ), //Top Right
             Array(xOff + width , 0      , zIndex, UVx + UV , UVy + UV )  //Bottom Right
         )
@@ -49,17 +43,8 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
         val order: Array[Int] = Array(0, 2, 1, 0, 3, 2)
 
         order.foreach(index => verts = verts ++ localVerts(index))
-//        verts = verts ++ localVerts(0)
-
-        println(char + " | " + charVal)
-        println("(" + xLoc + ", " + yLoc + ")")
-        localVerts.foreach(array => {
-            println(array.mkString(", "))
-        })
         i += 1
     })
-
-    println(verts.mkString(", "))
 
     val modelMatrix = new Matrix4f()
     modelMatrix.translate(new Vector2f(x, y))
