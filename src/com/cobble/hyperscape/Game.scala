@@ -4,8 +4,10 @@ import java.io._
 
 import com.cobble.hyperscape.core.{HyperScape, Init}
 import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
+import com.cobble.hyperscape.render.Camera
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl._
+import org.lwjgl.util.vector.{Vector4f, Matrix4f}
 import org.lwjgl.{LWJGLException, Sys}
 
 object Game {

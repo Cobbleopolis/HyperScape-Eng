@@ -29,6 +29,7 @@ class GuiModel(verts: Array[Float]) {
 
     GL30.glBindVertexArray(0)
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
+//    println(verts.grouped(7).map(x => x.take(3).mkString(", ")).mkString("\n"))
     println("Created Gui Model")
 
     /**
