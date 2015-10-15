@@ -13,6 +13,8 @@ class GameStateMainMenu extends GameState {
 
     var gui: GuiScreen= null
 
+    var count: Int = 60
+
     val size: Float = 360f
     val modelArray: Array[Float] = Array(
         -size, -size, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
@@ -37,7 +39,13 @@ class GameStateMainMenu extends GameState {
         gui.initGui()
     }
 
-    override def tick(): Unit = {}
+    override def tick(): Unit = {
+        count -= 1
+        if (count == 0) {
+            count = 60
+            gui.buttonList.head.isHilighted = !gui.buttonList.head.isHilighted
+        }
+    }
 
     override def orthographicRender(): Unit = {
 //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))

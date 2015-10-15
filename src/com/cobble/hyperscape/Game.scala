@@ -4,8 +4,10 @@ import java.io._
 
 import com.cobble.hyperscape.core.{HyperScape, Init}
 import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
+import com.cobble.hyperscape.render.Camera
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl._
+import org.lwjgl.util.vector.{Vector4f, Matrix4f}
 import org.lwjgl.{LWJGLException, Sys}
 
 object Game {
@@ -61,11 +63,11 @@ object Game {
 //            HyperScape.mainCamera.uploadPerspective()
             // Map the internal OpenGL coordinate system to the entire screen
             hyperScape.render()
-            val err = GL11.glGetError()
-            if (err != 0) {
-                println("Error in shader" + ShaderRegistry.getCurrentShader + " | " + err)
-                System.exit(1)
-            }
+//            val err = GL11.glGetError()
+//            if (err != 0) {
+//                println("Error in shader" + ShaderRegistry.getCurrentShader + " | " + err)
+//                System.exit(1)
+//            }
             Display.sync(60)
             Display.update()
         }

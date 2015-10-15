@@ -1,8 +1,11 @@
 package com.cobble.hyperscape.gui
 
+import com.cobble.hyperscape.core.HyperScape
+import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.render.{FontModel, GuiModel}
 import com.cobble.hyperscape.util.GLUtil
-import org.lwjgl.util.vector.Vector3f
+import org.lwjgl.opengl.GL20
+import org.lwjgl.util.vector.{Vector3f, Vector4f}
 
 /**
  * Used by GUI's to render buttons
@@ -13,6 +16,7 @@ import org.lwjgl.util.vector.Vector3f
  * @param width The width of the button (default is 0.2)
  */
 class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, height: Float = 0.2f, width: Float = 0.2f, color: Vector3f = new Vector3f(1.0f, 1.0f, 1.0f), textScale: Int = 3) extends GuiElement {
+    var isHilighted: Boolean = true
     val verts: Array[Float] = Array(
         x,         y,          0f,      color.getX, color.getY, color.getZ, 1.0f,
         x + width, y + height, 0f,      color.getX, color.getY, color.getZ, 1.0f,
@@ -33,7 +37,7 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, height: Float = 0.2
     def render(): Unit = {
         GLUtil.checkGLError()
         fontModel.render()
-        guiModel.render()
+        guiModel.render(isHilighted)
     }
 
     /**

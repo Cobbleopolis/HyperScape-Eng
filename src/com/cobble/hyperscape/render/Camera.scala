@@ -33,48 +33,26 @@ class Camera {
     }
 
     def orthographicFrustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix4f = {
-        val width = Display.getWidth.asInstanceOf[Float]
-        val height = Display.getHeight.asInstanceOf[Float]
-        val length = far - near
+        val w = right - left
+        val h = top - bottom
+        val l = far - near
+
         val dest = new Matrix4f()
-//        println(width + " | " + height + " | " + length)
-//        dest.m00 = 2 / width
-//        dest.m03 = -((right + left) / width)
-//        dest.m11 = 2 / height
-//        dest.m13 = -((top + bottom) / height)
-//        dest.m22 = -2 / length
-//        dest.m23 = -((far + near) / length)
-//        dest.m33 = 1
-
-
-        //Custom Orhto
-//        dest.m00 = 1 / width
-//        dest.m03 = -(right + left) / width
-//        dest.m11 = 1 / height
-//        dest.m13 = -(top + bottom) / height
-//        dest.m22 = -1 / length
-//        dest.m23 = near/ length
-//        dest.m33 = 1
-
-        //Real Ortho
-        dest.m00 = 2f / (width / VirtualResolution.getScale)
-        dest.m11 = 2f / (height / VirtualResolution.getScale)
-        dest.m22 = -2f / length
-        dest.m32 = -near
-        dest.m33 = 1f
-
-        new Matrix4f(dest)
+        dest.m00 =  2 / w
+        dest.m11 =  2 / h
+        dest.m22 = -2 / l
+        dest.m33 =  1
+        dest.m30 = -(right + left) / w
+        dest.m31 = -(top + bottom) / h
+        dest.m32 = -(far + near) / l
+        dest
     }
 
     /**
      * Updates the camera's perspective matrix. Used when the window is resized.
      */
     def updatePerspective(): Unit = {
-//        if(mode == Reference.Camera.PERSPECTIVE_MODE) {
-            perspective = perspective(if (mode == Reference.Camera.PERSPECTIVE_MODE) fov else orthographicFov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
-//        } else {
-//            perspective = perspective(orthographicFov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
-//        }
+            perspective = perspective(fov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
     }
 
 
@@ -84,9 +62,9 @@ class Camera {
         if(mode == Reference.Camera.PERSPECTIVE_MODE) {
             frustum(-right, right, -top, top, near, far)
         } else {
-            val width = Display.getWidth
-            val height = Display.getHeight
-            orthographicFrustum(-right, right, -top, top, near, far)
+            val width = Display.getWidth / VirtualResolution.getScale
+            val height = Display.getHeight / VirtualResolution.getScale
+            orthographicFrustum(-width / 2, width / 2, - height / 2, height / 2, -1f, 1f)
         }
     }
 
