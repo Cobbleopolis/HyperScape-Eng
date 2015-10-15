@@ -13,6 +13,8 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
 
     val modelMatrix = new Matrix4f()
 
+    var verts: Array[Float] = Array[Float]()
+
     println("Creating Font Model...")
     val vao = GL30.glGenVertexArrays()
 
@@ -50,7 +52,6 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
     HyperScape.uploadBuffer.flip()
-    var verts: Array[Float] = Array[Float]()
     GL30.glBindVertexArray(vao)
     var i = 0
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
