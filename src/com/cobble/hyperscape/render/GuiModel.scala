@@ -35,9 +35,18 @@ class GuiModel(verts: Array[Float]) {
     /**
      * Renders the model
      */
-    def render(drawLines: Boolean = false): Unit = {
+    def render(isHilighted: Boolean = false): Unit = {
         // Bind the gui shader
         ShaderRegistry.bindShader("gui")
+
+        val loc = ShaderRegistry.getCurrentShader.getUniformLocation("elementColor")
+        if (isHilighted) {
+            GL20.glUniform4f(loc, .25f, .25f, .25f, 1f)
+        } else {
+            GL20.glUniform4f(loc, 0f, 0f, 0f, 1f)
+//            HyperScape.uploadBuffer.put(Array(0f, 0f, 0f, 1f))
+        }
+
 
         // Bind to the VAO that has all the information about the quad vertices
         GL30.glBindVertexArray(vao)

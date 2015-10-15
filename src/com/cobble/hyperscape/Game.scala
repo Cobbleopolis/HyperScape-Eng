@@ -63,11 +63,11 @@ object Game {
 //            HyperScape.mainCamera.uploadPerspective()
             // Map the internal OpenGL coordinate system to the entire screen
             hyperScape.render()
-            val err = GL11.glGetError()
-            if (err != 0) {
-                println("Error in shader" + ShaderRegistry.getCurrentShader + " | " + err)
-                System.exit(1)
-            }
+//            val err = GL11.glGetError()
+//            if (err != 0) {
+//                println("Error in shader" + ShaderRegistry.getCurrentShader + " | " + err)
+//                System.exit(1)
+//            }
             Display.sync(60)
             Display.update()
         }
