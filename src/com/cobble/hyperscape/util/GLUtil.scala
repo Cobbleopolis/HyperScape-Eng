@@ -25,7 +25,7 @@ object GLUtil {
     def checkGLError(): Unit = {
         val err = GL11.glGetError()
         if (err != 0) {
-            println("Error in shader" + ShaderRegistry.getCurrentShader + " | " + err)
+            println("Error in shader " + ShaderRegistry.getCurrentShader + " | " + err)
             System.exit(1)
         }
     }
