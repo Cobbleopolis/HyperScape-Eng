@@ -32,7 +32,7 @@ object MathUtil {
      * Returns the greatest integer less than or equal to the double argument
      * @param float The float to floor
      */
-    def floor_float(float : Float): Int = {
+    def floor_float(float: Float): Int = {
         val i: Int = float.toInt
         if (float < i.toFloat) i - 1 else i
     }

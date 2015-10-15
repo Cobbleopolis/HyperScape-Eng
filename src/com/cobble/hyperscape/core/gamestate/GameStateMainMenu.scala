@@ -10,22 +10,18 @@ import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 class GameStateMainMenu extends GameState {
 
     val defaultShader: String = "terrain"
-
-    var gui: GuiScreen= null
-
-    var count: Int = 60
-
     val size: Float = 360f
     val modelArray: Array[Float] = Array(
-        -size, -size, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-         size, -size, 0.0f,       1.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-         size,  size, 0.0f,       1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
+        -size, -size, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        size, -size, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        size, size, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
 
-        -size, -size, 0.0f,      0.0f, 1.0f,      0.0f, 0.0f, 1.0f,
-         size,  size,  0.0f,      1.0f, 0.0f,      0.0f, 0.0f, 1.0f,
-        -size,  size,  0.0f,      0.0f, 0.0f,      0.0f, 0.0f, 1.0f
+        -size, -size, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        size, size, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+        -size, size, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f
     )
-
+    var gui: GuiScreen = null
+    var count: Int = 60
     var model: RenderModel = null
 
     var offset: Float = 0.0f
@@ -48,7 +44,7 @@ class GameStateMainMenu extends GameState {
     }
 
     override def orthographicRender(): Unit = {
-//        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
+        //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
         ShaderRegistry.bindShader("terrain")
         TextureRegistry.bindTexture("terrain")
         HyperScape.mainCamera.uploadPerspective()
@@ -56,10 +52,10 @@ class GameStateMainMenu extends GameState {
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, -1))
         GLUtil.uploadModelMatrix(modelMatrix)
-//        model.render()
+        //        model.render()
         gui.render()
-//        if (offset > 1.5 || offset < -1) vel = -vel
-//        offset -= vel
+        //        if (offset > 1.5 || offset < -1) vel = -vel
+        //        offset -= vel
     }
 
     override def destroy(): Unit = {

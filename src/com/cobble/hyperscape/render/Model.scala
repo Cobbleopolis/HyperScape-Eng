@@ -11,21 +11,12 @@ import org.lwjgl.util.vector.Vector3f
 class Model(verts: Array[Float]) {
     var verticies = util.Arrays.copyOf(verts, verts.length)
 
-    def translate(vector: Vector3f): Unit = {
-        translate(vector.getX, vector.getY, vector.getX)
-    }
     /**
-     * Translates the model relative to the objects origin
-     * @param x Amount to translate in the x
-     * @param y Amount to translate in the y
-     * @param z Amount to translate in the z
+     * Rotates the model
+     * @param vec A vector containing the x, y, z components of the rotation in degrease
      */
-    def translate(x: Float, y: Float, z: Float): Unit = {
-        for (i <- 0 until verticies.length by Vertex.ELEMENT_COUNT) {
-            verticies.update(i, verticies(i) + x)
-            verticies.update(i + 1, verticies(i + 1) + y)
-            verticies.update(i + 2, verticies(i + 2) + z)
-        }
+    def rotate(vec: Vector3f): Unit = {
+        rotate(vec.getX, vec.getY, vec.getZ)
     }
 
     /**
@@ -51,12 +42,22 @@ class Model(verts: Array[Float]) {
         translate(avg)
     }
 
+    def translate(vector: Vector3f): Unit = {
+        translate(vector.getX, vector.getY, vector.getX)
+    }
+
     /**
-     * Rotates the model
-     * @param vec A vector containing the x, y, z components of the rotation in degrease
+     * Translates the model relative to the objects origin
+     * @param x Amount to translate in the x
+     * @param y Amount to translate in the y
+     * @param z Amount to translate in the z
      */
-    def rotate(vec: Vector3f): Unit = {
-        rotate(vec.getX, vec.getY, vec.getZ)
+    def translate(x: Float, y: Float, z: Float): Unit = {
+        for (i <- 0 until verticies.length by Vertex.ELEMENT_COUNT) {
+            verticies.update(i, verticies(i) + x)
+            verticies.update(i + 1, verticies(i + 1) + y)
+            verticies.update(i + 2, verticies(i + 2) + z)
+        }
     }
 
     /**

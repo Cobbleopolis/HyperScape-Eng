@@ -49,27 +49,27 @@ object TextureRegistry {
     }
 
     /**
+     * Destroys all of the registered textures
+     */
+    def destroyAllTextures(): Unit = {
+        println("Destroying all registered textures...")
+        //        textures.foreach(tex => destroyTexture(tex._1))
+        for (tex <- textures) {
+            destroyTexture(tex._1)
+        }
+        println("Finished destroying all registered textures...")
+    }
+
+    /**
      * Destroys a texture
      * @param textureName Name of the texture to destroy
      */
-    def destroyTexture(textureName: String): Unit ={
+    def destroyTexture(textureName: String): Unit = {
         println("Destroying texture " + textureName + "...")
         val textureLoc = textures(textureName)
         GL11.glDeleteTextures(textureLoc)
         textures = textures.filter(tex => tex._2 != textureLoc)
         println("Finished destroying texture " + textureName + "...")
-    }
-
-    /**
-     * Destroys all of the registered textures
-     */
-    def destroyAllTextures(): Unit = {
-        println("Destroying all registered textures...")
-//        textures.foreach(tex => destroyTexture(tex._1))
-        for(tex <- textures) {
-            destroyTexture(tex._1)
-        }
-        println("Finished destroying all registered textures...")
     }
 
 }

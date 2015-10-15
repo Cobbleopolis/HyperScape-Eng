@@ -17,6 +17,25 @@ class Camera {
     var view = new Matrix4f()
     var pos = new Vector3f()
 
+    /**
+     * Updates the camera's perspective matrix. Used when the window is resized.
+     */
+    def updatePerspective(): Unit = {
+        perspective = perspective(fov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
+    }
+
+    private def perspective(fovInDegrees: Float, aspectRatio: Float, near: Float, far: Float): Matrix4f = {
+        val top = (near * Math.tan(fovInDegrees * MathUtil.PI360)).toFloat
+        val right = top * aspectRatio
+        if (mode == Reference.Camera.PERSPECTIVE_MODE) {
+            frustum(-right, right, -top, top, near, far)
+        } else {
+            val width = Display.getWidth / VirtualResolution.getScale
+            val height = Display.getHeight / VirtualResolution.getScale
+            orthographicFrustum(-width / 2, width / 2, -height / 2, height / 2, -1f, 1f)
+        }
+    }
+
     def frustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix4f = {
         val width = right - left
         val height = top - bottom
@@ -38,34 +57,14 @@ class Camera {
         val l = far - near
 
         val dest = new Matrix4f()
-        dest.m00 =  2 / w
-        dest.m11 =  2 / h
+        dest.m00 = 2 / w
+        dest.m11 = 2 / h
         dest.m22 = -2 / l
-        dest.m33 =  1
+        dest.m33 = 1
         dest.m30 = -(right + left) / w
         dest.m31 = -(top + bottom) / h
         dest.m32 = -(far + near) / l
         dest
-    }
-
-    /**
-     * Updates the camera's perspective matrix. Used when the window is resized.
-     */
-    def updatePerspective(): Unit = {
-            perspective = perspective(fov, Display.getWidth.toFloat / Display.getHeight.toFloat, nearClip, farClip)
-    }
-
-
-    private def perspective(fovInDegrees: Float, aspectRatio: Float, near: Float, far: Float): Matrix4f = {
-        val top = (near * Math.tan(fovInDegrees * MathUtil.PI360)).toFloat
-        val right = top * aspectRatio
-        if(mode == Reference.Camera.PERSPECTIVE_MODE) {
-            frustum(-right, right, -top, top, near, far)
-        } else {
-            val width = Display.getWidth / VirtualResolution.getScale
-            val height = Display.getHeight / VirtualResolution.getScale
-            orthographicFrustum(-width / 2, width / 2, - height / 2, height / 2, -1f, 1f)
-        }
     }
 
     /**

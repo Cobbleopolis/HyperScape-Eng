@@ -25,13 +25,13 @@ class HyperScape {
         HyperScape.currentGameState.tick()
         while (Keyboard.next()) {
             println(Keyboard.getEventCharacter)
-//            if (Keyboard.getEventKeyState) {
-//
-//            } else {
-//                if (Keyboard.getEventKey == Keyboard.KEY_A) {
-//                    println("A Key Released")
-//                }
-//            }
+            //            if (Keyboard.getEventKeyState) {
+            //
+            //            } else {
+            //                if (Keyboard.getEventKey == Keyboard.KEY_A) {
+            //                    println("A Key Released")
+            //                }
+            //            }
         }
     }
 
@@ -42,13 +42,13 @@ class HyperScape {
         HyperScape.mainCamera.uploadPerspective()
         HyperScape.currentGameState.perspectiveRender()
 
-//        GL11.glDisable(GL11.GL_DEPTH_TEST)
+        //        GL11.glDisable(GL11.GL_DEPTH_TEST)
         HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
-//        HyperScape.mainCamera.fov = 160
+        //        HyperScape.mainCamera.fov = 160
         HyperScape.mainCamera.updatePerspective()
         HyperScape.mainCamera.uploadPerspective()
         HyperScape.currentGameState.orthographicRender()
-//        GL11.glEnable(GL11.GL_DEPTH_TEST)
+        //        GL11.glEnable(GL11.GL_DEPTH_TEST)
     }
 
     def destroy(): Unit = {
@@ -59,14 +59,10 @@ class HyperScape {
 object HyperScape {
     /** The buffer used to upload to the GPU. Max is 1048576 floats */
     val uploadBuffer = BufferUtils.createFloatBuffer(1048576)
-
-    /** The current game state that the game is in */
-    var currentGameState: GameState = null
-
-    var lines: Boolean = false
-
     /** The Camera that renders they game */
     val mainCamera = new Camera
-
+    /** The current game state that the game is in */
+    var currentGameState: GameState = null
+    var lines: Boolean = false
     var debug = false
 }

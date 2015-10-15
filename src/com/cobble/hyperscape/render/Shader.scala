@@ -8,8 +8,8 @@ import org.lwjgl.opengl.{GL11, GL20}
  * @param vertexId The id of the vertex shader program
  * @param fragmentId The id of the fragment shader program
  */
-class Shader(programId: Int, vertexId: Int, fragmentId: Int)  {
-    var uniformLocations: Map[String, Int] = Map() /** Map of the uniform locations for the shader*/
+class Shader(programId: Int, vertexId: Int, fragmentId: Int) {
+    var uniformLocations: Map[String, Int] = Map() /** Map of the uniform locations for the shader */
 
     /**
      * Returns the location for the uniform location
@@ -69,7 +69,7 @@ class Shader(programId: Int, vertexId: Int, fragmentId: Int)  {
         GL20.glDeleteProgram(programId)
     }
 
-    override def toString: String ={
+    override def toString: String = {
         programId + " | " + vertexId + " | " + fragmentId
     }
 }

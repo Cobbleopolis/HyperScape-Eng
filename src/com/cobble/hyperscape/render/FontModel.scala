@@ -11,11 +11,10 @@ import org.lwjgl.util.vector.{Matrix4f, Vector2f}
 //0.0625
 class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float = 0.5f) {
 
-    var verts: Array[Float] = Array[Float]()
+    val modelMatrix = new Matrix4f()
 
     println("Creating Font Model...")
-
-    var i = 0
+    val vao = GL30.glGenVertexArrays()
 
     text.foreach(char => {
         val charVal = Math.min(char.asInstanceOf[Int], 255)
@@ -34,10 +33,10 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
 
         val xOff = width * i
         val localVerts: Array[Array[Float]] = Array(
-            Array(xOff         , 0      , zIndex, UVx      , UVy + UV ), //Bottom Left
-            Array(xOff         , height , zIndex, UVx      , UVy      ), //Top Left
-            Array(xOff + width , height , zIndex, UVx + UV , UVy      ), //Top Right
-            Array(xOff + width , 0      , zIndex, UVx + UV , UVy + UV )  //Bottom Right
+            Array(xOff, 0, zIndex, UVx, UVy + UV), //Bottom Left
+            Array(xOff, height, zIndex, UVx, UVy), //Top Left
+            Array(xOff + width, height, zIndex, UVx + UV, UVy), //Top Right
+            Array(xOff + width, 0, zIndex, UVx + UV, UVy + UV) //Bottom Right
         )
 
         val order: Array[Int] = Array(0, 2, 1, 0, 3, 2)
@@ -45,18 +44,15 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
         order.foreach(index => verts = verts ++ localVerts(index))
         i += 1
     })
-
-    val modelMatrix = new Matrix4f()
+    val vbo = GL15.glGenBuffers()
     modelMatrix.translate(new Vector2f(x, y))
 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
     HyperScape.uploadBuffer.flip()
-
-    val vao = GL30.glGenVertexArrays()
+    var verts: Array[Float] = Array[Float]()
     GL30.glBindVertexArray(vao)
-
-    val vbo = GL15.glGenBuffers()
+    var i = 0
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
     GL15.glBufferData(GL15.GL_ARRAY_BUFFER, HyperScape.uploadBuffer, GL15.GL_STATIC_DRAW)
 

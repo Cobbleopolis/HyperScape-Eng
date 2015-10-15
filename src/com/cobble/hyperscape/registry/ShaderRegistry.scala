@@ -28,9 +28,9 @@ object ShaderRegistry {
         atribLocation.foreach(loc => {
             GL20.glBindAttribLocation(pId, loc._1, loc._2)
         })
-//        GL20.glBindAttribLocation(pId, 0, "in_Position")
-//        // Color information will be attribute 1
-//        GL20.glBindAttribLocation(pId, 1, "in_TextureCoord")
+        //        GL20.glBindAttribLocation(pId, 0, "in_Position")
+        //        // Color information will be attribute 1
+        //        GL20.glBindAttribLocation(pId, 1, "in_TextureCoord")
 
         GL20.glLinkProgram(pId)
         GL20.glValidateProgram(pId)
@@ -71,8 +71,8 @@ object ShaderRegistry {
      * @param shaderName Name of the shader to bind
      */
     def bindShader(shaderName: String): Unit = {
-//        println(shaderName + " | " + currShader + " | " + (shaderName != currShader))
-        if(shaderName != currShader){
+        //        println(shaderName + " | " + currShader + " | " + (shaderName != currShader))
+        if (shaderName != currShader) {
             programs(shaderName).bind()
             currShader = shaderName
             val err = GL11.glGetError()
@@ -98,6 +98,17 @@ object ShaderRegistry {
     }
 
     /**
+     * Destroys all loaded shaders
+     */
+    def destroyAllShaders(): Unit = {
+        println("Destroying all registered shaders...")
+        for (shader <- programs) {
+            destroyShader(shader._1)
+        }
+        println("Finished destroying all registered shaders")
+    }
+
+    /**
      * Destroys a shader
      * @param shaderName Name of the shader to destroy
      */
@@ -108,20 +119,9 @@ object ShaderRegistry {
         println("Finished destroying shader " + shaderName + "...")
     }
 
-    /**
-     * Destroys all loaded shaders
-     */
-    def destroyAllShaders(): Unit = {
-        println("Destroying all registered shaders...")
-        for(shader <- programs) {
-            destroyShader(shader._1)
-        }
-        println("Finished destroying all registered shaders")
-    }
-
     def printAllShaders(): Unit = {
-        for(shader <- programs){
-            println(shader._1 + " | " +  shader._2.toString)
+        for (shader <- programs) {
+            println(shader._1 + " | " + shader._2.toString)
         }
     }
 }

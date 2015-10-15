@@ -42,7 +42,7 @@ class TexturedGuiRenderModel(verts: Array[Float]) {
 
         // Draw the vertices
         GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
-//        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
+        //        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
 
         // Put everything back to default (deselect)
         GL20.glDisableVertexAttribArray(0)

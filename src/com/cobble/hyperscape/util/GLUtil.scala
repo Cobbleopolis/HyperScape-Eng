@@ -21,6 +21,14 @@ object GLUtil {
     }
 
     /**
+     * Wraps the font's width and height
+     * @param text The text to get the size of
+     * @param scale The scale of the font
+     * @return The size of the font, order is width and then height
+     */
+    def getFontSize(text: String, scale: Int): (Float, Float) = (getFontWidth(text, scale), getFontHeight(scale))
+
+    /**
      * Calculates the font's width
      * @param text The text to find the width of
      * @param scale The scale of the font
@@ -34,14 +42,6 @@ object GLUtil {
      * @return The height of the text
      */
     def getFontHeight(scale: Int): Float = scale.asInstanceOf[Float] * Reference.Font.FONT_HEIGHT
-
-    /**
-     * Wraps the font's width and height
-     * @param text The text to get the size of
-     * @param scale The scale of the font
-     * @return The size of the font, order is width and then height
-     */
-    def getFontSize(text: String, scale: Int): (Float, Float) = (getFontWidth(text, scale), getFontHeight(scale))
 
     /**
      * Checks if there is an error on the graphics card
