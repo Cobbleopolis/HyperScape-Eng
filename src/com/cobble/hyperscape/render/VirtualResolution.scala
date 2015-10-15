@@ -5,12 +5,19 @@ package com.cobble.hyperscape.render
  */
 object VirtualResolution {
 
-    var guiScale: Float = 1f
+    private var guiScale: Float = 1f
 
+    /**
+     * Sets the virtual scale
+     * @param scale The scale to be stored
+     */
     def setScale(scale: Float): Unit = {
         guiScale = scale
     }
 
+    /**
+     * @return Returns the stored scale
+     */
     def getScale: Float = {
         guiScale
     }

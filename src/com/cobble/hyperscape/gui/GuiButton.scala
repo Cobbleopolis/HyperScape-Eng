@@ -31,20 +31,19 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, height: Float = 0.2
 
     val guiModel = new GuiModel(verts)
 
-    /**
-     * Renders the button
-     */
+    def containsPoint(x: Int, y: Int): Boolean = {
+        false
+    }
+
     def render(): Unit = {
         GLUtil.checkGLError()
         fontModel.render()
         guiModel.render(isHilighted)
     }
 
-    /**
-     * Destroys the button
-     */
     def destroy(): Unit = {
         guiModel.destroy()
+        fontModel.destroy()
     }
 
 }

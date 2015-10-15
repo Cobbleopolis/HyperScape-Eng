@@ -11,6 +11,9 @@ trait GuiScreen {
     /** A list of the buttons in the Gui **/
     var buttonList: List[GuiButton] = List()
 
+    /**
+     * Called when the gui is supposed to be created
+     */
     def initGui(): Unit = {
 
     }
