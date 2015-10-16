@@ -26,7 +26,11 @@ class HyperScape {
     def tick(): Unit = {
         HyperScape.currentGameState.tick()
         while (Keyboard.next()) {
-            println(Keyboard.getEventCharacter)
+            val character = Keyboard.getEventCharacter
+            val characterVal = Keyboard.getEventCharacter.asInstanceOf[Byte]
+            EventRegistry.getButtonEventListeners.foreach(eventListener => {
+                eventListener.onButtonHold(character, characterVal)
+            })
         }
 
         while (Mouse.next()) {
@@ -35,6 +39,10 @@ class HyperScape {
             val dx = Mouse.getDX
             val dy = Mouse.getDY
             val mouseState = Mouse.getEventButton
+
+            EventRegistry.getMouseListeners.foreach(eventListener => {
+                eventListener.onMouseMove(x, y, dx, dy)
+            })
 
             if (Mouse.getEventButtonState) {
                 if (Mouse.getEventButton != -1) {
