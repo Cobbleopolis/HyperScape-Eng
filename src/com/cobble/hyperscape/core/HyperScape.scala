@@ -10,6 +10,8 @@ import org.lwjgl.opengl.{Display, GL11}
 
 class HyperScape {
 
+    var prevMouseState: Int = -1
+
     def init(): Unit = {
         GameStates.registerGameStates()
         changeState(Reference.GameState.MAIN_MENU)
@@ -25,26 +27,43 @@ class HyperScape {
         HyperScape.currentGameState.tick()
         while (Keyboard.next()) {
             println(Keyboard.getEventCharacter)
-            //            if (Keyboard.getEventKeyState) {
-            //
-            //            } else {
-            //                if (Keyboard.getEventKey == Keyboard.KEY_A) {
-            //                    println("A Key Released")
-            //                }
-            //            }
         }
 
         while (Mouse.next()) {
-            EventRegistry.getMouseListeners.foreach(eventListener => {
-                val x = Mouse.getX - (Display.getWidth / 2)
-                val y = Mouse.getY - (Display.getHeight / 2)
-                val dx = Mouse.getDX
-                val dy = Mouse.getDY
-                eventListener.onMouseMove(x, y, dx, dy)
-//                println(Mouse.getX + ", " + Mouse.getX)
-            })
-            //
+            val x = Mouse.getX - (Display.getWidth / 2)
+            val y = Mouse.getY - (Display.getHeight / 2)
+            val dx = Mouse.getDX
+            val dy = Mouse.getDY
+            val mouseState = Mouse.getEventButton
 
+            if (Mouse.getEventButtonState) {
+                if (Mouse.getEventButton != -1) {
+                    EventRegistry.getMouseListeners.foreach(eventListener => {
+                        eventListener.onMouseDown(x, y, dx, dy, mouseState)
+                    })
+                    HyperScape.anyMouseButtonDown = true
+                }
+            }else {
+                if (Mouse.getEventButton != -1) {
+                    EventRegistry.getMouseListeners.foreach(eventListener => {
+                        eventListener.onMouseUp(x, y, dx, dy, mouseState)
+                    })
+                    HyperScape.anyMouseButtonDown = false
+                }
+            }
+
+        }
+
+
+        if (HyperScape.anyMouseButtonDown) {
+            val x = Mouse.getX - (Display.getWidth / 2)
+            val y = Mouse.getY - (Display.getHeight / 2)
+            val dx = Mouse.getDX
+            val dy = Mouse.getDY
+            val mouseState = Mouse.getEventButton
+            EventRegistry.getMouseListeners.foreach(eventListener => {
+                eventListener.mouseDown(x, y, dx, dy, mouseState)
+            })
         }
     }
 
@@ -78,4 +97,5 @@ object HyperScape {
     var currentGameState: GameState = null
     var lines: Boolean = false
     var debug = false
+    var anyMouseButtonDown = false
 }
