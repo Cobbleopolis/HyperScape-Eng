@@ -27,7 +27,15 @@ class HyperScape {
         HyperScape.currentGameState.tick()
         while (Keyboard.next()) {
             val character = Keyboard.getEventCharacter
-            val characterVal = Keyboard.getEventCharacter.asInstanceOf[Byte]
+            val characterVal = Keyboard.getEventKey
+            EventRegistry.getButtonEventListeners.foreach(eventListener => {
+                eventListener.onButtonTypingHold(character, characterVal)
+            })
+        }
+
+        if (Keyboard.getEventKeyState) {
+            val character = Keyboard.getEventCharacter
+            val characterVal = Keyboard.getEventKey
             EventRegistry.getButtonEventListeners.foreach(eventListener => {
                 eventListener.onButtonHold(character, characterVal)
             })
