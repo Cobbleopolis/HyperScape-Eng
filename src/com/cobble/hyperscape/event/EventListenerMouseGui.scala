@@ -2,7 +2,7 @@ package com.cobble.hyperscape.event
 
 import com.cobble.hyperscape.core.HyperScape
 
-class EventListenerMainMouse extends EventListenerMouse {
+class EventListenerMouseGui extends EventListenerMouse {
 
     override def onMouseMove(x: Int, y: Int, deltaX: Int, deltaY: Int) = {
 //        println("(" + x + ", " + y + ") (" + deltaX + ", " + deltaY + ")")
