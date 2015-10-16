@@ -12,14 +12,14 @@ trait EventListenerMouse {
     def onMouseMove(x: Int, y: Int, deltaX: Int, deltaY: Int): Unit = {}
 
     /**
-     * Called when the mouse is clicked
+     * Called while a mouse button is down
      * @param x The x location of the mouse
      * @param y The y location of the mouse
      * @param deltaX The change in the x position
      * @param deltaY The change in the y position
      * @param mouseButton The button that was pressed
      */
-    def onClick(x: Int, y: Int, deltaX: Int, deltaY: Int, mouseButton: Int): Unit = {}
+    def mouseDown(x: Int, y: Int, deltaX: Int, deltaY: Int, mouseButton: Int): Unit = {}
 
     /**
      * Called when the mouse is pressed
