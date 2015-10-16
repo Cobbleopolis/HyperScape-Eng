@@ -20,7 +20,7 @@ class GameStateMainMenu extends GameState {
         size, size, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
         -size, size, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f
     )
-    var gui: GuiScreen = null
+//    override var currentGui: GuiScreen = null
     var count: Int = 60
     var model: RenderModel = null
 
@@ -31,16 +31,17 @@ class GameStateMainMenu extends GameState {
     override def changeTo(): Unit = {
         super.changeTo()
         model = new RenderModel(modelArray)
-        gui = new GuiMainMenu
-        gui.initGui()
+        currentGui = new GuiMainMenu
+        currentGui.initGui()
+//        println("Main Menu " + (currentGui == null))
     }
 
     override def tick(): Unit = {
-        count -= 1
-        if (count == 0) {
-            count = 60
-            gui.buttonList.head.isHilighted = !gui.buttonList.head.isHilighted
-        }
+//        count -= 1
+//        if (count == 0) {
+//            count = 60
+//            currentGui.buttonList.head.isHilighted = !currentGui.buttonList.head.isHilighted
+//        }
     }
 
     override def orthographicRender(): Unit = {
@@ -53,14 +54,14 @@ class GameStateMainMenu extends GameState {
         modelMatrix.translate(new Vector3f(0, 0, -1))
         GLUtil.uploadModelMatrix(modelMatrix)
         //        model.render()
-        gui.render()
+        currentGui.render()
         //        if (offset > 1.5 || offset < -1) vel = -vel
         //        offset -= vel
     }
 
     override def destroy(): Unit = {
         model.destroy()
-        gui.destroy()
+        currentGui.destroy()
     }
     
 }

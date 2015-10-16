@@ -27,7 +27,7 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, height: Float = 0.2
     var isHilighted: Boolean = true
 
     def containsPoint(x: Int, y: Int): Boolean = {
-        false
+        x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height
     }
 
     def render(): Unit = {

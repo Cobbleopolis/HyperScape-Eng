@@ -37,6 +37,7 @@ object Game {
 
         hyperScape = new HyperScape
         hyperScape.init()
+//        hyperScape.changeState("mainMenu")
 
         Keyboard.enableRepeatEvents(true)
 

@@ -1,5 +1,6 @@
 package com.cobble.hyperscape.core.gamestate
 
+import com.cobble.hyperscape.gui.GuiScreen
 import com.cobble.hyperscape.registry.ShaderRegistry
 
 trait GameState {
@@ -8,6 +9,11 @@ trait GameState {
      * The default shader used by the shader when it is switched to.
      */
     val defaultShader: String
+
+    /**
+     * The current gui used by the game state. null by default and when there is no gui
+     */
+    var currentGui: GuiScreen = null
 
     /**
      * Called when the game switches to the game state.

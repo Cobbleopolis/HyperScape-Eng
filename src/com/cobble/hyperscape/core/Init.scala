@@ -1,6 +1,7 @@
 package com.cobble.hyperscape.core
 
-import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
+import com.cobble.hyperscape.event.EventListenerMainMouse
+import com.cobble.hyperscape.registry.{EventRegistry, ShaderRegistry, TextureRegistry}
 
 object Init {
 
@@ -10,6 +11,7 @@ object Init {
     def loadAssets(): Unit = {
         loadShaders()
         loadTextures()
+        registerEventListeners()
         //        loadModels()
         println("Done Loading")
     }
@@ -39,5 +41,14 @@ object Init {
         TextureRegistry.loadTexture("res/gui.png", "gui")
         TextureRegistry.loadTexture("res/font3.png", "font")
         println("Finished Loading Textures")
+    }
+
+    /**
+     * Registers all of the event Listeners
+     */
+    def registerEventListeners(): Unit = {
+        println("Registering Event Listeners...")
+        EventRegistry.registerMouseEventListener(new EventListenerMainMouse)
+        println("Finished Registering Event Listeners")
     }
 }

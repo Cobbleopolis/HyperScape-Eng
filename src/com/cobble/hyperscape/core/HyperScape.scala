@@ -2,11 +2,11 @@ package com.cobble.hyperscape.core
 
 import com.cobble.hyperscape.core.gamestate.{GameState, GameStates}
 import com.cobble.hyperscape.reference.Reference
-import com.cobble.hyperscape.registry.GameStateRegistry
+import com.cobble.hyperscape.registry.{EventRegistry, GameStateRegistry}
 import com.cobble.hyperscape.render.Camera
 import org.lwjgl.BufferUtils
-import org.lwjgl.input.Keyboard
-import org.lwjgl.opengl.GL11
+import org.lwjgl.input.{Keyboard, Mouse}
+import org.lwjgl.opengl.{Display, GL11}
 
 class HyperScape {
 
@@ -32,6 +32,19 @@ class HyperScape {
             //                    println("A Key Released")
             //                }
             //            }
+        }
+
+        while (Mouse.next()) {
+            EventRegistry.getMouseListeners.foreach(eventListener => {
+                val x = Mouse.getX - (Display.getWidth / 2)
+                val y = Mouse.getY - (Display.getHeight / 2)
+                val dx = Mouse.getDX
+                val dy = Mouse.getDY
+                eventListener.onMouseMove(x, y, dx, dy)
+//                println(Mouse.getX + ", " + Mouse.getX)
+            })
+            //
+
         }
     }
 

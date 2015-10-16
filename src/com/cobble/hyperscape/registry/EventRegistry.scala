@@ -4,16 +4,16 @@ import com.cobble.hyperscape.event.{EventListenerButton, EventListenerMouse}
 
 object EventRegistry {
 
-    val mouseEventListener: Array[EventListenerMouse] = Array[EventListenerMouse]()
+    var mouseEventListener: Array[EventListenerMouse] = Array[EventListenerMouse]()
 
-    val buttonEventListener: Array[EventListenerButton] = Array[EventListenerButton]()
+    var buttonEventListener: Array[EventListenerButton] = Array[EventListenerButton]()
     
     /**
      * Registers a mouse event listener
      * @param eventListenerMouse The mouse event listener to be registered
      */
     def registerMouseEventListener(eventListenerMouse: EventListenerMouse): Unit = {
-        mouseEventListener :+ eventListenerMouse
+        mouseEventListener = mouseEventListener :+ eventListenerMouse
     }
     
     /**
@@ -26,7 +26,7 @@ object EventRegistry {
      * @param eventListenerButton The button event listener to be registered
      */
     def registerButtonEventListener(eventListenerButton: EventListenerButton): Unit = {
-        buttonEventListener :+ eventListenerButton
+        buttonEventListener = buttonEventListener :+ eventListenerButton
     }
 
     /**
