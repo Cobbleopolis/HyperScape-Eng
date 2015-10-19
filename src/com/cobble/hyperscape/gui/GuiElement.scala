@@ -5,6 +5,8 @@ package com.cobble.hyperscape.gui
  */
 abstract class GuiElement {
 
+    var isDown: Boolean = false
+
     /**
      * Detects if the point that is passed is contained within the element
      * @param x The x location of the position

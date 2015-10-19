@@ -36,15 +36,24 @@ class GuiModel(verts: Array[Float]) {
     /**
      * Renders the model
      */
-    def render(isHilighted: Boolean = false): Unit = {
+    def render(isHilighted: Boolean = false, isDown: Boolean = false): Unit = {
         // Bind the gui shader
         ShaderRegistry.bindShader("gui")
 
         val loc = ShaderRegistry.getCurrentShader.getUniformLocation("elementColor")
+        val subtractColorLoc = ShaderRegistry.getCurrentShader.getUniformLocation("subtractColor")
+
         if (isHilighted) {
-            GL20.glUniform4f(loc, .25f, .25f, .25f, 1f)
+            GL20.glUniform3f(loc, .25f, .25f, .25f)
         } else {
-            GL20.glUniform4f(loc, 0f, 0f, 0f, 1f)
+            GL20.glUniform3f(loc, 0f, 0f, 0f)
+        }
+
+        if (isDown) {
+            GL20.glUniform3f(loc, .05f, .05f, .05f)
+            GL20.glUniform1i(subtractColorLoc, 1)
+        } else {
+            GL20.glUniform1i(subtractColorLoc, 0)
             //            HyperScape.uploadBuffer.put(Array(0f, 0f, 0f, 1f))
         }
 
