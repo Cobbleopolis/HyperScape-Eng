@@ -8,8 +8,8 @@ import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 trait GuiScreen {
     
 
-    /** A list of the buttons in the Gui **/
-    var buttonList: List[GuiButton] = List()
+    /** A list of the element in the Gui **/
+    var elementList: List[GuiButton] = List()
 
     /**
      * Called when the gui is supposed to be created
@@ -27,7 +27,7 @@ trait GuiScreen {
         val modelMatrix = new Matrix4f()
         modelMatrix.translate(new Vector3f(0, 0, 0))
         GLUtil.uploadModelMatrix(modelMatrix)
-        buttonList.foreach(button => {
+        elementList.foreach(button => {
             button.render()
         })
 
@@ -38,7 +38,7 @@ trait GuiScreen {
      * Destroies the GUI and removes all the models from the Graphics card.
      */
     def destroy(): Unit = {
-        buttonList.foreach(button => {
+        elementList.foreach(button => {
             button.destroy()
         })
     }

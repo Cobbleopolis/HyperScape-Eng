@@ -9,7 +9,7 @@ class EventListenerMouseGui extends EventListenerMouse {
 //        println(HyperScape.currentGameState == null)
 //        println(HyperScape.currentGameState.currentGui == null)
 //        println(HyperScape.currentGameState.currenGui.buttonList == null)
-        HyperScape.currentGameState.currentGui.buttonList.foreach(element => {
+        HyperScape.currentGameState.currentGui.elementList.foreach(element => {
             element.isHilighted = element.containsPoint(x, y)
         })
     }
