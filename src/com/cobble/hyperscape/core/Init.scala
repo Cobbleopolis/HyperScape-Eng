@@ -23,9 +23,17 @@ object Init {
     def loadShaders(): Unit = {
         println("Loading Shaders...")
         ShaderRegistry.loadShader("res/shader/terrain.vert", "res/shader/terrain.frag", "terrain", Array((0, "in_Position"), (1, "in_TextureCoord"), (2, "in_Normal")))
-        ShaderRegistry.loadShader("res/shader/mainMenu.vert", "res/shader/mainMenu.frag", "mainMenu", Array((0, "in_Position"), (1, "in_TextureCoord"), (2, "in_Normal")))
+        ShaderRegistry.loadShader("res/shader/dropShadow.vert", "res/shader/dropShadow.frag", "dropShadow", Array((0, "in_Position"), (1, "in_TextureCoord"), (2, "in_Normal")))
         ShaderRegistry.loadShader("res/shader/gui.vert", "res/shader/gui.frag", "gui", Array((0, "in_Position"), (1, "in_Color")))
-        ShaderRegistry.loadShader("res/shader/font.vert", "res/shader/font.frag", "font", Array((0, "in_Position"), (1, "in_TextureCoord")))
+        ShaderRegistry.loadShader("res/shader/font.vert", "res/shader/font.frag", "font", Array((0, "in_Position"), (1, "in_TextureCoord"), (1, "in_TextureCoord")))
+        ShaderRegistry.loadShader(
+            "res/shader/dropShadow.vert",
+            "res/shader/dropShadow.frag",
+            "dropShadow",
+            Array(
+                (0, "in_Position"),
+                (1, "in_TextureCoord"),
+                (1, "in_zIndex")))
         //        ShaderRegistry.loadShader("res/shader/terrain.vert", "res/shader/terrain.frag", "font", Array((0, "in_Position"), (1, "in_TextureCoord"), (2, "in_Normal")))
         ShaderRegistry.printAllShaders()
         println("Finished Loading Shaders")
@@ -40,6 +48,7 @@ object Init {
         TextureRegistry.loadTexture("res/player.png", "player")
         TextureRegistry.loadTexture("res/gui.png", "gui")
         TextureRegistry.loadTexture("res/font3.png", "font")
+        TextureRegistry.loadTexture("res/dropShadow.png", "dropShadow")
         println("Finished Loading Textures")
     }
 

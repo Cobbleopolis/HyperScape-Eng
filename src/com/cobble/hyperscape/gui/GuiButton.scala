@@ -1,6 +1,6 @@
 package com.cobble.hyperscape.gui
 
-import com.cobble.hyperscape.render.{FontModel, GuiModel}
+import com.cobble.hyperscape.render.{DropShadowModel, FontModel, GuiModel}
 import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.util.vector.Vector3f
 
@@ -23,6 +23,7 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
         x + width, y + height, 0f, color.getX, color.getY, color.getZ, 1.0f
     ) //new Array[Float](72)
     val fontModel = new FontModel(text, x + (width / 2) - (GLUtil.getFontWidth(text, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
+    val dropShadow = new DropShadowModel(x - 30, y - 30, width + 30, height + 30, 3)
     val guiModel = new GuiModel(verts)
 
     var isHilighted: Boolean = false
@@ -33,11 +34,13 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
 
     def render(): Unit = {
         GLUtil.checkGLError()
+        dropShadow.render()
         fontModel.render()
-        guiModel.render(isHilighted, isDown)
+//        guiModel.render(isHilighted, isDown)
     }
 
     def destroy(): Unit = {
+//        dropShadow.destroy()
         guiModel.destroy()
         fontModel.destroy()
     }

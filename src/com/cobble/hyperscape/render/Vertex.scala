@@ -14,6 +14,9 @@ object Vertex {
     /** The amount of elements in one uv element */
     val UV_SIZE = 2
 
+    /** The amount of elements in one uv element */
+    val UV_OFFSET = 3
+
     /** The amount of elements in one normal element */
     val NORMAL_SIZE = 3
 
@@ -53,4 +56,16 @@ object Vertex {
 
     /** The offset for texture in bytes */
     val TEXTURE_OFFSET = VERTEX_SIZE * BYTES_IN_FLOAT
+
+    //Drop Shadow
+
+    val DROP_SHADOW_COUNT = 6
+
+    val DROP_SHADOW_SIZE_IN_BYTES = DROP_SHADOW_COUNT * BYTES_IN_FLOAT
+
+    val DROP_SHADOW_Z_INDEX_OFFSET = (VERTEX_SIZE + UV_SIZE) * BYTES_IN_FLOAT
+
+    val DROP_SHADOW_Z_INDEX_SIZE = 1
+
+    val DROP_SHADOW_Z_INDEX_SIZE_IN_BYTES = DROP_SHADOW_Z_INDEX_SIZE * BYTES_IN_FLOAT
 }

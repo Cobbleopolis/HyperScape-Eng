@@ -32,7 +32,7 @@ class Camera {
         } else {
             val width = Display.getWidth / VirtualResolution.getScale
             val height = Display.getHeight / VirtualResolution.getScale
-            orthographicFrustum(-width / 2, width / 2, -height / 2, height / 2, -1f, 1f)
+            orthographicFrustum(-width / 2, width / 2, -height / 2, height / 2, -1f, 25f)
         }
     }
 
@@ -48,7 +48,7 @@ class Camera {
         dest.m22 = -(far + near) / length
         dest.m32 = -(far * near * 2) / length
         dest.m23 = -1
-        new Matrix4f(dest)
+        dest
     }
 
     def orthographicFrustum(left: Float, right: Float, bottom: Float, top: Float, near: Float, far: Float): Matrix4f = {
