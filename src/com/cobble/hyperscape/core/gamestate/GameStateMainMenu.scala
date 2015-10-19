@@ -1,7 +1,7 @@
 package com.cobble.hyperscape.core.gamestate
 
 import com.cobble.hyperscape.core.HyperScape
-import com.cobble.hyperscape.gui.{GuiMainMenu, GuiScreen}
+import com.cobble.hyperscape.gui.{Guis, GuiMainMenu, GuiScreen}
 import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
 import com.cobble.hyperscape.render.RenderModel
 import com.cobble.hyperscape.util.GLUtil
@@ -31,8 +31,7 @@ class GameStateMainMenu extends GameState {
     override def changeTo(): Unit = {
         super.changeTo()
         model = new RenderModel(modelArray)
-        currentGui = new GuiMainMenu
-        currentGui.initGui()
+        changeGui(Guis.guiMainMenu)
 //        println("Main Menu " + (currentGui == null))
     }
 
@@ -46,22 +45,22 @@ class GameStateMainMenu extends GameState {
 
     override def orthographicRender(): Unit = {
         //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
-        ShaderRegistry.bindShader("terrain")
-        TextureRegistry.bindTexture("terrain")
-        HyperScape.mainCamera.uploadPerspective()
-        HyperScape.mainCamera.uploadView()
-        val modelMatrix = new Matrix4f()
-        modelMatrix.translate(new Vector3f(0, 0, -1))
-        GLUtil.uploadModelMatrix(modelMatrix)
-        //        model.render()
+//        ShaderRegistry.bindShader("terrain")
+//        TextureRegistry.bindTexture("terrain")
+//        HyperScape.mainCamera.uploadPerspective()
+//        HyperScape.mainCamera.uploadView()
+//        val modelMatrix = new Matrix4f()
+//        modelMatrix.translate(new Vector3f(0, 0, -1))
+//        GLUtil.uploadModelMatrix(modelMatrix)
+//                model.render()
         currentGui.render()
         //        if (offset > 1.5 || offset < -1) vel = -vel
         //        offset -= vel
     }
 
     override def destroy(): Unit = {
+        super.destroy()
         model.destroy()
-        currentGui.destroy()
     }
     
 }

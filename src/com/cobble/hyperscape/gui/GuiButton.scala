@@ -12,7 +12,7 @@ import org.lwjgl.util.vector.Vector3f
  * @param height The height of the button (default is 0.2)
  * @param width The width of the button (default is 0.2)
  */
-class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, height: Float = 0.2f, width: Float = 0.2f, color: Vector3f = new Vector3f(1.0f, 1.0f, 1.0f), textScale: Int = 3) extends GuiElement {
+class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f, height: Float = 0.2f, color: Vector3f = new Vector3f(1.0f, 1.0f, 1.0f), textScale: Int = 3) extends GuiElement {
     val verts: Array[Float] = Array(
         x, y, 0f, color.getX, color.getY, color.getZ, 1.0f,
         x + width, y + height, 0f, color.getX, color.getY, color.getZ, 1.0f,

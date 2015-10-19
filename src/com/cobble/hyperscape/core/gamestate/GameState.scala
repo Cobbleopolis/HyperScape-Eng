@@ -2,6 +2,7 @@ package com.cobble.hyperscape.core.gamestate
 
 import com.cobble.hyperscape.gui.GuiScreen
 import com.cobble.hyperscape.registry.ShaderRegistry
+import com.cobble.hyperscape.util.GLUtil
 
 trait GameState {
 
@@ -20,6 +21,16 @@ trait GameState {
      */
     def changeTo(): Unit = {
         ShaderRegistry.bindShader(defaultShader)
+    }
+
+    /**
+     * Changes the current gui
+     * @param gui The gui to change to (can be null).
+     */
+    def changeGui(gui: GuiScreen): Unit = {
+//        if (currentGui != null) currentGui.destroy()
+        currentGui = gui
+//        if (currentGui != null) currentGui.initGui()
     }
 
     /**
@@ -47,6 +58,6 @@ trait GameState {
      * Called when the game switches to a different state or closes.
      */
     def destroy(): Unit = {
-
+        if (currentGui != null) currentGui.destroy()
     }
 }

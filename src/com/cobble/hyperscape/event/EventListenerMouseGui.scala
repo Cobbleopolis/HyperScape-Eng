@@ -1,6 +1,7 @@
 package com.cobble.hyperscape.event
 
 import com.cobble.hyperscape.core.HyperScape
+import com.cobble.hyperscape.reference.Reference
 
 class EventListenerMouseGui extends EventListenerMouse {
 
@@ -15,7 +16,7 @@ class EventListenerMouseGui extends EventListenerMouse {
     }
 
     override def mouseDown(x: Int, y: Int, deltaX: Int, deltaY: Int, mouseButton: Int): Unit = {
-        println("(" + x + ", " + y + ") (" + deltaX + ", " + deltaY + ")")
+        println("(" + x + ", " + y + ") (" + deltaX + ", " + deltaY + ") | " + mouseButton)
     }
 
     override def onMouseDown(x: Int, y: Int, deltaX: Int, deltaY: Int, mouseButton: Int): Unit = {
@@ -24,6 +25,15 @@ class EventListenerMouseGui extends EventListenerMouse {
 
     override def onMouseUp(x: Int, y: Int, deltaX: Int, deltaY: Int, mouseButton: Int): Unit = {
         println("Mouse Up")
+        if(HyperScape.currentGameState != null)
+            if (HyperScape.currentGameState.currentGui != null) {
+                var i = 0
+                HyperScape.currentGameState.currentGui.elementList.foreach(elem => {
+                    if (elem.containsPoint(x, y) && mouseButton == Reference.Mouse.MOUSE_BUTTON_LEFT)
+                        HyperScape.currentGameState.currentGui.onClick(i)
+                    i += 1
+                })
+            }
     }
 
 }

@@ -31,4 +31,11 @@ object Reference {
         val FONT_HEIGHT = 8
     }
 
+    object Mouse {
+
+        val MOUSE_BUTTON_LEFT = 0
+
+        val MOUSE_BUTTON_RIGHT = 1
+    }
+
 }

@@ -49,11 +49,11 @@ class Shader(programId: Int, vertexId: Int, fragmentId: Int) {
      */
     def bind(): Unit = {
         GL20.glUseProgram(programId)
-        val err = GL11.glGetError()
-        if (err != 0) {
-            println("In Shader | " + err)
-            System.exit(1)
-        }
+//        val err = GL11.glGetError()
+//        if (err != 0) {
+//            println("In Shader | " + err)
+//            System.exit(1)
+//        }
     }
 
     /**

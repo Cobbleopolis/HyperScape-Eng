@@ -75,17 +75,11 @@ object ShaderRegistry {
         if (shaderName != currShader) {
             programs(shaderName).bind()
             currShader = shaderName
-            val err = GL11.glGetError()
-            if (err != 0) {
-                println("In Shader Registry Change | " + shaderName + " | " + err)
-                System.exit(1)
-            }
-        } else {
-            val err = GL11.glGetError()
-            if (err != 0) {
-                println("In Shader Registry No Change | " + shaderName + " | " + err)
-                System.exit(1)
-            }
+        }
+        val err = GL11.glGetError()
+        if (err != 0) {
+            println("In Shader Registry No Change | " + shaderName + " | " + err)
+            System.exit(12)
         }
     }
 

@@ -5,18 +5,14 @@ import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.util.vector.{Matrix4f, Vector3f}
 
+/**
+ * All elements should be added in the constructor.
+ */
 trait GuiScreen {
     
 
     /** A list of the element in the Gui **/
     var elementList: List[GuiButton] = List()
-
-    /**
-     * Called when the gui is supposed to be created
-     */
-    def initGui(): Unit = {
-
-    }
 
     /**
      * Renders the screen
@@ -32,6 +28,12 @@ trait GuiScreen {
         })
 
     }
+
+    /**
+     * Called when one of the elements in the Gui Screen is clicked
+     * @param elementIndex The index of the element that was clicked
+     */
+    def onClick(elementIndex: Int): Unit = {}
 
 
     /**
