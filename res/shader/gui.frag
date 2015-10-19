@@ -9,7 +9,7 @@ in vec4 pass_Color;
 out vec4 out_Color;
 
 void main() {
-    vec4 elemColor = vec4(elementColor, 0f);
+    vec4 elemColor = vec4(elementColor, 0);
     if (subtractColor == 0)
         out_Color =  pass_Color + elemColor;
     else
