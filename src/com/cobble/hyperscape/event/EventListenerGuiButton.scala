@@ -1,6 +1,6 @@
 package com.cobble.hyperscape.event
 
-class EventListenerMainButton extends EventListenerButton {
+class EventListenerGuiButton extends EventListenerButton {
 
     override def onButtonHold(button: Char, charVal: Int): Unit = {
         println(button + " | " + charVal)

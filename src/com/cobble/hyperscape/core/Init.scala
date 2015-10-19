@@ -1,6 +1,6 @@
 package com.cobble.hyperscape.core
 
-import com.cobble.hyperscape.event.{EventListenerMainButton, EventListenerMouseGui}
+import com.cobble.hyperscape.event.{EventListenerGuiButton, EventListenerMouseGui}
 import com.cobble.hyperscape.registry.{EventRegistry, ShaderRegistry, TextureRegistry}
 
 object Init {
@@ -49,7 +49,7 @@ object Init {
     def registerEventListeners(): Unit = {
         println("Registering Event Listeners...")
         EventRegistry.registerMouseEventListener(new EventListenerMouseGui)
-        EventRegistry.registerButtonEventListener(new EventListenerMainButton)
+        EventRegistry.registerButtonEventListener(new EventListenerGuiButton)
         println("Finished Registering Event Listeners")
     }
 }
