@@ -1,7 +1,9 @@
 package com.cobble.hyperscape.registry
 
+import java.awt.{Dimension, Canvas}
 import java.io.File
 import javax.imageio.ImageIO
+import javax.swing.{ImageIcon, JLabel, JFrame}
 
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl._
@@ -19,6 +21,16 @@ object TextureRegistry {
      */
     def loadTexture(pathToTexture: String, textureName: String): Unit = {
         val img = ImageIO.read(new File(pathToTexture))
+
+//        val frm = new JFrame()
+//        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
+//        val canvas = new JLabel()
+//        canvas.setPreferredSize(new Dimension(img.getWidth, img.getHeight))
+//        canvas.setIcon(new ImageIcon(img))
+//        frm.add(canvas)
+//        frm.pack()
+//        frm.setVisible(true)
+
         val rgb = new Array[Int](img.getWidth * img.getHeight * 4)
         img.getRGB(0, 0, img.getWidth, img.getHeight, rgb, 0, img.getWidth)
         val pixels = BufferUtils.createIntBuffer(rgb.length)

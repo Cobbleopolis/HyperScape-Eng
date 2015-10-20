@@ -14,14 +14,28 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
 
     val modelMatrix = new Matrix4f()
 
+    val PIX: Float = 0.1171875f
     val localVerts: Array[Array[Float]] = Array(
-        Array(0    , 0     , z , 0f, 1f, zIndex), //Bottom Left
-        Array(0    , height, z , 0f, 0f, zIndex), //Top Left
-        Array(width, height, z , 0f, 1f, zIndex), //Top Right
-        Array(width, 0     , z , 1f, 1f, zIndex)  //Bottom Right
+        Array(30    , 30     , z , PIX, 1 - PIX, zIndex), //Center Bottom Left
+        Array(30    , height - 30, z , PIX, PIX, zIndex), //Center Top Left
+        Array(width - 30, height - 30, z , 1 - PIX, PIX, zIndex), //Center Top Right
+        Array(width - 30, 30     , z , 1 - PIX, 1 - PIX, zIndex),  //Center Bottom Right
+
+        Array(0    , height - 30     , z , 0f, PIX, zIndex), //Left Top Bottom Left
+        Array(0    , height, z , 0f, 0f, zIndex), //Left Top Top Left
+        Array(30, height, z , PIX, 0f, zIndex), //Left Top Top Right
+        Array(30, height - 30     , z , PIX, PIX, zIndex),  //Left Top Bottom Right
+
+        Array(30    , height - 30     , z , PIX, 1 - PIX, zIndex), //Top Center Bottom Left
+        Array(30    , height, z , PIX, PIX, zIndex), //Top Center Top Left
+        Array(width - 30, height - 30, z , 1 - PIX, PIX, zIndex), //Top Center Top Right
+        Array(width - 30, 30     , z , 1 - PIX, 1 - PIX, zIndex)  //Top Center Bottom Right
+
     )
 
-    val order: Array[Int] = Array(0, 2, 1, 0, 3, 2)
+    val order: Array[Int] = Array(
+        0, 2, 1, 0, 3, 2,
+        4, 6, 5, 4, 7, 6)
 
     order.foreach(index => verts = verts ++ localVerts(index))
 
@@ -40,7 +54,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
     GL15.glBufferData(GL15.GL_ARRAY_BUFFER, HyperScape.uploadBuffer, GL15.GL_STATIC_DRAW)
 
     GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
-    GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.UV_OFFSET)
+    GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.TEXTURE_OFFSET)
     GL20.glVertexAttribPointer(2, Vertex.DROP_SHADOW_Z_INDEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.DROP_SHADOW_Z_INDEX_OFFSET)
 
     GL30.glBindVertexArray(0)
