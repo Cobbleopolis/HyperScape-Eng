@@ -23,20 +23,18 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
         x + width, y + height, 0f, color.getX, color.getY, color.getZ, 1.0f
     ) //new Array[Float](72)
     val fontModel = new FontModel(text, x + (width / 2) - (GLUtil.getFontWidth(text, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
-    val dropShadow = new DropShadowModel(x - 30, y - 30, width + 30, height + 30, 3)
+    val dropShadow = new DropShadowModel(x, y, width, height, 3)
     val guiModel = new GuiModel(verts)
 
     var isHilighted: Boolean = false
 
-    def containsPoint(x: Int, y: Int): Boolean = {
-        x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height
-    }
+    def containsPoint(x: Int, y: Int): Boolean = x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height
 
     def render(): Unit = {
         GLUtil.checkGLError()
-        dropShadow.render()
         fontModel.render()
-//        guiModel.render(isHilighted, isDown)
+        dropShadow.render()
+        guiModel.render(isHilighted, isDown)
     }
 
     def destroy(): Unit = {

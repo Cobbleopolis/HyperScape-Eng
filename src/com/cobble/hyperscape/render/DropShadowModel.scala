@@ -8,16 +8,16 @@ import org.lwjgl.util.vector.{Matrix4f, Vector2f}
 
 class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: Float) {
 
-    val z = 1f
+    val z = -1f
 
     var verts: Array[Float] = Array[Float]()
 
     val modelMatrix = new Matrix4f()
 
     val localVerts: Array[Array[Float]] = Array(
-        Array(0,     0     , z , 0f, 1f, zIndex), //Bottom Left
-        Array(0,     height, z , 0f, 0f, zIndex), //Top Left
-        Array(width, height, z , 1f, 0f, zIndex), //Top Right
+        Array(0    , 0     , z , 0f, 1f, zIndex), //Bottom Left
+        Array(0    , height, z , 0f, 0f, zIndex), //Top Left
+        Array(width, height, z , 0f, 1f, zIndex), //Top Right
         Array(width, 0     , z , 1f, 1f, zIndex)  //Bottom Right
     )
 
@@ -25,10 +25,12 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
 
     order.foreach(index => verts = verts ++ localVerts(index))
 
+    verts.grouped(Vertex.DROP_SHADOW_COUNT).foreach(o => println(o.mkString(", ")))
+
     val vbo = GL15.glGenBuffers()
     val vao = GL30.glGenVertexArrays()
 
-    modelMatrix.translate(new Vector2f(x, y))
+    modelMatrix.translate(new Vector2f(x, y - 30))
 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
@@ -37,9 +39,9 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
     GL15.glBufferData(GL15.GL_ARRAY_BUFFER, HyperScape.uploadBuffer, GL15.GL_STATIC_DRAW)
 
-    GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_Z_INDEX_SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
-    GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_Z_INDEX_SIZE_IN_BYTES, Vertex.UV_OFFSET)
-    GL20.glVertexAttribPointer(2, Vertex.DROP_SHADOW_Z_INDEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_Z_INDEX_SIZE_IN_BYTES, Vertex.DROP_SHADOW_Z_INDEX_OFFSET)
+    GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
+    GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.UV_OFFSET)
+    GL20.glVertexAttribPointer(2, Vertex.DROP_SHADOW_Z_INDEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.DROP_SHADOW_Z_INDEX_OFFSET)
 
     GL30.glBindVertexArray(0)
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
@@ -54,7 +56,8 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
         HyperScape.mainCamera.uploadView()
         GLUtil.uploadModelMatrix(modelMatrix)
         TextureRegistry.bindTexture("dropShadow")
-        GL11.glDisable(GL11.GL_CULL_FACE)
+        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+        GL11.glEnable(GL11.GL_BLEND)
         // Bind to the VAO that has all the information about the quad vertices
         GL30.glBindVertexArray(vao)
         GL20.glEnableVertexAttribArray(0)
@@ -71,6 +74,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
         GL20.glDisableVertexAttribArray(1)
         GL20.glDisableVertexAttribArray(2)
         GL30.glBindVertexArray(0)
+        GL11.glDisable(GL11.GL_BLEND)
         GLUtil.checkGLError()
     }
 
