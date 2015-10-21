@@ -1,6 +1,7 @@
 package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
+import com.cobble.hyperscape.registry.ShaderRegistry
 import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
 import org.lwjgl.util.vector.Matrix4f
 
@@ -36,8 +37,7 @@ class TexturedGuiRenderModel(verts: Array[Float]) {
     def render(drawLines: Boolean = false): Unit = {
         // Bind to the VAO that has all the information about the quad vertices
         GL30.glBindVertexArray(vao)
-        GL20.glEnableVertexAttribArray(0)
-        GL20.glEnableVertexAttribArray(1)
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
 
         // Draw the vertices
@@ -45,8 +45,7 @@ class TexturedGuiRenderModel(verts: Array[Float]) {
         //        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
 
         // Put everything back to default (deselect)
-        GL20.glDisableVertexAttribArray(0)
-        GL20.glDisableVertexAttribArray(1)
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
         GL30.glBindVertexArray(0)
     }
 
@@ -55,8 +54,9 @@ class TexturedGuiRenderModel(verts: Array[Float]) {
      * Destroys the model
      */
     def destroy(): Unit = {
+        GL30.glBindVertexArray(vao)
         // Disable the VBO index from the VAO attributes list
-        GL20.glDisableVertexAttribArray(0)
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
 
         // Delete the VBO
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)

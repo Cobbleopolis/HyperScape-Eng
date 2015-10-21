@@ -18,6 +18,11 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
     println("Creating Font Model...")
     val vao = GL30.glGenVertexArrays()
 
+    val vbo = GL15.glGenBuffers()
+    modelMatrix.translate(new Vector2f(x, y))
+
+    var i = 0
+
     text.foreach(char => {
         val charVal = Math.min(char.asInstanceOf[Int], 255)
         val xLoc: Int = charVal % 16
@@ -46,14 +51,13 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
         order.foreach(index => verts = verts ++ localVerts(index))
         i += 1
     })
-    val vbo = GL15.glGenBuffers()
-    modelMatrix.translate(new Vector2f(x, y))
+
 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
     HyperScape.uploadBuffer.flip()
     GL30.glBindVertexArray(vao)
-    var i = 0
+
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
     GL15.glBufferData(GL15.GL_ARRAY_BUFFER, HyperScape.uploadBuffer, GL15.GL_STATIC_DRAW)
 
@@ -90,8 +94,7 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
         TextureRegistry.bindTexture("font")
         // Bind to the VAO that has all the information about the quad vertices
         GL30.glBindVertexArray(vao)
-        GL20.glEnableVertexAttribArray(0)
-        GL20.glEnableVertexAttribArray(1)
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
 
         // Draw the vertices
@@ -99,10 +102,8 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
         //        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
 
         // Put everything back to default (deselect)
-        GL20.glDisableVertexAttribArray(0)
-        GL20.glDisableVertexAttribArray(1)
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
         GL30.glBindVertexArray(0)
-        GLUtil.checkGLError()
     }
 
 
@@ -110,8 +111,9 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
      * Destroys the model
      */
     def destroy(): Unit = {
+        GL30.glBindVertexArray(vao)
         // Disable the VBO index from the VAO attributes list
-        GL20.glDisableVertexAttribArray(0)
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
 
         // Delete the VBO
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)

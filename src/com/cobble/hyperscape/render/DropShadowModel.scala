@@ -79,7 +79,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
 
     order.foreach(index => verts = verts ++ localVerts(index))
 
-    verts.grouped(Vertex.DROP_SHADOW_COUNT).foreach(o => println(o.mkString(", ")))
+//    verts.grouped(Vertex.DROP_SHADOW_COUNT).foreach(o => println(o.mkString(", ")))
 
     val vbo = GL15.glGenBuffers()
     val vao = GL30.glGenVertexArrays()
@@ -119,9 +119,10 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
 //        GL11.glDisable(GL11.GL_CULL_FACE)
         // Bind to the VAO that has all the information about the quad vertices
         GL30.glBindVertexArray(vao)
-        GL20.glEnableVertexAttribArray(0)
-        GL20.glEnableVertexAttribArray(1)
-//        GL20.glEnableVertexAttribArray(2)
+
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
+
+        //        GL20.glEnableVertexAttribArray(2)
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
 
         // Draw the vertices
@@ -129,12 +130,11 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
         //        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
 
         // Put everything back to default (deselect)
-        GL20.glDisableVertexAttribArray(0)
-        GL20.glDisableVertexAttribArray(1)
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
+
 //        GL20.glDisableVertexAttribArray(2)
         GL30.glBindVertexArray(0)
         GL11.glDisable(GL11.GL_BLEND)
-        GLUtil.checkGLError()
     }
 
     /**
@@ -142,7 +142,8 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
      */
     def destroy(): Unit = {
         // Disable the VBO index from the VAO attributes list
-        GL20.glDisableVertexAttribArray(0)
+        GL30.glBindVertexArray(vao)
+        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
 
         // Delete the VBO
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
