@@ -21,9 +21,11 @@ class GuiMainMenu extends GuiScreen {
             if (elementList.size < 3)
                 elementList = elementList :+ woah
             else
-                elementList(2).changeText("You clicked a button")
-        if (elementIndex == 2)
+                woah.changeText("You clicked a button")
+        if (elementIndex == 2) {
+            woah.changeText("WOAH A NEW BUTTON!")
             elementList = elementList.dropRight(1)
+        }
 
         GLUtil.checkGLError()
     }
