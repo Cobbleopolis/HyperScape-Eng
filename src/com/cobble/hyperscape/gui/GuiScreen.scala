@@ -14,6 +14,9 @@ trait GuiScreen {
     /** A list of the element in the Gui **/
     var elementList: List[GuiButton] = List()
 
+    /** The name of the GUI displayed at the top of the GUI **/
+    var name: String
+
     /**
      * Renders the screen
      */
