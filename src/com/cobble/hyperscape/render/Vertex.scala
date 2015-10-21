@@ -59,7 +59,7 @@ object Vertex {
 
     //Drop Shadow
 
-    val DROP_SHADOW_COUNT = 6
+    val DROP_SHADOW_COUNT = 5
 
     val DROP_SHADOW_SIZE_IN_BYTES = DROP_SHADOW_COUNT * BYTES_IN_FLOAT
 

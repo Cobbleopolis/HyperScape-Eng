@@ -18,50 +18,50 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
     val fadeSize: Float = 10f
 
     val localVerts: Array[Array[Float]] = Array(
-        Array(fadeSize         , fadeSize          , z , PIX      , 1f - PIX , zIndex), //Center Bottom Left
-        Array(fadeSize         , height - fadeSize , z , PIX      , PIX      , zIndex), //Center Top Left
-        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX      , zIndex), //Center Top Right
-        Array(width - fadeSize , fadeSize          , z , 1f - PIX , 1f - PIX , zIndex),  //Center Bottom Right
+        Array(fadeSize         , fadeSize          , z , PIX      , 1f - PIX ), //Center Bottom Left
+        Array(fadeSize         , height - fadeSize , z , PIX      , PIX      ), //Center Top Left
+        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX      ), //Center Top Right
+        Array(width - fadeSize , fadeSize          , z , 1f - PIX , 1f - PIX ),  //Center Bottom Right
 
-        Array(0f       , height - fadeSize , z , 0f  , PIX , zIndex), //Left Top Bottom Left
-        Array(0f       , height            , z , 0f  , 0f  , zIndex), //Left Top Top Left
-        Array(fadeSize , height            , z , PIX , 0f  , zIndex), //Left Top Top Right
-        Array(fadeSize , height - fadeSize , z , PIX , PIX , zIndex),  //Left Top Bottom Right
+        Array(0f       , height - fadeSize , z , 0f  , PIX ), //Left Top Bottom Left
+        Array(0f       , height            , z , 0f  , 0f  ), //Left Top Top Left
+        Array(fadeSize , height            , z , PIX , 0f  ), //Left Top Top Right
+        Array(fadeSize , height - fadeSize , z , PIX , PIX ),  //Left Top Bottom Right
 
-        Array(fadeSize         , height - fadeSize , z , PIX      , PIX , zIndex), //Top Center Bottom Left
-        Array(fadeSize         , height            , z , PIX      , 0f  , zIndex), //Top Center Top Left
-        Array(width - fadeSize , height            , z , 1f - PIX , 0f  , zIndex), //Top Center Top Right
-        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX , zIndex),  //Top Center Bottom Right
+        Array(fadeSize         , height - fadeSize , z , PIX      , PIX ), //Top Center Bottom Left
+        Array(fadeSize         , height            , z , PIX      , 0f  ), //Top Center Top Left
+        Array(width - fadeSize , height            , z , 1f - PIX , 0f  ), //Top Center Top Right
+        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX ),  //Top Center Bottom Right
 
-        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX , zIndex), //Right Top Bottom Left
-        Array(fadeSize         , height            , z , PIX      , 0f  , zIndex), //Right Top Top Left
-        Array(width            , height            , z , 1f       , 0f  , zIndex), //Right Top Top Right
-        Array(width            , height - fadeSize , z , 1f       , PIX , zIndex),  //Right Top Bottom Right
+        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX ), //Right Top Bottom Left
+        Array(fadeSize         , height            , z , PIX      , 0f  ), //Right Top Top Left
+        Array(width            , height            , z , 1f       , 0f  ), //Right Top Top Right
+        Array(width            , height - fadeSize , z , 1f       , PIX ),  //Right Top Bottom Right
 
-        Array(width - fadeSize , fadeSize          , z , 1f - PIX , 1f - PIX , zIndex), //Right Center Bottom Left
-        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX      , zIndex), //Right Center Top Left
-        Array(width            , height            , z , 1f       , 0f       , zIndex), //Right Center Top Right
-        Array(width            , fadeSize          , z , 1f       , 1f - PIX , zIndex),  //Right Center Bottom Right
+        Array(width - fadeSize , fadeSize          , z , 1f - PIX , 1f - PIX ), //Right Center Bottom Left
+        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX      ), //Right Center Top Left
+        Array(width            , height            , z , 1f       , 0f       ), //Right Center Top Right
+        Array(width            , fadeSize          , z , 1f       , 1f - PIX ),  //Right Center Bottom Right
 
-        Array(width - fadeSize , 0f       , z , 1f - PIX , 1f       , zIndex), //Right Bottom Bottom Left
-        Array(width - fadeSize , fadeSize , z , 1f - PIX , 1f - PIX , zIndex), //Right Bottom Top Left
-        Array(width            , fadeSize , z , 1f       , 1f - PIX , zIndex), //Right Bottom Top Right
-        Array(width            , 0f       , z , 1f       , 1f       , zIndex), //Right Bottom Bottom Right
+        Array(width - fadeSize , 0f       , z , 1f - PIX , 1f       ), //Right Bottom Bottom Left
+        Array(width - fadeSize , fadeSize , z , 1f - PIX , 1f - PIX ), //Right Bottom Top Left
+        Array(width            , fadeSize , z , 1f       , 1f - PIX ), //Right Bottom Top Right
+        Array(width            , 0f       , z , 1f       , 1f       ), //Right Bottom Bottom Right
 
-        Array(fadeSize         , 0f       , z , 1f - PIX , 1f       , zIndex), //Center Bottom Bottom Left
-        Array(fadeSize         , fadeSize , z , PIX      , 1f - PIX , zIndex), //Center Bottom Top Left
-        Array(width - fadeSize , fadeSize , z , 1f - PIX , 1f - PIX , zIndex), //Center Bottom Top Right
-        Array(width - fadeSize , 0f       , z , 1f - PIX , 1f       , zIndex),  //Center Bottom Bottom Right
+        Array(fadeSize         , 0f       , z , 1f - PIX , 1f       ), //Center Bottom Bottom Left
+        Array(fadeSize         , fadeSize , z , PIX      , 1f - PIX ), //Center Bottom Top Left
+        Array(width - fadeSize , fadeSize , z , 1f - PIX , 1f - PIX ), //Center Bottom Top Right
+        Array(width - fadeSize , 0f       , z , 1f - PIX , 1f       ),  //Center Bottom Bottom Right
 
-        Array(0f       , 0f       , z , 0f  , 1f       , zIndex), //Left Bottom Bottom Left
-        Array(0f       , fadeSize , z , 0f  , 1f - PIX , zIndex), //Left Bottom Top Left
-        Array(fadeSize , fadeSize , z , PIX , 1f - PIX , zIndex), //Left Bottom Top Right
-        Array(fadeSize , 0f       , z , PIX , 1f       , zIndex), //Left Bottom Bottom Right
+        Array(0f       , 0f       , z , 0f  , 1f       ), //Left Bottom Bottom Left
+        Array(0f       , fadeSize , z , 0f  , 1f - PIX ), //Left Bottom Top Left
+        Array(fadeSize , fadeSize , z , PIX , 1f - PIX ), //Left Bottom Top Right
+        Array(fadeSize , 0f       , z , PIX , 1f       ), //Left Bottom Bottom Right
 
-        Array(0f       , fadeSize          , z , 0f  , 1f - PIX , zIndex), //Right Center Bottom Left
-        Array(0f       , height - fadeSize , z , 0f  , PIX      , zIndex), //Right Center Top Left
-        Array(fadeSize , height - fadeSize , z , PIX , PIX      , zIndex), //Right Center Top Right
-        Array(fadeSize , fadeSize          , z , PIX , PIX      , zIndex) //Right Center Bottom Right
+        Array(0f       , fadeSize          , z , 0f  , 1f - PIX ), //Right Center Bottom Left
+        Array(0f       , height - fadeSize , z , 0f  , PIX      ), //Right Center Top Left
+        Array(fadeSize , height - fadeSize , z , PIX , PIX      ), //Right Center Top Right
+        Array(fadeSize , fadeSize          , z , PIX , PIX      ) //Right Center Bottom Right
 
     )
 
@@ -74,7 +74,8 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
         20, 22, 21, 20, 23, 22,
         24, 26, 25, 24, 27, 26,
         28, 30, 29, 28, 31, 30,
-        32, 34, 33, 32, 35, 34)
+        32, 34, 33, 32, 35, 34
+    )
 
     order.foreach(index => verts = verts ++ localVerts(index))
 
@@ -94,7 +95,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
 
     GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
     GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.TEXTURE_OFFSET)
-    GL20.glVertexAttribPointer(2, Vertex.DROP_SHADOW_Z_INDEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.DROP_SHADOW_Z_INDEX_OFFSET)
+//    GL20.glVertexAttribPointer(2, Vertex.DROP_SHADOW_Z_INDEX_SIZE, GL11.GL_FLOAT, false, Vertex.DROP_SHADOW_SIZE_IN_BYTES, Vertex.DROP_SHADOW_Z_INDEX_OFFSET)
 
     GL30.glBindVertexArray(0)
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
@@ -111,12 +112,16 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
         TextureRegistry.bindTexture("dropShadow")
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GL11.glEnable(GL11.GL_BLEND)
-        GL11.glDisable(GL11.GL_CULL_FACE)
+
+        val loc = ShaderRegistry.getCurrentShader.getUniformLocation("zIndex")
+        GL20.glUniform1f(loc, zIndex)
+
+//        GL11.glDisable(GL11.GL_CULL_FACE)
         // Bind to the VAO that has all the information about the quad vertices
         GL30.glBindVertexArray(vao)
         GL20.glEnableVertexAttribArray(0)
         GL20.glEnableVertexAttribArray(1)
-        GL20.glEnableVertexAttribArray(2)
+//        GL20.glEnableVertexAttribArray(2)
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
 
         // Draw the vertices
@@ -126,7 +131,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
         // Put everything back to default (deselect)
         GL20.glDisableVertexAttribArray(0)
         GL20.glDisableVertexAttribArray(1)
-        GL20.glDisableVertexAttribArray(2)
+//        GL20.glDisableVertexAttribArray(2)
         GL30.glBindVertexArray(0)
         GL11.glDisable(GL11.GL_BLEND)
         GLUtil.checkGLError()
