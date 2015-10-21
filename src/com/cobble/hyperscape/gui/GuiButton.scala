@@ -6,7 +6,7 @@ import org.lwjgl.util.vector.Vector3f
 
 /**
  * Used by GUI's to render buttons
- * @param text The text displayed on the button
+ * @param text The original text displayed on the button
  * @param x The x location of the button (default is 0)
  * @param y The y location of the button (default is 0)
  * @param height The height of the button (default is 0.2)
@@ -22,7 +22,8 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
         x + width, y, 0f, color.getX, color.getY, color.getZ, 1.0f,
         x + width, y + height, 0f, color.getX, color.getY, color.getZ, 1.0f
     ) //new Array[Float](72)
-    val fontModel = new FontModel(text, x + (width / 2) - (GLUtil.getFontWidth(text, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
+    var displayText: String = text
+    var fontModel = new FontModel(displayText, x + (width / 2) - (GLUtil.getFontWidth(displayText, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
     val dropShadow = new DropShadowModel(x - 10, y - 10, width + 20, height + 20, 3)
     val guiModel = new GuiModel(verts)
 
@@ -41,6 +42,17 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
         dropShadow.destroy()
         guiModel.destroy()
         fontModel.destroy()
+    }
+
+    /**
+     * Changes the button text
+     * Note: This will not change the size og the button. If the button's size needs to change, create a new one and destroy this one.
+     * @param text The new text to be displayed by the button
+     */
+    def changeText(text: String): Unit = {
+        fontModel.destroy()
+        displayText = text
+        fontModel = new FontModel(displayText, x + (width / 2) - (GLUtil.getFontWidth(displayText, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
     }
 
 }
