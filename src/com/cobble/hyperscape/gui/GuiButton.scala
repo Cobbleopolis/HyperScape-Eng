@@ -22,8 +22,14 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
         x + width, y, 0f, color.getX, color.getY, color.getZ, 1.0f,
         x + width, y + height, 0f, color.getX, color.getY, color.getZ, 1.0f
     ) //new Array[Float](72)
+
+//    var displayText: String = ""
+//    var fontModel: FontModel = null
+//    changeText(text)
+
     var displayText: String = text
     var fontModel = new FontModel(displayText, x + (width / 2) - (GLUtil.getFontWidth(displayText, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
+
     val dropShadow = new DropShadowModel(x - 10, y - 10, width + 20, height + 20, 3)
     val guiModel = new GuiModel(verts)
 
@@ -32,9 +38,8 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
     def containsPoint(x: Int, y: Int): Boolean = x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height
 
     def render(): Unit = {
-        GLUtil.checkGLError()
-        fontModel.render()
         dropShadow.render()
+        fontModel.render()
         guiModel.render(isHilighted, isDown)
     }
 
@@ -50,7 +55,7 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
      * @param text The new text to be displayed by the button
      */
     def changeText(text: String): Unit = {
-        fontModel.destroy()
+        if (fontModel != null) fontModel.destroy()
         displayText = text
         fontModel = new FontModel(displayText, x + (width / 2) - (GLUtil.getFontWidth(displayText, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
     }
