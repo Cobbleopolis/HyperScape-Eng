@@ -45,13 +45,14 @@ object GLUtil {
 
     /**
      * Checks if there is an error on the graphics card
-     * @param exit The game will exit if this is set to true. Default is false
+     * @param prependedText The text that will be prepended when printing
+     * @param exit The game will exit if this is set to true and there is an error. Default is false
      */
-    def checkGLError(exit: Boolean = false): Unit = {
+    def checkGLError(prependedText: String, exit: Boolean = false): Unit = {
         val err = GL11.glGetError()
         if (err != 0) {
-            println("Error in shader " + ShaderRegistry.getCurrentShader + " | " + err)
-            if (exit) System.exit(1)
+            println(prependedText + " | Error in shader " + ShaderRegistry.getCurrentShader + " | " + err)
+//            if (exit) System.exit(1)
         }
     }
 
