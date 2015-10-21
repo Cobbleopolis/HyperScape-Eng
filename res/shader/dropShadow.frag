@@ -1,6 +1,7 @@
 #version 330 core
 
 uniform sampler2D texture_diffuse;
+uniform float in_zIndex;
 
 in vec2 pass_TextureCoord;
 
