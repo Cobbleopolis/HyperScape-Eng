@@ -1,6 +1,6 @@
 package com.cobble.hyperscape.render
 
-import org.lwjgl.opengl.{GL11, GL20}
+import org.lwjgl.opengl.GL20
 
 /**
  * Creates a shader object

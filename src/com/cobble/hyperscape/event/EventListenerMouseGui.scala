@@ -1,7 +1,6 @@
 package com.cobble.hyperscape.event
 
 import com.cobble.hyperscape.core.HyperScape
-import com.cobble.hyperscape.gui.GuiButton
 import com.cobble.hyperscape.reference.Reference
 
 class EventListenerMouseGui extends EventListenerMouse {

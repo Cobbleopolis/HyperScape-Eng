@@ -2,7 +2,6 @@ package com.cobble.hyperscape.core.gamestate
 
 import com.cobble.hyperscape.gui.GuiScreen
 import com.cobble.hyperscape.registry.ShaderRegistry
-import com.cobble.hyperscape.util.GLUtil
 
 trait GameState {
 

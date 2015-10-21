@@ -1,10 +1,10 @@
 package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
-import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
+import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
 import com.cobble.hyperscape.util.GLUtil
-import org.lwjgl.opengl.{GL11, GL20, GL30, GL15}
-import org.lwjgl.util.vector.{Vector3f, Matrix4f, Vector2f}
+import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
+import org.lwjgl.util.vector.{Matrix4f, Vector2f}
 
 class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: Float) {
 

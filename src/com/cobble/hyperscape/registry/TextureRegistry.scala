@@ -1,9 +1,7 @@
 package com.cobble.hyperscape.registry
 
-import java.awt.{Dimension, Canvas}
 import java.io.File
 import javax.imageio.ImageIO
-import javax.swing.{ImageIcon, JLabel, JFrame}
 
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl._
