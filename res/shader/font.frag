@@ -8,8 +8,7 @@ out vec4 out_Color;
 
 void main() {
     out_Color = texture(texture_diffuse, pass_TextureCoord);
-    if (out_Color.a < 1.0) {
+    if (out_Color.a < 1.0)
         discard;
-    }
 //    out_Color = vec4(1.0, 1.0, 1.0, 1.0);
 }
