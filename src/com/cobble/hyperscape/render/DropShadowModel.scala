@@ -4,7 +4,7 @@ import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
 import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.opengl.{GL11, GL20, GL30, GL15}
-import org.lwjgl.util.vector.{Matrix4f, Vector2f}
+import org.lwjgl.util.vector.{Vector3f, Matrix4f, Vector2f}
 
 class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: Float) {
 
@@ -15,27 +15,66 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
     val modelMatrix = new Matrix4f()
 
     val PIX: Float = 0.1171875f
+    val fadeSize: Float = 10f
+
     val localVerts: Array[Array[Float]] = Array(
-        Array(30    , 30     , z , PIX, 1 - PIX, zIndex), //Center Bottom Left
-        Array(30    , height - 30, z , PIX, PIX, zIndex), //Center Top Left
-        Array(width - 30, height - 30, z , 1 - PIX, PIX, zIndex), //Center Top Right
-        Array(width - 30, 30     , z , 1 - PIX, 1 - PIX, zIndex),  //Center Bottom Right
+        Array(fadeSize         , fadeSize          , z , PIX      , 1f - PIX , zIndex), //Center Bottom Left
+        Array(fadeSize         , height - fadeSize , z , PIX      , PIX      , zIndex), //Center Top Left
+        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX      , zIndex), //Center Top Right
+        Array(width - fadeSize , fadeSize          , z , 1f - PIX , 1f - PIX , zIndex),  //Center Bottom Right
 
-        Array(0    , height - 30     , z , 0f, PIX, zIndex), //Left Top Bottom Left
-        Array(0    , height, z , 0f, 0f, zIndex), //Left Top Top Left
-        Array(30, height, z , PIX, 0f, zIndex), //Left Top Top Right
-        Array(30, height - 30     , z , PIX, PIX, zIndex),  //Left Top Bottom Right
+        Array(0f       , height - fadeSize , z , 0f  , PIX , zIndex), //Left Top Bottom Left
+        Array(0f       , height            , z , 0f  , 0f  , zIndex), //Left Top Top Left
+        Array(fadeSize , height            , z , PIX , 0f  , zIndex), //Left Top Top Right
+        Array(fadeSize , height - fadeSize , z , PIX , PIX , zIndex),  //Left Top Bottom Right
 
-        Array(30    , height - 30     , z , PIX, 1 - PIX, zIndex), //Top Center Bottom Left
-        Array(30    , height, z , PIX, PIX, zIndex), //Top Center Top Left
-        Array(width - 30, height - 30, z , 1 - PIX, PIX, zIndex), //Top Center Top Right
-        Array(width - 30, 30     , z , 1 - PIX, 1 - PIX, zIndex)  //Top Center Bottom Right
+        Array(fadeSize         , height - fadeSize , z , PIX      , PIX , zIndex), //Top Center Bottom Left
+        Array(fadeSize         , height            , z , PIX      , 0f  , zIndex), //Top Center Top Left
+        Array(width - fadeSize , height            , z , 1f - PIX , 0f  , zIndex), //Top Center Top Right
+        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX , zIndex),  //Top Center Bottom Right
+
+        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX , zIndex), //Right Top Bottom Left
+        Array(fadeSize         , height            , z , PIX      , 0f  , zIndex), //Right Top Top Left
+        Array(width            , height            , z , 1f       , 0f  , zIndex), //Right Top Top Right
+        Array(width            , height - fadeSize , z , 1f       , PIX , zIndex),  //Right Top Bottom Right
+
+        Array(width - fadeSize , fadeSize          , z , 1f - PIX , 1f - PIX , zIndex), //Right Center Bottom Left
+        Array(width - fadeSize , height - fadeSize , z , 1f - PIX , PIX      , zIndex), //Right Center Top Left
+        Array(width            , height            , z , 1f       , 0f       , zIndex), //Right Center Top Right
+        Array(width            , fadeSize          , z , 1f       , 1f - PIX , zIndex),  //Right Center Bottom Right
+
+        Array(width - fadeSize , 0f       , z , 1f - PIX , 1f       , zIndex), //Right Bottom Bottom Left
+        Array(width - fadeSize , fadeSize , z , 1f - PIX , 1f - PIX , zIndex), //Right Bottom Top Left
+        Array(width            , fadeSize , z , 1f       , 1f - PIX , zIndex), //Right Bottom Top Right
+        Array(width            , 0f       , z , 1f       , 1f       , zIndex), //Right Bottom Bottom Right
+
+        Array(fadeSize         , 0f       , z , 1f - PIX , 1f       , zIndex), //Center Bottom Bottom Left
+        Array(fadeSize         , fadeSize , z , PIX      , 1f - PIX , zIndex), //Center Bottom Top Left
+        Array(width - fadeSize , fadeSize , z , 1f - PIX , 1f - PIX , zIndex), //Center Bottom Top Right
+        Array(width - fadeSize , 0f       , z , 1f - PIX , 1f       , zIndex),  //Center Bottom Bottom Right
+
+        Array(0f       , 0f       , z , 0f  , 1f       , zIndex), //Left Bottom Bottom Left
+        Array(0f       , fadeSize , z , 0f  , 1f - PIX , zIndex), //Left Bottom Top Left
+        Array(fadeSize , fadeSize , z , PIX , 1f - PIX , zIndex), //Left Bottom Top Right
+        Array(fadeSize , 0f       , z , PIX , 1f       , zIndex), //Left Bottom Bottom Right
+
+        Array(0f       , fadeSize          , z , 0f  , 1f - PIX , zIndex), //Right Center Bottom Left
+        Array(0f       , height - fadeSize , z , 0f  , PIX      , zIndex), //Right Center Top Left
+        Array(fadeSize , height - fadeSize , z , PIX , PIX      , zIndex), //Right Center Top Right
+        Array(fadeSize , fadeSize          , z , PIX , PIX      , zIndex) //Right Center Bottom Right
 
     )
 
     val order: Array[Int] = Array(
         0, 2, 1, 0, 3, 2,
-        4, 6, 5, 4, 7, 6)
+        4, 6, 5, 4, 7, 6,
+        8, 10, 9, 8, 11, 10,
+        12, 14, 13, 12, 15, 14,
+        16, 18, 17, 16, 19, 18,
+        20, 22, 21, 20, 23, 22,
+        24, 26, 25, 24, 27, 26,
+        28, 30, 29, 28, 31, 30,
+        32, 34, 33, 32, 35, 34)
 
     order.foreach(index => verts = verts ++ localVerts(index))
 
@@ -44,7 +83,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
     val vbo = GL15.glGenBuffers()
     val vao = GL30.glGenVertexArrays()
 
-    modelMatrix.translate(new Vector2f(x, y - 30))
+    modelMatrix.translate(new Vector2f(x, y - Math.max(zIndex, fadeSize)))//.scale(new Vector3f(zIndex))
 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
@@ -72,6 +111,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
         TextureRegistry.bindTexture("dropShadow")
         GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
         GL11.glEnable(GL11.GL_BLEND)
+        GL11.glDisable(GL11.GL_CULL_FACE)
         // Bind to the VAO that has all the information about the quad vertices
         GL30.glBindVertexArray(vao)
         GL20.glEnableVertexAttribArray(0)
