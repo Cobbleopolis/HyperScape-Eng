@@ -40,7 +40,9 @@ object ShaderRegistry {
             System.out.println("ERROR - Could not create the shaders: " + Integer.toHexString(errorCheckValue))
             System.exit(-1)
         }
-        programs += (shaderName -> new Shader(pId, vsId, fsId))
+        val newShader = new Shader(pId, vsId, fsId)
+        newShader.inputs = atribLocation
+        programs += (shaderName -> newShader)
         println("\tShader Id | " + shaderName + " | " + pId + ", " + vsId + ", " + fsId)
         val shader = programs(shaderName)
         println("\t\tShader | " + shader.getProgramId + ", " + shader.getVertexId + ", " + shader.getFragmentId)

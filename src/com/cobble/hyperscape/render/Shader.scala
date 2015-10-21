@@ -11,6 +11,8 @@ import org.lwjgl.opengl.GL20
 class Shader(programId: Int, vertexId: Int, fragmentId: Int) {
     var uniformLocations: Map[String, Int] = Map() /** Map of the uniform locations for the shader */
 
+    var inputs: Array[(Int, String)] = Array()
+
     /**
      * Returns the location for the uniform location
      * @param name Name of the uniform variable
