@@ -5,11 +5,11 @@ import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
 import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
-import org.lwjgl.util.vector.{Matrix4f, Vector2f}
+import org.lwjgl.util.vector.{Vector3f, Vector4f, Matrix4f, Vector2f}
 
 //6 * 8
 //0.0625
-class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float = 0.5f) {
+class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float = 0.5f, color: Vector3f = new Vector3f(1.0f, 1.0f, 1.0f)) {
 
     val modelMatrix = new Matrix4f()
 
@@ -40,10 +40,10 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
 
         val xOff = width * i
         val localVerts: Array[Array[Float]] = Array(
-            Array(xOff, 0, zIndex, UVx, UVy + UV), //Bottom Left
-            Array(xOff, height, zIndex, UVx, UVy), //Top Left
-            Array(xOff + width, height, zIndex, UVx + UV, UVy), //Top Right
-            Array(xOff + width, 0, zIndex, UVx + UV, UVy + UV) //Bottom Right
+            Array(xOff         , 0      , zIndex, UVx      , UVy + UV , color.getX, color.getY, color.getZ), //Bottom Left
+            Array(xOff         , height , zIndex, UVx      , UVy      , color.getX, color.getY, color.getZ), //Top Left
+            Array(xOff + width , height , zIndex, UVx + UV , UVy      , color.getX, color.getY, color.getZ), //Top Right
+            Array(xOff + width , 0      , zIndex, UVx + UV , UVy + UV , color.getX, color.getY, color.getZ)  //Bottom Right
         )
 
         val order: Array[Int] = Array(0, 2, 1, 0, 3, 2)
@@ -51,6 +51,8 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
         order.foreach(index => verts = verts ++ localVerts(index))
         i += 1
     })
+
+//    verts.grouped(Vertex.FONT_ELEMENT_COUNT).foreach(i => println(i.mkString(", ")))
 
 
     HyperScape.uploadBuffer.clear()
@@ -61,8 +63,9 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
     GL15.glBufferData(GL15.GL_ARRAY_BUFFER, HyperScape.uploadBuffer, GL15.GL_STATIC_DRAW)
 
-    GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.TEXTURE_VERTEX_SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
-    GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.TEXTURE_VERTEX_SIZE_IN_BYTES, Vertex.TEXTURE_OFFSET)
+    GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.FONT_VERTEX_SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
+    GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.FONT_VERTEX_SIZE_IN_BYTES, Vertex.TEXTURE_OFFSET)
+    GL20.glVertexAttribPointer(2, Vertex.FONT_COLOR_SIZE, GL11.GL_FLOAT, false, Vertex.FONT_VERTEX_SIZE_IN_BYTES, Vertex.FONT_COLOR_OFFSET)
 
     GL30.glBindVertexArray(0)
     GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
