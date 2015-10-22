@@ -54,7 +54,6 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
 
 //    verts.grouped(Vertex.FONT_ELEMENT_COUNT).foreach(i => println(i.mkString(", ")))
 
-
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
     HyperScape.uploadBuffer.flip()
