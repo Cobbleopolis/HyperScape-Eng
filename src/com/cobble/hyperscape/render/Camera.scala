@@ -32,7 +32,7 @@ class Camera {
         } else {
             val width = Display.getWidth / VirtualResolution.getScale
             val height = Display.getHeight / VirtualResolution.getScale
-            orthographicFrustum(-width / 2, width / 2, -height / 2, height / 2, -1f, 25f)
+            orthographicFrustum(-width / 2, width / 2, -height / 2, height / 2, -2f, 25f)
         }
     }
 
