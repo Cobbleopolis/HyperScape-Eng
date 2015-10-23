@@ -1,6 +1,7 @@
 package com.cobble.hyperscape.core.gamestate
 
 import com.cobble.hyperscape.gui.Guis
+import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.render.RenderModel
 
 class GameStateMainMenu extends GameState {
@@ -28,6 +29,7 @@ class GameStateMainMenu extends GameState {
         super.changeTo()
         model = new RenderModel(modelArray)
         changeGui(Guis.guiMainMenu)
+//        ShaderRegistry.getShader("font").inputs.foreach(input => println("(" + input._1 + ", " + input._2 + ")"))
 //        println("Main Menu " + (currentGui == null))
     }
 

@@ -93,6 +93,10 @@ object ShaderRegistry {
         programs(currShader)
     }
 
+    def getShader(shaderName: String): Shader = {
+        programs(shaderName)
+    }
+
     /**
      * Destroys all loaded shaders
      */

@@ -24,7 +24,7 @@ object Vertex {
     val VERTEX_OFFSET = 0
 
     /** The offset for the UV elements in bytes */
-    val UV_OFFSET_IN_BYTES = 3 * BYTES_IN_FLOAT
+    val UV_OFFSET_IN_BYTES = UV_OFFSET * BYTES_IN_FLOAT
 
     /** The offset for the normal in bytes */
     val NORMAL_OFFSET_IN_BYTES = 5 * BYTES_IN_FLOAT
@@ -56,6 +56,19 @@ object Vertex {
 
     /** The offset for texture in bytes */
     val TEXTURE_OFFSET = VERTEX_SIZE * BYTES_IN_FLOAT
+
+
+    //Font
+
+    /** The amount of elements in a font vertex **/
+    val FONT_ELEMENT_COUNT = 8
+
+    val FONT_COLOR_OFFSET = (VERTEX_SIZE + UV_SIZE) * BYTES_IN_FLOAT
+
+    /** The size of a vertex in bytes **/
+    val FONT_VERTEX_SIZE_IN_BYTES = FONT_ELEMENT_COUNT * BYTES_IN_FLOAT
+
+    val FONT_COLOR_SIZE = 3
 
     //Drop Shadow
 
