@@ -1,32 +1,52 @@
 package com.cobble.hyperscape.gui
 
 import com.cobble.hyperscape.core.HyperScape
+import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.render.{FontModel, GuiModel}
 import com.cobble.hyperscape.util.GLUtil
+import org.lwjgl.opengl.GL11
 import org.lwjgl.util.vector.{Vector4f, Matrix4f, Vector3f}
 
 /**
  * All elements should be added in the constructor.
  */
-abstract class GuiScreen (name: String) {
-
-    val color: Vector4f = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f)
+abstract class GuiScreen (name: String, size: Float = 360f, bevel: Float = 34f, color: Vector4f = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f)) {
 
     val z: Float = -2f
-    
-    val size: Float = 460f
-
-    val bevel: Float = 20
 
     val verts: Array[Float] = Array(
-        -size, -size, z, color.getX, color.getY, color.getZ, color.getW, // Bottom Left
-         size,  size, z, color.getX, color.getY, color.getZ, color.getW, //Top Right
-        -size,  size, z, color.getX, color.getY, color.getZ, color.getW, //Top Left
+        -size,          size - bevel , z, color.getX, color.getY, color.getZ, color.getW, // Top Bevel Bottom Left
+        -size + bevel,  size - bevel , z, color.getX, color.getY, color.getZ, color.getW, // Top Bevel Bottom Right
+        -size + bevel,  size         , z, color.getX, color.getY, color.getZ, color.getW, // Top Bevel Top Right
 
-        -size, -size, z, color.getX, color.getY, color.getZ, color.getW, // Bottom Left
-         size, -size, z, color.getX, color.getY, color.getZ, color.getW, //Bottom Left
-         size,  size, z, color.getX, color.getY, color.getZ, color.getW //Top Right
+        -size + bevel,  size - bevel , z, color.getX, color.getY, color.getZ, color.getW, // Top Strip Bottom Left
+         size        ,  size         , z, color.getX, color.getY, color.getZ, color.getW, // Top Strip Top Right
+        -size + bevel,  size         , z, color.getX, color.getY, color.getZ, color.getW, // Top Strip Top Left
+
+        -size + bevel,  size - bevel , z, color.getX, color.getY, color.getZ, color.getW, // Top Strip Bottom Left
+         size        ,  size - bevel , z, color.getX, color.getY, color.getZ, color.getW, // Top Strip Bottom Right
+         size        ,  size         , z, color.getX, color.getY, color.getZ, color.getW, // Top Strip Top Right
+
+        -size, -size + bevel , z, color.getX, color.getY, color.getZ, color.getW, // Center Bottom Left
+         size,  size - bevel , z, color.getX, color.getY, color.getZ, color.getW, // Center Top Right
+        -size,  size - bevel , z, color.getX, color.getY, color.getZ, color.getW, // Center Top Left
+
+        -size, -size + bevel , z, color.getX, color.getY, color.getZ, color.getW, // Center Bottom Left
+         size, -size + bevel , z, color.getX, color.getY, color.getZ, color.getW, // Center Bottom Right
+         size,  size - bevel , z, color.getX, color.getY, color.getZ, color.getW,  // Center Top Right
+
+         size - bevel , -size         , z, color.getX, color.getY, color.getZ, color.getW, // Bottom Bevel Bottom Left
+         size         , -size + bevel , z, color.getX, color.getY, color.getZ, color.getW, // Bottom Bevel Top Right
+         size - bevel , -size + bevel , z, color.getX, color.getY, color.getZ, color.getW, // Bottom Bevel Top Left
+
+        -size         , -size         , z, color.getX, color.getY, color.getZ, color.getW, // Bottom Strip Bottom Left
+         size - bevel , -size + bevel , z, color.getX, color.getY, color.getZ, color.getW, // Bottom Strip Top Right
+        -size         , -size + bevel , z, color.getX, color.getY, color.getZ, color.getW, // Bottom Strip Top Left
+
+        -size         , -size         , z, color.getX, color.getY, color.getZ, color.getW, // Bottom Strip Bottom Left
+         size - bevel , -size         , z, color.getX, color.getY, color.getZ, color.getW, // Bottom Strip Bottom Right
+         size - bevel , -size + bevel , z, color.getX, color.getY, color.getZ, color.getW // Bottom Strip Top Right
     )
 
     val guiModel: GuiModel = new GuiModel(verts)
@@ -35,8 +55,7 @@ abstract class GuiScreen (name: String) {
     var elementList: List[GuiButton] = List()
 
     /** The Font Model for the text at the top of the GUI **/
-    val fontModel: FontModel = new FontModel(name, -size - bevel, 20f)
-
+    val fontModel: FontModel = new FontModel(name, -size + bevel + 30.0f, size - bevel, (bevel / Reference.Font.FONT_HEIGHT).asInstanceOf[Int], textColor = (0.25f, 0.25f, 0.25f, 1.0f))
     /**
      * Renders the screen
      */
