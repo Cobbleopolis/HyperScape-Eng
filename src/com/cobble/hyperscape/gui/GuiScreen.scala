@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.{Vector4f, Matrix4f, Vector3f}
 /**
  * All elements should be added in the constructor.
  */
-trait GuiScreen {
+abstract class GuiScreen (name: String) {
 
     val color: Vector4f = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f)
 
@@ -34,10 +34,8 @@ trait GuiScreen {
     /** A list of the element in the Gui **/
     var elementList: List[GuiButton] = List()
 
-    /** The name of the GUI displayed at the top of the GUI **/
-    var name: String
-
-    val fontModel: FontModel = new FontModel("This is a Gui", -size - bevel, 20f)
+    /** The Font Model for the text at the top of the GUI **/
+    val fontModel: FontModel = new FontModel(name, -size - bevel, 20f)
 
     /**
      * Renders the screen

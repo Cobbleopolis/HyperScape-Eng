@@ -4,9 +4,7 @@ import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.util.vector.Vector3f
 
-class GuiMainMenu extends GuiScreen {
-
-    var name: String = "Main Menu"
+class GuiMainMenu extends GuiScreen("Main Menu") {
 
     val woah = new GuiButton("WOAH A NEW BUTTON!", -500, 0, 340, 340, new Vector3f(0.141f, 0.317f, 0.709f))
 
