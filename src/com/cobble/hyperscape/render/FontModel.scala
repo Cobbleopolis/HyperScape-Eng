@@ -9,7 +9,7 @@ import org.lwjgl.util.vector.{Matrix4f, Vector2f}
 
 //6 * 8
 //0.0625
-class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float = 0.5f) {
+class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float = 0.5f, textColor: (Float, Float, Float, Float) = (1.0f, 1.0f, 1.0f, 1.0f)) {
 
     val modelMatrix = new Matrix4f()
 
@@ -96,6 +96,9 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
         GL30.glBindVertexArray(vao)
         ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
+
+        val loc = ShaderRegistry.getCurrentShader.getUniformLocation("textColor")
+        GL20.glUniform4f(loc, textColor._1, textColor._2, textColor._3, textColor._4)
 
         // Draw the vertices
         GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.TEXTURE_ELEMENT_COUNT)
