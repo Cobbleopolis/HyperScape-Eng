@@ -44,6 +44,8 @@ class GuiModel(verts: Array[Float]) {
         HyperScape.mainCamera.uploadView()
         GLUtil.uploadModelMatrix(modelMatrix)
 
+        if (verts(Vertex.GUI_ELEMENT_COUNT - 1) < 1.0f) GL11.glEnable(GL11.GL_BLEND); GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+
         val loc = ShaderRegistry.getCurrentShader.getUniformLocation("elementColor")
         val subtractColorLoc = ShaderRegistry.getCurrentShader.getUniformLocation("subtractColor")
 
@@ -70,8 +72,11 @@ class GuiModel(verts: Array[Float]) {
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
 
         // Draw the vertices
+//        GL11.glDisable(GL11.GL_CULL_FACE)
         GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
         //        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
+
+        if (verts(Vertex.GUI_ELEMENT_COUNT - 1) < 1.0f) GL11.glDisable(GL11.GL_BLEND)
 
         // Put everything back to default (deselect)
         ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
