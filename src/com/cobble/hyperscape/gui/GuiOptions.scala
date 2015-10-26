@@ -5,7 +5,7 @@ import org.lwjgl.util.vector.Vector3f
 
 class GuiOptions extends GuiScreen ("Options") {
 
-    elementList = elementList :+ new GuiButton("Go Back!", -330f, -300f, 660f, 100f, new Vector3f(1f, 0.5f, 0f))
+    elementList = elementList :+ new GuiButton("Back", -330f, -300f, 660f, 75f, new Vector3f(1f, 0.5f, 0f))
     elementList = elementList :+ new GuiButton("This is a different GUI", -330f, 0f, 660f, 300f, new Vector3f(0.749f, 0.211f, 0.047f))
 
     override def onClick(elementIndex: Int): Unit ={
