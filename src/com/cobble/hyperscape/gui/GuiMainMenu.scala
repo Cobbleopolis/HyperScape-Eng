@@ -19,8 +19,6 @@ class GuiMainMenu extends GuiScreen("Main Menu") {
                 elementList = elementList :+ woah
             else
                 elementList = elementList.dropRight(1)
-//        if (elementIndex == 2)
-//            woah.changeText("WOAH A NEW BUTTON!")
     }
 
     //    override def render(): Unit = {
