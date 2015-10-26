@@ -55,7 +55,8 @@ abstract class GuiScreen (name: String, size: Float = 360f, bevel: Float = 34f, 
     var elementList: List[GuiButton] = List()
 
     /** The Font Model for the text at the top of the GUI **/
-    val fontModel: FontModel = new FontModel(name, -size + bevel + 30.0f, size - bevel, (bevel / Reference.Font.FONT_HEIGHT).asInstanceOf[Int], textColor = (0.25f, 0.25f, 0.25f, 1.0f))
+    val fontModel: FontModel = new FontModel(name, -size + bevel + 30.0f, size - bevel - (Reference.Font.FONT_HEIGHT / 2), ((bevel - Reference.Font.FONT_HEIGHT) / Reference.Font.FONT_HEIGHT).asInstanceOf[Int], textColor = (0.25f, 0.25f, 0.25f, 1.0f))
+
     /**
      * Renders the screen
      */
