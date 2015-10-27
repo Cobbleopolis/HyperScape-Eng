@@ -17,7 +17,8 @@ class GuiMainMenu extends GuiScreen("Main Menu") {
     override def onClick(elementIndex: Int): Unit ={
         if (elementIndex == 1)
             HyperScape.currentGameState.changeGui(Guis.guiOptions)
-//        if (elementIndex == 2)
+        if (elementIndex == 2)
+            HyperScape.requestClose()
 //            if (elementList.size < 3)
 //                elementList = elementList :+ woah
 //            else

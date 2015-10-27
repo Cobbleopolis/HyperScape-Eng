@@ -45,7 +45,7 @@ object Game {
         //        HyperScape.mainCamera.updatePerspective()
         //        HyperScape.mainCamera.uploadPerspective()
 
-        while (!Display.isCloseRequested) {
+        while (!Display.isCloseRequested && !HyperScape.isCloseRequested) {
             //            if (firstRender) {
             //                println("First Render")
             //                GL11.glViewport(0, 0, Display.getWidth, Display.getHeight)

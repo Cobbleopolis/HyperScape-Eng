@@ -114,4 +114,10 @@ object HyperScape {
     var lines: Boolean = false
     var debug = false
     var anyMouseButtonDown = false
+
+    private var close: Boolean = false
+
+    def requestClose(): Unit = {close = true}
+
+    def isCloseRequested: Boolean = close
 }
