@@ -66,7 +66,7 @@ abstract class GuiScreen (name: String, size: Float = 360f, bevel: Float = 34f, 
         val modelMatrix = new Matrix4f()
 //        modelMatrix.translate(new Vector3f(0, 0, 0))
         GLUtil.uploadModelMatrix(modelMatrix)
-        guiModel.render()
+//        guiModel.render()
         fontModel.render()
         elementList.foreach(elem => {
             elem.render()

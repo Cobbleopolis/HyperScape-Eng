@@ -49,7 +49,7 @@ object Init {
         TextureRegistry.loadTexture("res/player.png", "player")
         TextureRegistry.loadTexture("res/gui.png", "gui")
         TextureRegistry.loadTexture("res/font3.png", "font")
-        TextureRegistry.loadTexture("res/dropShadow.png", "dropShadow")
+        TextureRegistry.loadTexture("res/dropShadowWhite.png", "dropShadow")
         println("Finished Loading Textures")
     }
 

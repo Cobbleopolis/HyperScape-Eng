@@ -66,7 +66,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
     )
 
     val order: Array[Int] = Array(
-        0, 2, 1, 0, 3, 2,
+//        0, 2, 1, 0, 3, 2,
         4, 6, 5, 4, 7, 6,
         8, 10, 9, 8, 11, 10,
         12, 14, 13, 12, 15, 14,
@@ -84,7 +84,7 @@ class DropShadowModel(x: Float, y: Float, width: Float, height: Float, zIndex: F
     val vbo = GL15.glGenBuffers()
     val vao = GL30.glGenVertexArrays()
 
-    modelMatrix.translate(new Vector2f(x, y - Math.max(zIndex, fadeSize)))//.scale(new Vector3f(zIndex))
+    modelMatrix.translate(new Vector2f(x, y))//.scale(new Vector3f(zIndex))
 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)

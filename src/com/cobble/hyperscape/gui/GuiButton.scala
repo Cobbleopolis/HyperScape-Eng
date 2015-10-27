@@ -2,7 +2,7 @@ package com.cobble.hyperscape.gui
 
 import com.cobble.hyperscape.render.{DropShadowModel, FontModel, GuiModel}
 import com.cobble.hyperscape.util.GLUtil
-import org.lwjgl.util.vector.Vector3f
+import org.lwjgl.util.vector.{Vector4f, Vector3f}
 
 /**
  * Used by GUI's to render buttons
@@ -12,15 +12,15 @@ import org.lwjgl.util.vector.Vector3f
  * @param height The height of the button (default is 0.2)
  * @param width The width of the button (default is 0.2)
  */
-class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f, height: Float = 0.2f, color: Vector3f = new Vector3f(1.0f, 1.0f, 1.0f), textScale: Int = 3) extends GuiElement {
+class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f, height: Float = 0.2f, color: Vector4f = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), textScale: Int = 3) extends GuiElement {
     val verts: Array[Float] = Array(
-        x, y, 0f, color.getX, color.getY, color.getZ, 1.0f,
-        x + width, y + height, 0f, color.getX, color.getY, color.getZ, 1.0f,
-        x, y + height, 0f, color.getX, color.getY, color.getZ, 1.0f,
+        x, y, 0f, color.getX, color.getY, color.getZ, color.getW,
+        x + width, y + height, 0f, color.getX, color.getY, color.getZ, color.getW,
+        x, y + height, 0f, color.getX, color.getY, color.getZ, color.getW,
 
-        x, y, 0f, color.getX, color.getY, color.getZ, 1.0f,
-        x + width, y, 0f, color.getX, color.getY, color.getZ, 1.0f,
-        x + width, y + height, 0f, color.getX, color.getY, color.getZ, 1.0f
+        x, y, 0f, color.getX, color.getY, color.getZ, color.getW,
+        x + width, y, 0f, color.getX, color.getY, color.getZ, color.getW,
+        x + width, y + height, 0f, color.getX, color.getY, color.getZ, color.getW
     ) //new Array[Float](72)
 
 //    var displayText: String = ""
