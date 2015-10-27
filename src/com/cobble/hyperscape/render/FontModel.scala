@@ -131,7 +131,7 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
      * Gets a copy of the model
      * @return A copy of the model
      */
-    def copy: TexturedGuiRenderModel = {
-        new TexturedGuiRenderModel(verts)
+    def copy: FontModel = {
+        new FontModel(text, x, y, scale, zIndex, textColor)
     }
 }
