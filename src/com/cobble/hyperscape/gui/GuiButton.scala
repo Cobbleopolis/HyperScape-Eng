@@ -35,7 +35,9 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
 
     var isHilighted: Boolean = false
 
-    def containsPoint(x: Int, y: Int): Boolean = x >= this.x && x <= this.x + width && y >= this.y && y <= this.y + height
+    def containsPoint(mouseX: Int, mouseY: Int): Boolean =
+        mouseX >= x && mouseX <= x + width &&
+        mouseY >= y && mouseY <= y + height
 
     def render(): Unit = {
         dropShadow.render()
