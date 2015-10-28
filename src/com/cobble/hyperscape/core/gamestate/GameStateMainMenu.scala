@@ -1,7 +1,6 @@
 package com.cobble.hyperscape.core.gamestate
 
 import com.cobble.hyperscape.gui.Guis
-import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.render.RenderModel
 
 class GameStateMainMenu extends GameState {
@@ -17,7 +16,7 @@ class GameStateMainMenu extends GameState {
         size, size, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
         -size, size, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f
     )
-//    override var currentGui: GuiScreen = null
+    //    override var currentGui: GuiScreen = null
     var count: Int = 60
     var model: RenderModel = null
 
@@ -29,28 +28,28 @@ class GameStateMainMenu extends GameState {
         super.changeTo()
         model = new RenderModel(modelArray)
         changeGui(Guis.guiMainMenu)
-//        ShaderRegistry.getShader("font").inputs.foreach(input => println("(" + input._1 + ", " + input._2 + ")"))
-//        println("Main Menu " + (currentGui == null))
+        //        ShaderRegistry.getShader("font").inputs.foreach(input => println("(" + input._1 + ", " + input._2 + ")"))
+        //        println("Main Menu " + (currentGui == null))
     }
 
     override def tick(): Unit = {
-//        count -= 1
-//        if (count == 0) {
-//            count = 60
-//            currentGui.buttonList.head.isHilighted = !currentGui.buttonList.head.isHilighted
-//        }
+        //        count -= 1
+        //        if (count == 0) {
+        //            count = 60
+        //            currentGui.buttonList.head.isHilighted = !currentGui.buttonList.head.isHilighted
+        //        }
     }
 
     override def orthographicRender(): Unit = {
         //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
-//        ShaderRegistry.bindShader("terrain")
-//        TextureRegistry.bindTexture("terrain")
-//        HyperScape.mainCamera.uploadPerspective()
-//        HyperScape.mainCamera.uploadView()
-//        val modelMatrix = new Matrix4f()
-//        modelMatrix.translate(new Vector3f(0, 0, -1))
-//        GLUtil.uploadModelMatrix(modelMatrix)
-//                model.render()
+        //        ShaderRegistry.bindShader("terrain")
+        //        TextureRegistry.bindTexture("terrain")
+        //        HyperScape.mainCamera.uploadPerspective()
+        //        HyperScape.mainCamera.uploadView()
+        //        val modelMatrix = new Matrix4f()
+        //        modelMatrix.translate(new Vector3f(0, 0, -1))
+        //        GLUtil.uploadModelMatrix(modelMatrix)
+        //                model.render()
         currentGui.render()
         //        if (offset > 1.5 || offset < -1) vel = -vel
         //        offset -= vel
@@ -60,5 +59,5 @@ class GameStateMainMenu extends GameState {
         super.destroy()
         model.destroy()
     }
-    
+
 }
