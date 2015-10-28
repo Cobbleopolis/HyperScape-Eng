@@ -42,8 +42,8 @@ class HyperScape {
         }
 
         while (Mouse.next()) {
-            val x = Mouse.getX - (Display.getWidth / 2)
-            val y = Mouse.getY - (Display.getHeight / 2)
+            val x = Mouse.getX
+            val y = Mouse.getY
             val dx = Mouse.getDX
             val dy = Mouse.getDY
             val mouseState = Mouse.getEventButton

@@ -17,6 +17,9 @@ class Camera {
     var view = new Matrix4f()
     var pos = new Vector3f()
 
+    private var edges: (Float, Float, Float, Float) = (0f, 0f, 0f, 0f)
+    private var dimension: (Float, Float) = (0f, 0f)
+
     /**
      * Updates the camera's perspective matrix. Used when the window is resized.
      */
@@ -28,11 +31,15 @@ class Camera {
         val top = (near * Math.tan(fovInDegrees * MathUtil.PI360)).toFloat
         val right = top * aspectRatio
         if (mode == Reference.Camera.PERSPECTIVE_MODE) {
+            edges = (-right, right, -top , top)
+            dimension = (right * 2f, top * 2f)
             frustum(-right, right, -top, top, near, far)
         } else {
-            val width = Display.getWidth / VirtualResolution.getScale
-            val height = Display.getHeight / VirtualResolution.getScale
-            orthographicFrustum(-width / 2, width / 2, -height / 2, height / 2, -2f, 25f)
+            val width: Float = Display.getWidth / VirtualResolution.getScale
+            val height: Float = Display.getHeight / VirtualResolution.getScale
+            edges = (0f, width, 0f, height)
+            dimension = (width, height)
+            orthographicFrustum(0f, width, 0f, height, -2f, 25f)
         }
     }
 
@@ -90,4 +97,55 @@ class Camera {
         GL20.glUniformMatrix4(loc, false, HyperScape.uploadBuffer)
         HyperScape.uploadBuffer.clear()
     }
+
+    /**
+     * Gets the current location of the left edge of the camera
+     * @return The current location of the left edge of the camera
+     */
+    def getLeftEdge: Float = edges._1
+
+    /**
+     * Gets the current location of the right edge of the camera
+     * @return The current location of the right edge of the camera
+     */
+    def getRightEdge: Float = edges._2
+
+    /**
+     * Gets the current location of the bottom edge of the camera
+     * @return The current location of the bottom edge of the camera
+     */
+    def getBottomEdge: Float = edges._3
+
+    /**
+     * Gets the current location of the top edge of the camera
+     * @return The current location of the top edge of the camera
+     */
+    def getTopEdge: Float = edges._4
+
+    /**
+     * Gets the current locations of all the edges of the camera.
+     * Ordered: Left, Right, Bottom, Top
+     * @return The current locations of all the edges of the camera.
+     */
+    def getAllEdges: (Float, Float, Float, Float) = edges
+
+
+    /**
+     * Gets the camera's current width
+     * @return The camera's current width
+     */
+    def getCameraWidth: Float = dimension._1
+
+    /**
+     * Gets the camera's current height
+     * @return The camera's current height
+     */
+    def getCameraHeight: Float = dimension._2
+
+    /**
+     * Gets the current dimensions of the camera.
+     * Ordered: Width, Height
+     * @return The current dimensions of the camera
+     */
+    def getCameraDimension: (Float, Float) = dimension
 }
