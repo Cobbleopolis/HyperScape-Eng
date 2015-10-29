@@ -2,7 +2,7 @@ package com.cobble.hyperscape.gui
 
 import com.cobble.hyperscape.render.{DropShadowModel, FontModel, GuiModel}
 import com.cobble.hyperscape.util.GLUtil
-import org.lwjgl.util.vector.{Vector4f, Vector3f}
+import org.lwjgl.util.vector.{Vector2f, Vector4f, Vector3f}
 
 /**
  * Used by GUI's to render buttons
@@ -14,13 +14,13 @@ import org.lwjgl.util.vector.{Vector4f, Vector3f}
  */
 class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f, height: Float = 0.2f, color: Vector4f = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f), textScale: Int = 3) extends GuiElement {
     val verts: Array[Float] = Array(
-        x, y, 0f, color.getX, color.getY, color.getZ, color.getW,
-        x + width, y + height, 0f, color.getX, color.getY, color.getZ, color.getW,
-        x, y + height, 0f, color.getX, color.getY, color.getZ, color.getW,
+        0f, 0f, 0f, color.getX, color.getY, color.getZ, color.getW,
+        width, height, 0f, color.getX, color.getY, color.getZ, color.getW,
+        0f, height, 0f, color.getX, color.getY, color.getZ, color.getW,
 
-        x, y, 0f, color.getX, color.getY, color.getZ, color.getW,
-        x + width, y, 0f, color.getX, color.getY, color.getZ, color.getW,
-        x + width, y + height, 0f, color.getX, color.getY, color.getZ, color.getW
+        0f, 0f, 0f, color.getX, color.getY, color.getZ, color.getW,
+        width, 0f, 0f, color.getX, color.getY, color.getZ, color.getW,
+        width, height, 0f, color.getX, color.getY, color.getZ, color.getW
     ) //new Array[Float](72)
 
 //    var displayText: String = ""
@@ -31,7 +31,7 @@ class GuiButton(text: String, x: Float = 0.0f, y: Float = 0, width: Float = 0.2f
     var fontModel = new FontModel(displayText, x + (width / 2) - (GLUtil.getFontWidth(displayText, textScale) / 2), y + (height / 2) - (GLUtil.getFontHeight(textScale) / 2), textScale)
 
     val dropShadow = new DropShadowModel(x - 10, y - 10, width + 20, height + 20, 3)
-    val guiModel = new GuiModel(verts)
+    val guiModel = new GuiModel(verts, x, y)
 
     var isHilighted: Boolean = false
 

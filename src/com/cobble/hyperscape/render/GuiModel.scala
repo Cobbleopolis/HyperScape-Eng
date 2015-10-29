@@ -9,10 +9,13 @@ import org.lwjgl.util.vector.{Vector2f, Vector3f, Matrix4f}
 /**
  * The model useed in rendering GUI's. These models can not be manipulated after initialization
  * @param verts an array of verts used to define the model for a GUI must be in format of (x, y, z, r, g, b, a)
+ * @param x The default x location of the element
+ * @param y The default y location of the element
  */
-class GuiModel(verts: Array[Float]) {
+class GuiModel(verts: Array[Float], x: Float = 0f, y: Float = 0f) {
     println("Creating Gui Model...")
     private val modelMatrix = new Matrix4f()
+    modelMatrix.translate(new Vector2f(x, y))
 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
@@ -117,6 +120,6 @@ class GuiModel(verts: Array[Float]) {
      * @return A copy of the model
      */
     def copy: GuiModel = {
-        new GuiModel(verts)
+        new GuiModel(verts, x, y)
     }
 }
