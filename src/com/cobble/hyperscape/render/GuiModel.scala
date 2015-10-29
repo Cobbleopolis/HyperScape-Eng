@@ -4,7 +4,7 @@ import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.registry.ShaderRegistry
 import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
-import org.lwjgl.util.vector.Matrix4f
+import org.lwjgl.util.vector.{Vector2f, Vector3f, Matrix4f}
 
 /**
  * The model useed in rendering GUI's. These models can not be manipulated after initialization
@@ -12,7 +12,7 @@ import org.lwjgl.util.vector.Matrix4f
  */
 class GuiModel(verts: Array[Float]) {
     println("Creating Gui Model...")
-    val modelMatrix = new Matrix4f()
+    private val modelMatrix = new Matrix4f()
 
     HyperScape.uploadBuffer.clear()
     HyperScape.uploadBuffer.put(verts)
@@ -83,6 +83,17 @@ class GuiModel(verts: Array[Float]) {
         GL30.glBindVertexArray(0)
     }
 
+    /**
+     * Translates the GUI model
+     * @param translationVector A vector containing the x, y, z components to translate by
+     */
+    def translate(translationVector: Vector3f): Unit = modelMatrix.translate(translationVector)
+
+    /**
+     * Translates the GUI model
+     * @param translationVector A vector containing the x, y components to translate by
+     */
+    def translate(translationVector: Vector2f): Unit = modelMatrix.translate(translationVector)
 
     /**
      * Destroys the model
