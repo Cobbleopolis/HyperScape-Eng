@@ -11,6 +11,8 @@ import org.lwjgl.util.vector.{Matrix4f, Vector2f}
 //0.0625
 class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float = 0.5f, textColor: (Float, Float, Float, Float) = (1.0f, 1.0f, 1.0f, 1.0f)) {
 
+    val shader: String = "font"
+
     val modelMatrix = new Matrix4f()
 
     var verts: Array[Float] = Array[Float]()
@@ -87,7 +89,7 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
      */
     def render(drawLines: Boolean = false): Unit = {
         // Bind the font shader
-        ShaderRegistry.bindShader("font")
+        ShaderRegistry.bindShader(shader)
         HyperScape.mainCamera.uploadPerspective()
         HyperScape.mainCamera.uploadView()
         GLUtil.uploadModelMatrix(modelMatrix)
@@ -116,7 +118,7 @@ class FontModel(text: String, x: Float, y: Float, scale: Int = 2, zIndex: Float 
     def destroy(): Unit = {
         GL30.glBindVertexArray(vao)
         // Disable the VBO index from the VAO attributes list
-        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
+        ShaderRegistry.getShader(shader).inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
 
         // Delete the VBO
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)

@@ -13,6 +13,9 @@ import org.lwjgl.util.vector.{Vector2f, Vector3f, Matrix4f}
  * @param y The default y location of the element
  */
 class GuiModel(verts: Array[Float], x: Float = 0f, y: Float = 0f) {
+
+    val shader: String = "gui"
+
     println("Creating Gui Model...")
     private val modelMatrix = new Matrix4f()
     modelMatrix.translate(new Vector2f(x, y))
@@ -41,7 +44,7 @@ class GuiModel(verts: Array[Float], x: Float = 0f, y: Float = 0f) {
      */
     def render(isHilighted: Boolean = false, isDown: Boolean = false): Unit = {
         // Bind the gui shader
-        ShaderRegistry.bindShader("gui")
+        ShaderRegistry.bindShader(shader)
 
         HyperScape.mainCamera.uploadPerspective()
         HyperScape.mainCamera.uploadView()
@@ -104,7 +107,7 @@ class GuiModel(verts: Array[Float], x: Float = 0f, y: Float = 0f) {
     def destroy(): Unit = {
         GL30.glBindVertexArray(vao)
         // Disable the VBO index from the VAO attributes list
-        ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
+        ShaderRegistry.getShader(shader).inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
 
         // Delete the VBO
         GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)

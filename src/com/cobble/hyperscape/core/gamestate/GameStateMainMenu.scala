@@ -2,6 +2,7 @@ package com.cobble.hyperscape.core.gamestate
 
 import com.cobble.hyperscape.gui.Guis
 import com.cobble.hyperscape.render.RenderModel
+import com.cobble.hyperscape.world.{WorldMainMenu, World}
 
 class GameStateMainMenu extends GameState {
 
@@ -24,6 +25,8 @@ class GameStateMainMenu extends GameState {
 
     var vel: Float = 0.01f
 
+    val world: World = new WorldMainMenu
+
     override def changeTo(): Unit = {
         super.changeTo()
         model = new RenderModel(modelArray)
@@ -40,6 +43,9 @@ class GameStateMainMenu extends GameState {
         //        }
     }
 
+    override def perspectiveRender(): Unit = {
+        world.render()
+    }
     override def orthographicRender(): Unit = {
         //        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))
         //        ShaderRegistry.bindShader("terrain")

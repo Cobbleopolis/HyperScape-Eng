@@ -85,4 +85,6 @@ class Model(verts: Array[Float]) {
     def copy: Model = {
         new Model(verticies)
     }
+
+    def getVerts: Array[Float] = verticies
 }

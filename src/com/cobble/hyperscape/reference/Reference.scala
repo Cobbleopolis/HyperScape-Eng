@@ -38,4 +38,9 @@ object Reference {
         val MOUSE_BUTTON_RIGHT = 1
     }
 
+    object World {
+
+        val WORLD_SIZE = 16777215
+    }
+
 }
