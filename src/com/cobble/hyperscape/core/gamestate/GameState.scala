@@ -1,5 +1,6 @@
 package com.cobble.hyperscape.core.gamestate
 
+import com.cobble.hyperscape.entity.{EntityPlayer, Entity}
 import com.cobble.hyperscape.gui.GuiScreen
 import com.cobble.hyperscape.registry.ShaderRegistry
 
@@ -14,6 +15,8 @@ trait GameState {
      * The current gui used by the game state. null by default and when there is no gui
      */
     var currentGui: GuiScreen = null
+
+    var player: EntityPlayer = new EntityPlayer
 
     /**
      * Called when the game switches to the game state.
