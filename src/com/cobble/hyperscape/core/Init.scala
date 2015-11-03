@@ -1,7 +1,7 @@
 package com.cobble.hyperscape.core
 
 import com.cobble.hyperscape.event.{EventListenerGuiButton, EventListenerMouseGui}
-import com.cobble.hyperscape.registry.{EventRegistry, ShaderRegistry, TextureRegistry}
+import com.cobble.hyperscape.registry.{ModelRegistry, EventRegistry, ShaderRegistry, TextureRegistry}
 
 object Init {
 
@@ -12,7 +12,7 @@ object Init {
         loadShaders()
         loadTextures()
         registerEventListeners()
-        //        loadModels()
+        loadModels()
         println("Done Loading")
     }
 
@@ -51,6 +51,15 @@ object Init {
         TextureRegistry.loadTexture("res/font3.png", "font")
         TextureRegistry.loadTexture("res/dropShadowWhite.png", "dropShadow")
         println("Finished Loading Textures")
+    }
+
+    /**
+     * Loads all of the models
+     */
+    def loadModels(): Unit = {
+        println("Loading Models...")
+        ModelRegistry.loadModel("res/model/cube.obj", "cube")
+        println("Finished Loading Models")
     }
 
     /**
