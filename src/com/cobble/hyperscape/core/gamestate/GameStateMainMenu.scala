@@ -25,7 +25,7 @@ class GameStateMainMenu extends GameState {
 
     var vel: Float = 0.01f
 
-    val world: World = new WorldMainMenu
+    var world: World = new WorldMainMenu
 
     override def changeTo(): Unit = {
         super.changeTo()
@@ -44,6 +44,7 @@ class GameStateMainMenu extends GameState {
     }
 
     override def perspectiveRender(): Unit = {
+        super.perspectiveRender()
         world.render()
     }
     override def orthographicRender(): Unit = {

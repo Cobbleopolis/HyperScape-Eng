@@ -34,12 +34,15 @@ class HyperScape {
         }
 
         if (Keyboard.getEventKeyState) {
+            println("Test")
             val character = Keyboard.getEventCharacter
             val characterVal = Keyboard.getEventKey
             EventRegistry.getButtonEventListeners.foreach(eventListener => {
                 eventListener.onButtonHold(character, characterVal)
             })
         }
+
+        EventRegistry.getButtonEventListeners.foreach(eventListener => eventListener.onTick())
 
         while (Mouse.next()) {
             val x = Mouse.getX

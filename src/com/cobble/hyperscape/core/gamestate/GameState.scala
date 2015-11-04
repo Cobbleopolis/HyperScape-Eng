@@ -3,6 +3,8 @@ package com.cobble.hyperscape.core.gamestate
 import com.cobble.hyperscape.entity.{EntityPlayer, Entity}
 import com.cobble.hyperscape.gui.GuiScreen
 import com.cobble.hyperscape.registry.ShaderRegistry
+import com.cobble.hyperscape.world.World
+import org.lwjgl.util.vector.Vector3f
 
 trait GameState {
 
@@ -17,6 +19,9 @@ trait GameState {
     var currentGui: GuiScreen = null
 
     var player: EntityPlayer = new EntityPlayer
+	player.rotateEntity(0f, 0f, Math.toRadians(180).asInstanceOf[Float])
+
+    var world: World
 
     /**
      * Called when the game switches to the game state.
@@ -46,7 +51,11 @@ trait GameState {
      * Called when the game renders with a perspective matrix. The correct matrix has already been uploaded. This renders before the orthographic render.
      */
     def perspectiveRender(): Unit = {
-
+        world.worldModel.modelMatrix.setIdentity()
+        world.worldModel.modelMatrix.rotate(player.rotation.getX, new Vector3f(1.0f, 0.0f, 0.0f))
+        world.worldModel.modelMatrix.rotate(player.rotation.getY, new Vector3f(0.0f, 1.0f, 0.0f))
+        world.worldModel.modelMatrix.rotate(player.rotation.getZ, new Vector3f(0.0f, 0.0f, 1.0f))
+        world.worldModel.modelMatrix.translate(player.position)
     }
 
     /**

@@ -41,4 +41,11 @@ trait EventListenerButton {
     def onButtonUp(button: Char, charVal: Int): Unit = {
 
     }
+
+    /**
+     * Called every tick
+     */
+    def onTick(): Unit = {
+
+    }
 }
