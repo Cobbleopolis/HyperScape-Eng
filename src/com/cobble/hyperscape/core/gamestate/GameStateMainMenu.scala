@@ -58,7 +58,7 @@ class GameStateMainMenu extends GameState {
 		//        modelMatrix.translate(new Vector3f(0, 0, -1))
 		//        GLUtil.uploadModelMatrix(modelMatrix)
 		//                model.render()
-		currentGui.render()
+		//		currentGui.render()
 		//        if (offset > 1.5 || offset < -1) vel = -vel
 		//        offset -= vel
 	}

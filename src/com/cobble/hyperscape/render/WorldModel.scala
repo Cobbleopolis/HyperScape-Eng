@@ -26,7 +26,7 @@ class WorldModel {
 	}
 
 	def uploadVerts(destroyCurrentModel: Boolean = true): Unit = {
-		println("Upload")
+		println("Uploading...")
 		if (destroyCurrentModel) destroy()
 		HyperScape.uploadBuffer.clear()
 		HyperScape.uploadBuffer.put(verts)
@@ -45,6 +45,7 @@ class WorldModel {
 
 		GL30.glBindVertexArray(0)
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
+		println("Uploaded")
 	}
 
 	def render(): Unit = {
