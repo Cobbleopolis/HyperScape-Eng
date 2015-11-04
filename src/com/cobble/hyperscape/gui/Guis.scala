@@ -5,10 +5,10 @@ import com.cobble.hyperscape.reference.Reference
 
 object Guis {
 
-    HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
-    HyperScape.mainCamera.updatePerspective()
+	HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
+	HyperScape.mainCamera.updatePerspective()
 
-    val guiMainMenu = new GuiMainMenu
+	val guiMainMenu = new GuiMainMenu
 
-    val guiOptions = new GuiOptions
+	val guiOptions = new GuiOptions
 }

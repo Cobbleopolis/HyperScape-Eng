@@ -10,117 +10,119 @@ import org.lwjgl.opengl.{Display, GL11}
 
 class HyperScape {
 
-    var prevMouseState: Int = -1
+	var prevMouseState: Int = -1
 
-    def init(): Unit = {
-        GameStates.registerGameStates()
-        changeState(Reference.GameState.MAIN_MENU)
-    }
+	def init(): Unit = {
+		GameStates.registerGameStates()
+		changeState(Reference.GameState.MAIN_MENU)
+	}
 
-    def changeState(newState: String): Unit = {
-        if (HyperScape.currentGameState != null) HyperScape.currentGameState.destroy()
-        HyperScape.currentGameState = GameStateRegistry.getGameState(newState)
-        HyperScape.currentGameState.changeTo()
-    }
+	def changeState(newState: String): Unit = {
+		if (HyperScape.currentGameState != null) HyperScape.currentGameState.destroy()
+		HyperScape.currentGameState = GameStateRegistry.getGameState(newState)
+		HyperScape.currentGameState.changeTo()
+	}
 
-    def tick(): Unit = {
-        HyperScape.currentGameState.tick()
-        while (Keyboard.next()) {
-            val character = Keyboard.getEventCharacter
-            val characterVal = Keyboard.getEventKey
-            EventRegistry.getButtonEventListeners.foreach(eventListener => {
-                eventListener.onButtonTypingHold(character, characterVal)
-            })
-        }
+	def tick(): Unit = {
+		HyperScape.currentGameState.tick()
+		while (Keyboard.next()) {
+			val character = Keyboard.getEventCharacter
+			val characterVal = Keyboard.getEventKey
+			EventRegistry.getButtonEventListeners.foreach(eventListener => {
+				eventListener.onButtonTypingHold(character, characterVal)
+			})
+		}
 
-        if (Keyboard.getEventKeyState) {
-            println("Test")
-            val character = Keyboard.getEventCharacter
-            val characterVal = Keyboard.getEventKey
-            EventRegistry.getButtonEventListeners.foreach(eventListener => {
-                eventListener.onButtonHold(character, characterVal)
-            })
-        }
+		if (Keyboard.getEventKeyState) {
+			println("Test")
+			val character = Keyboard.getEventCharacter
+			val characterVal = Keyboard.getEventKey
+			EventRegistry.getButtonEventListeners.foreach(eventListener => {
+				eventListener.onButtonHold(character, characterVal)
+			})
+		}
 
-        EventRegistry.getButtonEventListeners.foreach(eventListener => eventListener.onTick())
+		EventRegistry.getButtonEventListeners.foreach(eventListener => eventListener.onTick())
 
-        while (Mouse.next()) {
-            val x = Mouse.getX
-            val y = Mouse.getY
-            val dx = Mouse.getDX
-            val dy = Mouse.getDY
-            val mouseState = Mouse.getEventButton
+		while (Mouse.next()) {
+			val x = Mouse.getX
+			val y = Mouse.getY
+			val dx = Mouse.getDX
+			val dy = Mouse.getDY
+			val mouseState = Mouse.getEventButton
 
-            EventRegistry.getMouseListeners.foreach(eventListener => {
-                eventListener.onMouseMove(x, y, dx, dy)
-            })
+			EventRegistry.getMouseListeners.foreach(eventListener => {
+				eventListener.onMouseMove(x, y, dx, dy)
+			})
 
-            if (Mouse.getEventButtonState) {
-                if (Mouse.getEventButton != -1) {
-                    EventRegistry.getMouseListeners.foreach(eventListener => {
-                        eventListener.onMouseDown(x, y, dx, dy, mouseState)
-                    })
-                    HyperScape.anyMouseButtonDown = true
-                }
-            }else {
-                if (Mouse.getEventButton != -1) {
-                    EventRegistry.getMouseListeners.foreach(eventListener => {
-                        eventListener.onMouseUp(x, y, dx, dy, mouseState)
-                    })
-                    HyperScape.anyMouseButtonDown = false
-                }
-            }
+			if (Mouse.getEventButtonState) {
+				if (Mouse.getEventButton != -1) {
+					EventRegistry.getMouseListeners.foreach(eventListener => {
+						eventListener.onMouseDown(x, y, dx, dy, mouseState)
+					})
+					HyperScape.anyMouseButtonDown = true
+				}
+			} else {
+				if (Mouse.getEventButton != -1) {
+					EventRegistry.getMouseListeners.foreach(eventListener => {
+						eventListener.onMouseUp(x, y, dx, dy, mouseState)
+					})
+					HyperScape.anyMouseButtonDown = false
+				}
+			}
 
-        }
+		}
 
 
-        if (HyperScape.anyMouseButtonDown) {
-            val x = Mouse.getX - (Display.getWidth / 2)
-            val y = Mouse.getY - (Display.getHeight / 2)
-            val dx = Mouse.getDX
-            val dy = Mouse.getDY
-            val mouseState = Mouse.getEventButton
-            EventRegistry.getMouseListeners.foreach(eventListener => {
-                eventListener.mouseDown(x, y, dx, dy, mouseState)
-            })
-        }
-    }
+		if (HyperScape.anyMouseButtonDown) {
+			val x = Mouse.getX - (Display.getWidth / 2)
+			val y = Mouse.getY - (Display.getHeight / 2)
+			val dx = Mouse.getDX
+			val dy = Mouse.getDY
+			val mouseState = Mouse.getEventButton
+			EventRegistry.getMouseListeners.foreach(eventListener => {
+				eventListener.mouseDown(x, y, dx, dy, mouseState)
+			})
+		}
+	}
 
-    def render(): Unit = {
-        GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT)
-        HyperScape.mainCamera.mode = Reference.Camera.PERSPECTIVE_MODE
-        HyperScape.mainCamera.updatePerspective()
-        HyperScape.mainCamera.uploadPerspective()
-        HyperScape.currentGameState.perspectiveRender()
+	def render(): Unit = {
+		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT)
+		HyperScape.mainCamera.mode = Reference.Camera.PERSPECTIVE_MODE
+		HyperScape.mainCamera.updatePerspective()
+		HyperScape.mainCamera.uploadPerspective()
+		HyperScape.currentGameState.perspectiveRender()
 
-        //        GL11.glDisable(GL11.GL_DEPTH_TEST)
-        HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
-        //        HyperScape.mainCamera.fov = 160
-        HyperScape.mainCamera.updatePerspective()
-        HyperScape.mainCamera.uploadPerspective()
-        HyperScape.currentGameState.orthographicRender()
-        //        GL11.glEnable(GL11.GL_DEPTH_TEST)
-    }
+		//        GL11.glDisable(GL11.GL_DEPTH_TEST)
+		HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
+		//        HyperScape.mainCamera.fov = 160
+		HyperScape.mainCamera.updatePerspective()
+		HyperScape.mainCamera.uploadPerspective()
+		HyperScape.currentGameState.orthographicRender()
+		//        GL11.glEnable(GL11.GL_DEPTH_TEST)
+	}
 
-    def destroy(): Unit = {
-        HyperScape.currentGameState.destroy()
-    }
+	def destroy(): Unit = {
+		HyperScape.currentGameState.destroy()
+	}
 }
 
 object HyperScape {
-    /** The buffer used to upload to the GPU. Max is 1048576 floats */
-    val uploadBuffer = BufferUtils.createFloatBuffer(1048576)
-    /** The Camera that renders they game */
-    val mainCamera = new Camera
-    /** The current game state that the game is in */
-    var currentGameState: GameState = null
-    var lines: Boolean = false
-    var debug = false
-    var anyMouseButtonDown = false
+	/** The buffer used to upload to the GPU. Max is 1048576 floats */
+	val uploadBuffer = BufferUtils.createFloatBuffer(1048576)
+	/** The Camera that renders they game */
+	val mainCamera = new Camera
+	/** The current game state that the game is in */
+	var currentGameState: GameState = null
+	var lines: Boolean = false
+	var debug = false
+	var anyMouseButtonDown = false
 
-    private var close: Boolean = false
+	private var close: Boolean = false
 
-    def requestClose(): Unit = {close = true}
+	def requestClose(): Unit = {
+		close = true
+	}
 
-    def isCloseRequested: Boolean = close
+	def isCloseRequested: Boolean = close
 }
