@@ -101,9 +101,7 @@ object Game {
 	 * Get the time in milliseconds
 	 * @return The system time in milliseconds
 	 */
-	def getTime: Long = {
-		(Sys.getTime * 1000) / Sys.getTimerResolution
-	}
+	def getTime: Long = (Sys.getTime * 1000) / Sys.getTimerResolution
 
 	/**
 	 * Calculate how many milliseconds have passed since last frame.
