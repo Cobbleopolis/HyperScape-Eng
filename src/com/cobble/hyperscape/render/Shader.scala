@@ -9,8 +9,10 @@ import org.lwjgl.opengl.GL20
  * @param fragmentId The id of the fragment shader program
  */
 class Shader(programId: Int, vertexId: Int, fragmentId: Int) {
+	var uniformLocations: Map[String, Int] = Map()
+	/** Map of the uniform locations for the shader */
 
-	var uniformLocations: Map[String, Int] = Map() /** Map of the uniform locations for the shader */
+	var inputs: Array[(Int, String)] = Array()
 
 	/**
 	 * Returns the location for the uniform location
@@ -30,10 +32,31 @@ class Shader(programId: Int, vertexId: Int, fragmentId: Int) {
 
 
 	/**
+	 * @return The shader's program ID
+	 */
+	def getProgramId: Int = programId
+
+	/**
+	 * @return The shader's vertex shader ID
+	 */
+	def getVertexId: Int = vertexId
+
+	/**
+	 * @return The shader's fragment shader ID
+	 */
+	def getFragmentId: Int = fragmentId
+
+
+	/**
 	 * Binds the shader
 	 */
 	def bind(): Unit = {
 		GL20.glUseProgram(programId)
+		//        val err = GL11.glGetError()
+		//        if (err != 0) {
+		//            println("In Shader | " + err)
+		//            System.exit(1)
+		//        }
 	}
 
 	/**
@@ -47,5 +70,9 @@ class Shader(programId: Int, vertexId: Int, fragmentId: Int) {
 		GL20.glDeleteShader(fragmentId)
 		GL20.glDeleteShader(vertexId)
 		GL20.glDeleteProgram(programId)
+	}
+
+	override def toString: String = {
+		programId + " | " + vertexId + " | " + fragmentId
 	}
 }

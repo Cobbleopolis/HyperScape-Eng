@@ -1,6 +1,7 @@
 package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
+import com.cobble.hyperscape.registry.ShaderRegistry
 import org.lwjgl.opengl.{GL11, GL20, GL15, GL30}
 import org.lwjgl.util.vector.Matrix4f
 
@@ -35,19 +36,16 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
 	def render(drawLines: Boolean = false): Unit = {
 		// Bind to the VAO that has all the information about the quad vertices
 		GL30.glBindVertexArray(vao)
-		GL20.glEnableVertexAttribArray(0)
-		GL20.glEnableVertexAttribArray(1)
-		GL20.glEnableVertexAttribArray(2)
+		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
 
 		// Draw the vertices
 		if (drawLines)
-			GL11.glDrawArrays(GL11.GL_LINES, 0, verticies.length / Vertex.ELEMENT_COUNT)
+			GL11.glDrawArrays(GL11.GL_LINE, 0, verticies.length / Vertex.ELEMENT_COUNT)
 		else
 			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verticies.length / Vertex.ELEMENT_COUNT)
 
 		// Put everything back to default (deselect)
-		GL20.glDisableVertexAttribArray(0)
-		GL20.glDisableVertexAttribArray(1)
+		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
 		GL30.glBindVertexArray(0)
 	}
 
@@ -56,7 +54,7 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
 	 */
 	def destroy(): Unit = {
 		// Disable the VBO index from the VAO attributes list
-		GL20.glDisableVertexAttribArray(0)
+		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
 
 		// Delete the VBO
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
