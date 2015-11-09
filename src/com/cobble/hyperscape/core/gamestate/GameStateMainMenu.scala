@@ -35,18 +35,18 @@ class GameStateMainMenu extends GameState {
 		//        println("Main Menu " + (currentGui == null))
 	}
 
-	override def tick(): Unit = {
-		//        count -= 1
-		//        if (count == 0) {
-		//            count = 60
-		//            currentGui.buttonList.head.isHilighted = !currentGui.buttonList.head.isHilighted
-		//        }
-	}
+//	override def tick(): Unit = {
+//		//        count -= 1
+//		//        if (count == 0) {
+//		//            count = 60
+//		//            currentGui.buttonList.head.isHilighted = !currentGui.buttonList.head.isHilighted
+//		//        }
+//	}
 
-	override def perspectiveRender(): Unit = {
-		super.perspectiveRender()
-		world.render()
-	}
+//	override def perspectiveRender(): Unit = {
+//		super.perspectiveRender()
+//		world.render()
+//	}
 
 	override def orthographicRender(): Unit = {
 		//        HyperScape.mainCamera.view.translate(new Vector3f(0.0f, 0.0f, offset))

@@ -1,5 +1,7 @@
 package com.cobble.hyperscape.entity
 
-class EntityPlayer extends Entity {
+import com.cobble.hyperscape.world.World
+
+class EntityPlayer(worldObj: World) extends Entity(worldObj) {
 
 }

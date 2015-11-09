@@ -34,7 +34,7 @@ class HyperScape {
 		}
 
 		if (Keyboard.getEventKeyState) {
-			println("Test")
+//			println("Test")
 			val character = Keyboard.getEventCharacter
 			val characterVal = Keyboard.getEventKey
 			EventRegistry.getButtonEventListeners.foreach(eventListener => {
@@ -57,6 +57,10 @@ class HyperScape {
 
 			if (Mouse.getEventButtonState) {
 				if (Mouse.getEventButton != -1) {
+//					if (Mouse.isInsideWindow) {
+//						Mouse.setGrabbed(true)
+//						Mouse.setClipMouseCoordinatesToWindow(true)
+//					}
 					EventRegistry.getMouseListeners.foreach(eventListener => {
 						eventListener.onMouseDown(x, y, dx, dy, mouseState)
 					})
@@ -84,6 +88,9 @@ class HyperScape {
 				eventListener.mouseDown(x, y, dx, dy, mouseState)
 			})
 		}
+
+		if (Mouse.isGrabbed)
+			Mouse.setCursorPosition(Display.getWidth / 2, Display.getHeight / 2)
 	}
 
 	def render(): Unit = {

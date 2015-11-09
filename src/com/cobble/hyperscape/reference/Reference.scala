@@ -41,6 +41,8 @@ object Reference {
 	object World {
 
 		val WORLD_SIZE = 16777215
+
+		val CHUNK_SIZE = 261648
 	}
 
 }

@@ -1,6 +1,6 @@
 package com.cobble.hyperscape.core
 
-import com.cobble.hyperscape.event.{EventListenerButtonGui, EventListenerButtonPlayer, EventListenerMouseGui}
+import com.cobble.hyperscape.event.{EventListenerMousePlayer, EventListenerButtonGui, EventListenerButtonPlayer, EventListenerMouseGui}
 import com.cobble.hyperscape.registry.{EventRegistry, ModelRegistry, ShaderRegistry, TextureRegistry}
 
 object Init {
@@ -22,11 +22,10 @@ object Init {
 	 */
 	def loadShaders(): Unit = {
 		println("Loading Shaders...")
-		ShaderRegistry.loadShader("res/shader/terrain.vert", "res/shader/terrain.frag", "terrain", Array((0, "in_Position"), (1, "in_TextureCoord"), (2, "in_Normal")))
-		//        ShaderRegistry.loadShader("res/shader/dropShadow.vert", "res/shader/dropShadow.frag", "dropShadow", Array((0, "in_Position"), (1, "in_TextureCoord"), (2, "in_zIndex")))
-		ShaderRegistry.loadShader("res/shader/dropShadow.vert", "res/shader/dropShadow.frag", "dropShadow", Array((0, "in_Position"), (1, "in_TextureCoord")))
-		ShaderRegistry.loadShader("res/shader/gui.vert", "res/shader/gui.frag", "gui", Array((0, "in_Position"), (1, "in_Color")))
-		ShaderRegistry.loadShader("res/shader/font.vert", "res/shader/font.frag", "font", Array((0, "in_Position"), (1, "in_TextureCoord")))
+		ShaderRegistry.loadShader("res/shader/terrain.vert"    , "res/shader/terrain.frag"    , "terrain"    , Array((0, "in_Position"), (1, "in_TextureCoord"), (2, "in_Normal")))
+		ShaderRegistry.loadShader("res/shader/dropShadow.vert" , "res/shader/dropShadow.frag" , "dropShadow" , Array((0, "in_Position"), (1, "in_TextureCoord")))
+		ShaderRegistry.loadShader("res/shader/gui.vert"        , "res/shader/gui.frag"        , "gui"        , Array((0, "in_Position"), (1, "in_Color")))
+		ShaderRegistry.loadShader("res/shader/font.vert"       , "res/shader/font.frag"       , "font"       , Array((0, "in_Position"), (1, "in_TextureCoord")))
 		ShaderRegistry.loadShader(
 			"res/shader/dropShadow.vert",
 			"res/shader/dropShadow.frag",
@@ -70,6 +69,7 @@ object Init {
 		EventRegistry.registerMouseEventListener(new EventListenerMouseGui)
 		EventRegistry.registerButtonEventListener(new EventListenerButtonGui)
 		EventRegistry.registerButtonEventListener(new EventListenerButtonPlayer)
+//		EventRegistry.registerMouseEventListener(new EventListenerMousePlayer)
 		println("Finished Registering Event Listeners")
 	}
 }

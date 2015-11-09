@@ -48,25 +48,33 @@ class WorldModel {
 		println("Uploaded")
 	}
 
-	def render(): Unit = {
-		ShaderRegistry.bindShader(shader)
-		HyperScape.mainCamera.uploadPerspective()
-		HyperScape.mainCamera.uploadView()
-		GLUtil.uploadModelMatrix(modelMatrix)
-		TextureRegistry.bindTexture("terrain")
-		// Bind to the VAO that has all the information about the quad vertices
-		GL30.glBindVertexArray(vao)
-		GLUtil.checkGLError("World Render")
-		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
+	def render(xCoord: Int, zCoord: Int): Unit = {
+		if (!verts.isEmpty) {
+			GLUtil.checkGLError("Chunk Render")
+			ShaderRegistry.bindShader(shader)
+			HyperScape.mainCamera.uploadPerspective()
+			HyperScape.mainCamera.uploadView()
+			GLUtil.uploadModelMatrix(modelMatrix)
+			TextureRegistry.bindTexture("terrain")
+			// Bind to the VAO that has all the information about the quad vertices
+//			val loc = ShaderRegistry.getCurrentShader.getUniformLocation("chunkColor")
+//			if (xCoord % 2 == 0 && zCoord % 2 == 0) {
+//				GL20.glUniform4f(loc, .2f, 1f, 1f, 1f)
+//			} else {
+//				GL20.glUniform4f(loc, 1f, .2f, 1f, 1f)
+//			}
+			GL30.glBindVertexArray(vao)
+			ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
 
-		// Draw the vertices
-		GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.TEXTURE_ELEMENT_COUNT)
-		//        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
+			// Draw the vertices
+			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.TEXTURE_ELEMENT_COUNT)
+			//        GL11.glDrawArrays(if (drawLines) GL11.GL_LINES else GL11.GL_TRIANGLES, 0, verts.length / Vertex.GUI_ELEMENT_COUNT)
 
-		// Put everything back to default (deselect)
-		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
-		GL30.glBindVertexArray(0)
+			// Put everything back to default (deselect)
+			ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
+			GL30.glBindVertexArray(0)
+		}
 	}
 
 	/**

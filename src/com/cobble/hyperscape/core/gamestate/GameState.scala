@@ -1,5 +1,6 @@
 package com.cobble.hyperscape.core.gamestate
 
+import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.entity.EntityPlayer
 import com.cobble.hyperscape.gui.GuiScreen
 import com.cobble.hyperscape.registry.ShaderRegistry
@@ -17,9 +18,6 @@ trait GameState {
 	 * The current gui used by the game state. null by default and when there is no gui
 	 */
 	var currentGui: GuiScreen = null
-
-	var player: EntityPlayer = new EntityPlayer
-	player.rotateEntity(0f, 0f, Math.toRadians(180).asInstanceOf[Float])
 
 	var world: World
 
@@ -44,18 +42,19 @@ trait GameState {
 	 * Called when the game ticks
 	 */
 	def tick(): Unit = {
-
+		world.tick()
 	}
 
 	/**
 	 * Called when the game renders with a perspective matrix. The correct matrix has already been uploaded. This renders before the orthographic render.
 	 */
 	def perspectiveRender(): Unit = {
-		world.worldModel.modelMatrix.setIdentity()
-		world.worldModel.modelMatrix.rotate(player.rotation.getX, new Vector3f(1.0f, 0.0f, 0.0f))
-		world.worldModel.modelMatrix.rotate(player.rotation.getY, new Vector3f(0.0f, 1.0f, 0.0f))
-		world.worldModel.modelMatrix.rotate(player.rotation.getZ, new Vector3f(0.0f, 0.0f, 1.0f))
-		world.worldModel.modelMatrix.translate(player.position)
+		HyperScape.mainCamera.view.setIdentity()
+		HyperScape.mainCamera.view.rotate(world.player.rotation.getX, new Vector3f(1.0f, 0.0f, 0.0f))
+		HyperScape.mainCamera.view.rotate(world.player.rotation.getY, new Vector3f(0.0f, 1.0f, 0.0f))
+		HyperScape.mainCamera.view.rotate(world.player.rotation.getZ, new Vector3f(0.0f, 0.0f, 1.0f))
+		HyperScape.mainCamera.view.translate(world.player.position)
+		world.render()
 	}
 
 	/**

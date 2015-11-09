@@ -1,8 +1,9 @@
 package com.cobble.hyperscape.entity
 
+import com.cobble.hyperscape.world.World
 import org.lwjgl.util.vector.Vector3f
 
-abstract class Entity {
+abstract class Entity(worldObj: World) {
 
 	val position: Vector3f = new Vector3f()
 
