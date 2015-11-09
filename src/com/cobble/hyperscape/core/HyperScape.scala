@@ -1,135 +1,78 @@
 package com.cobble.hyperscape.core
 
-import com.cobble.hyperscape.core.gamestate.{GameState, GameStates}
-import com.cobble.hyperscape.reference.Reference
-import com.cobble.hyperscape.registry.{EventRegistry, GameStateRegistry}
+import com.cobble.hyperscape.entity.EntityPlayable
+import com.cobble.hyperscape.reference.Blocks
 import com.cobble.hyperscape.render.Camera
+import com.cobble.hyperscape.world.{WorldMainMenu, World}
 import org.lwjgl.BufferUtils
-import org.lwjgl.input.{Keyboard, Mouse}
+import org.lwjgl.input.Mouse
 import org.lwjgl.opengl.{Display, GL11}
+import org.lwjgl.util.vector.{Vector3f, Matrix4f}
+
 
 class HyperScape {
 
-	var prevMouseState: Int = -1
+	var world: World = null
 
+	var player: EntityPlayable = null
+
+	var shaderSelector = 0
+
+	/**
+	 * Initializes the game
+	 */
 	def init(): Unit = {
-		GameStates.registerGameStates()
-		changeState(Reference.GameState.MAIN_MENU)
+		Blocks.registerBlocks()
+		Mouse.setGrabbed(true)
+		//        player.rotate(0, Math.toRadians(180).toFloat, 0)
+		world = new WorldMainMenu
+		player = new EntityPlayable(world)
+		//        world.tick(player)
+		player.translate(0f, 32f, 0f)
+		HyperScape.mainCamera.uploadPerspective()
+		HyperScape.mainCamera.uploadView()
 	}
 
-	def changeState(newState: String): Unit = {
-		if (HyperScape.currentGameState != null) HyperScape.currentGameState.destroy()
-		HyperScape.currentGameState = GameStateRegistry.getGameState(newState)
-		HyperScape.currentGameState.changeTo()
-	}
-
+	/**
+	 * Ticks the game
+	 */
 	def tick(): Unit = {
-		HyperScape.currentGameState.tick()
-		while (Keyboard.next()) {
-			val character = Keyboard.getEventCharacter
-			val characterVal = Keyboard.getEventKey
-			EventRegistry.getButtonEventListeners.foreach(eventListener => {
-				eventListener.onButtonTypingHold(character, characterVal)
-			})
-		}
-
-		if (Keyboard.getEventKeyState) {
-//			println("Test")
-			val character = Keyboard.getEventCharacter
-			val characterVal = Keyboard.getEventKey
-			EventRegistry.getButtonEventListeners.foreach(eventListener => {
-				eventListener.onButtonHold(character, characterVal)
-			})
-		}
-
-		EventRegistry.getButtonEventListeners.foreach(eventListener => eventListener.onTick())
-
-		while (Mouse.next()) {
-			val x = Mouse.getX
-			val y = Mouse.getY
-			val dx = Mouse.getDX
-			val dy = Mouse.getDY
-			val mouseState = Mouse.getEventButton
-
-			EventRegistry.getMouseListeners.foreach(eventListener => {
-				eventListener.onMouseMove(x, y, dx, dy)
-			})
-
-			if (Mouse.getEventButtonState) {
-				if (Mouse.getEventButton != -1) {
-//					if (Mouse.isInsideWindow) {
-//						Mouse.setGrabbed(true)
-//						Mouse.setClipMouseCoordinatesToWindow(true)
-//					}
-					EventRegistry.getMouseListeners.foreach(eventListener => {
-						eventListener.onMouseDown(x, y, dx, dy, mouseState)
-					})
-					HyperScape.anyMouseButtonDown = true
-				}
-			} else {
-				if (Mouse.getEventButton != -1) {
-					EventRegistry.getMouseListeners.foreach(eventListener => {
-						eventListener.onMouseUp(x, y, dx, dy, mouseState)
-					})
-					HyperScape.anyMouseButtonDown = false
-				}
-			}
-
-		}
-
-
-		if (HyperScape.anyMouseButtonDown) {
-			val x = Mouse.getX - (Display.getWidth / 2)
-			val y = Mouse.getY - (Display.getHeight / 2)
-			val dx = Mouse.getDX
-			val dy = Mouse.getDY
-			val mouseState = Mouse.getEventButton
-			EventRegistry.getMouseListeners.foreach(eventListener => {
-				eventListener.mouseDown(x, y, dx, dy, mouseState)
-			})
-		}
-
-		if (Mouse.isGrabbed)
-			Mouse.setCursorPosition(Display.getWidth / 2, Display.getHeight / 2)
+		HyperScape.mainCamera.view = new Matrix4f
+		player.parseInput()
+		world.tick(player)
+		HyperScape.mainCamera.view.rotate(-player.rotation.getX, new Vector3f(1, 0, 0))
+		HyperScape.mainCamera.view.rotate(-player.rotation.getY + (Math.PI.toFloat / 2), new Vector3f(0, 1, 0))
+		HyperScape.mainCamera.view.rotate(-player.rotation.getZ, new Vector3f(0, 0, 1))
+		HyperScape.mainCamera.view.translate(new Vector3f(-player.position.getX, -(player.position.getY + player.camHeight), -player.position.getZ))
+		//        HyperScape.mainCamera.view.translate(new Vector3f(0, -player.camHeight, 0))
+		//        println(HyperScape.mainCamera.view.toString)
+		HyperScape.mainCamera.uploadView()
+		if (Mouse.isGrabbed) Mouse.setCursorPosition(Display.getWidth / 2, Display.getHeight / 2)
 	}
 
+	/**
+	 * Renders the game
+	 */
 	def render(): Unit = {
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT)
-		HyperScape.mainCamera.mode = Reference.Camera.PERSPECTIVE_MODE
-		HyperScape.mainCamera.updatePerspective()
-		HyperScape.mainCamera.uploadPerspective()
-		HyperScape.currentGameState.perspectiveRender()
-
-		//        GL11.glDisable(GL11.GL_DEPTH_TEST)
-		HyperScape.mainCamera.mode = Reference.Camera.ORTHOGRAPHIC_MODE
-		//        HyperScape.mainCamera.fov = 160
-		HyperScape.mainCamera.updatePerspective()
-		HyperScape.mainCamera.uploadPerspective()
-		HyperScape.currentGameState.orthographicRender()
-		//        GL11.glEnable(GL11.GL_DEPTH_TEST)
+		world.render()
+		player.render()
 	}
 
+	/**
+	 * Destroys the game
+	 */
 	def destroy(): Unit = {
-		HyperScape.currentGameState.destroy()
+		world.destroy()
 	}
 }
 
 object HyperScape {
-	/** The buffer used to upload to the GPU. Max is 1048576 floats */
-	val uploadBuffer = BufferUtils.createFloatBuffer(1048576)
+	/** The buffer used to upload to the GPU. Max is 64000000 floats */
+	val uploadBuffer = BufferUtils.createFloatBuffer(64000000)
 	/** The Camera that renders they game */
 	val mainCamera = new Camera
-	/** The current game state that the game is in */
-	var currentGameState: GameState = null
+	var shaderSelector = 0
 	var lines: Boolean = false
 	var debug = false
-	var anyMouseButtonDown = false
-
-	private var close: Boolean = false
-
-	def requestClose(): Unit = {
-		close = true
-	}
-
-	def isCloseRequested: Boolean = close
 }

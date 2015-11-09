@@ -10,7 +10,7 @@ object BlockRegistry {
 	 * @param block block to be registered
 	 */
 	def registerBlock(block: Block): Unit = {
-		println(block.blockID)
+		println(block.blockID + " " + block.renderType)
 		blocks += (block.blockID -> block)
 	}
 

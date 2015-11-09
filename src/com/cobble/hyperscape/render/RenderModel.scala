@@ -1,14 +1,15 @@
 package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
-import com.cobble.hyperscape.registry.ShaderRegistry
-import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
+import org.lwjgl.opengl.{GL11, GL20, GL15, GL30}
+import org.lwjgl.util.vector.Matrix4f
 
 /**
  * Creates a renderable model
- * @param verts An array of floats used to define a model object (must be ordered x, y, z, u, v, normalX, normalY, normalZ)
+ * @param verts An array of floats used to define a model object (must be ordered x, y, z, u, v)
  */
 class RenderModel(verts: Array[Float]) extends Model(verts) {
+	val modelMatrix = new Matrix4f()
 
 	HyperScape.uploadBuffer.clear()
 	HyperScape.uploadBuffer.put(verts)
@@ -24,9 +25,9 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
 	GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
 	GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.SIZE_IN_BYTES, Vertex.UV_OFFSET_IN_BYTES)
 	GL20.glVertexAttribPointer(2, Vertex.NORMAL_SIZE, GL11.GL_FLOAT, false, Vertex.SIZE_IN_BYTES, Vertex.NORMAL_OFFSET_IN_BYTES)
+	GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
 
 	GL30.glBindVertexArray(0)
-	GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
 
 	/**
 	 * Renders the model
@@ -34,8 +35,9 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
 	def render(drawLines: Boolean = false): Unit = {
 		// Bind to the VAO that has all the information about the quad vertices
 		GL30.glBindVertexArray(vao)
-		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
+		GL20.glEnableVertexAttribArray(0)
+		GL20.glEnableVertexAttribArray(1)
+		GL20.glEnableVertexAttribArray(2)
 
 		// Draw the vertices
 		if (drawLines)
@@ -44,17 +46,17 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
 			GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verticies.length / Vertex.ELEMENT_COUNT)
 
 		// Put everything back to default (deselect)
-		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
+		GL20.glDisableVertexAttribArray(0)
+		GL20.glDisableVertexAttribArray(1)
 		GL30.glBindVertexArray(0)
 	}
 
 	/**
-	 * Destroys the model
+	 * Destroies the model
 	 */
 	def destroy(): Unit = {
-		GL30.glBindVertexArray(vao)
 		// Disable the VBO index from the VAO attributes list
-		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
+		GL20.glDisableVertexAttribArray(0)
 
 		// Delete the VBO
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)

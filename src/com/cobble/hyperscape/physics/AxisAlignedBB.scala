@@ -33,6 +33,15 @@ class AxisAlignedBB(xMin: Float = 0f, xMax: Float = 1f, yMin: Float = 0f, yMax: 
 
 	/**
 	 * Returns a copy of the bounding box translated by the coordinates
+	 * @param xyz A vector with the x, y, z values of the translation
+	 * @return The translated bounding box
+	 */
+	def getTranslatedBoundingBox(xyz: Vector3f): AxisAlignedBB = {
+		getTranslatedBoundingBox(xyz.getX, xyz.getY, xyz.getZ)
+	}
+
+	/**
+	 * Returns a copy of the bounding box translated by the coordinates
 	 * @param x The x value of the translation
 	 * @param y The y value of the translation
 	 * @param z The z value of the translation
@@ -40,15 +49,6 @@ class AxisAlignedBB(xMin: Float = 0f, xMax: Float = 1f, yMin: Float = 0f, yMax: 
 	 */
 	def getTranslatedBoundingBox(x: Float, y: Float, z: Float): AxisAlignedBB = {
 		new AxisAlignedBB(minX + x, maxX + x, minY + y, maxY + y, minZ + z, maxZ + z)
-	}
-
-	/**
-	 * Returns a copy of the bounding box translated by the coordinates
-	 * @param xyz A vector with the x, y, z values of the translation
-	 * @return The translated bounding box
-	 */
-	def getTranslatedBoundingBox(xyz: Vector3f): AxisAlignedBB = {
-		getTranslatedBoundingBox(xyz.getX, xyz.getY, xyz.getZ)
 	}
 
 	/**
@@ -67,6 +67,10 @@ class AxisAlignedBB(xMin: Float = 0f, xMax: Float = 1f, yMin: Float = 0f, yMax: 
 		new Vector3f(minX + Math.abs(xMin), minY + Math.abs(yMin), minZ + Math.abs(zMin))
 	}
 
+	def setOrigin(vec: Vector3f): Unit = {
+		setOrigin(vec.getX, vec.getY, vec.getY)
+	}
+
 	/**
 	 * Sets the origin location of the bounding box
 	 * @param x X location of the origin
@@ -80,10 +84,6 @@ class AxisAlignedBB(xMin: Float = 0f, xMax: Float = 1f, yMin: Float = 0f, yMax: 
 		maxY = y + yMax
 		minZ = z + zMin
 		maxZ = z + zMax
-	}
-
-	def setOrigin(vec: Vector3f): Unit = {
-		setOrigin(vec.getX, vec.getY, vec.getY)
 	}
 
 	/**

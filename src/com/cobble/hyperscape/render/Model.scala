@@ -11,20 +11,10 @@ import org.lwjgl.util.vector.Vector3f
 class Model(verts: Array[Float]) {
 	var verticies = util.Arrays.copyOf(verts, verts.length)
 
-	/**
-	 * Rotates the model
-	 * @param vec A vector containing the x, y, z components of the rotation in degrease
-	 */
 	def rotate(vec: Vector3f): Unit = {
 		rotate(vec.getX, vec.getY, vec.getZ)
 	}
 
-	/**
-	 * Rotates the model
-	 * @param roll The degrease to rotate the model on the x axis
-	 * @param pitch The degrease to rotate the model on the y axis
-	 * @param yaw The degrease to rotate the model on the z axis
-	 */
 	def rotate(roll: Float, pitch: Float, yaw: Float): Unit = {
 		val avg = new Vector3f()
 		for (i <- 0 until verticies.length by Vertex.ELEMENT_COUNT) {
@@ -47,7 +37,7 @@ class Model(verts: Array[Float]) {
 	}
 
 	/**
-	 * Translates the model relative to the objects origin
+	 * Translates the model
 	 * @param x Amount to translate in the x
 	 * @param y Amount to translate in the y
 	 * @param z Amount to translate in the z
@@ -85,6 +75,4 @@ class Model(verts: Array[Float]) {
 	def copy: Model = {
 		new Model(verticies)
 	}
-
-	def getVerts: Array[Float] = verticies
 }

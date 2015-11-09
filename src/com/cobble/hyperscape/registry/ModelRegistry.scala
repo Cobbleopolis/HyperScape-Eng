@@ -1,7 +1,6 @@
 package com.cobble.hyperscape.registry
 
-import com.cobble.hyperscape.render.{Model, OBJLoader}
-
+import com.cobble.hyperscape.render.{OBJLoader, Model}
 
 object ModelRegistry {
 	private var models: Map[String, Model] = Map()

@@ -4,11 +4,10 @@ import java.io.File
 import javax.imageio.ImageIO
 
 import org.lwjgl.BufferUtils
-import org.lwjgl.opengl._
+import org.lwjgl.opengl.{GL12, GL13, GL11}
 
 
 object TextureRegistry {
-
 	private var textures: Map[String, Int] = Map()
 	private var currTexture = ""
 
@@ -19,16 +18,6 @@ object TextureRegistry {
 	 */
 	def loadTexture(pathToTexture: String, textureName: String): Unit = {
 		val img = ImageIO.read(new File(pathToTexture))
-
-		//        val frm = new JFrame()
-		//        frm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-		//        val canvas = new JLabel()
-		//        canvas.setPreferredSize(new Dimension(img.getWidth, img.getHeight))
-		//        canvas.setIcon(new ImageIcon(img))
-		//        frm.add(canvas)
-		//        frm.pack()
-		//        frm.setVisible(true)
-
 		val rgb = new Array[Int](img.getWidth * img.getHeight * 4)
 		img.getRGB(0, 0, img.getWidth, img.getHeight, rgb, 0, img.getWidth)
 		val pixels = BufferUtils.createIntBuffer(rgb.length)
@@ -59,28 +48,10 @@ object TextureRegistry {
 	}
 
 	/**
-	 * Destroys all of the registered textures
-	 */
-	def destroyAllTextures(): Unit = {
-		println("Destroying all registered textures...")
-		//        textures.foreach(tex => destroyTexture(tex._1))
-		for (tex <- textures) {
-			destroyTexture(tex._1)
-		}
-		println("Finished destroying all registered textures...")
-	}
-
-	/**
 	 * Destroys a texture
 	 * @param textureName Name of the texture to destroy
 	 */
 	def destroyTexture(textureName: String): Unit = {
-		println("Destroying texture " + textureName + "...")
-		val textureLoc = textures(textureName)
-		GL11.glDeleteTextures(textureLoc)
-		textures = textures.filter(tex => tex._2 != textureLoc)
-		println("Finished destroying texture " + textureName + "...")
+		textures(textureName)
 	}
-
 }
-
