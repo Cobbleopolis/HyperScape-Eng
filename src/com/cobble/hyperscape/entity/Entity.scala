@@ -1,6 +1,7 @@
 package com.cobble.hyperscape.entity
 
 import com.cobble.hyperscape.physics.AxisAlignedBB
+import com.cobble.hyperscape.render.RenderModel
 import com.cobble.hyperscape.util.MathUtil
 import com.cobble.hyperscape.world.World
 import org.lwjgl.util.vector.Vector3f
@@ -9,7 +10,7 @@ import org.lwjgl.util.vector.Vector3f
  * Creates an entity object
  * @param worldObj The world the entity is in
  */
-class Entity(worldObj: World) {
+abstract class Entity(worldObj: World) {
 
 	/** A vector that is used to represent the entities location (x, y, z) */
 	var position: Vector3f = new Vector3f
@@ -41,6 +42,8 @@ class Entity(worldObj: World) {
 	/** true if the entity is sneaking, false otherwise */
 	var isSneaking: Boolean = false
 
+    val model: RenderModel
+
 	/**
 	 * Ticks the entity
 	 */
@@ -57,6 +60,15 @@ class Entity(worldObj: World) {
 		//        println("Final: " + position.toString + " | " + velocity.toString)
 		//        println("---------------------------------------------------------------------------------")
 	}
+
+    def render(): Unit = {
+        model.modelMatrix.setIdentity()
+        model.modelMatrix.translate(position)
+        model.modelMatrix.rotate(rotation.getX, new Vector3f(1, 0, 0))
+        model.modelMatrix.rotate(rotation.getY, new Vector3f(0, 1, 0))
+        model.modelMatrix.rotate(rotation.getZ, new Vector3f(0, 0, 1))
+        model.render()
+    }
 
 	//TODO Have Galen attempt to explain how collision is actually working and then cry because I either don't understand it or because I'm really stupid
 
@@ -167,27 +179,20 @@ class Entity(worldObj: World) {
 
 	/**
 	 * Rotates the entity
-	 * @param roll Amount to rotate the entity on the x-axis in degrees
-	 * @param pitch Amount to rotate the entity on the y-axis in degrees
-	 * @param yaw Amount to rotate the entity on the z-axis in degrees
-	 */
-	def rotateDeg(roll: Float, pitch: Float, yaw: Float): Unit = {
-		rotate(Math.toRadians(roll).toFloat, Math.toRadians(pitch).toFloat, Math.toRadians(yaw).toFloat)
+     * @param yaw Amount to rotate the entity on the z-axis in degrees
+     * @param pitch Amount to rotate the entity on the y-axis in degrees
+     * @param roll Amount to rotate the entity on the x-axis in degrees
+     */
+	def rotateDeg(pitch: Float, yaw: Float, roll: Float): Unit = {
+        rotateEntity(Math.toRadians(pitch).toFloat, Math.toRadians(yaw).toFloat, Math.toRadians(roll).toFloat)
 	}
 
-	/**
-	 * Rotates the entity
-	 * @param roll Amount to rotate the entity on the x-axis in radians
-	 * @param pitch Amount to rotate the entity on the y-axis in radians
-	 * @param yaw Amount to rotate the entity on the z-axis in radians
-	 */
-	def rotate(roll: Float, pitch: Float, yaw: Float): Unit = {
-		rotation.translate(roll, pitch, yaw)
-		if (rotation.getY > MathUtil.TAU) rotation.setY(rotation.getY - MathUtil.TAU)
-		if (rotation.getY < 0) rotation.setY(MathUtil.TAU + rotation.getY)
-		if (rotation.getX > Math.toRadians(maxLookUp).toFloat) rotation.setX(Math.toRadians(maxLookUp).toFloat)
-		if (rotation.getX < Math.toRadians(maxLookDown).toFloat) rotation.setX(Math.toRadians(maxLookDown).toFloat)
+    def rotateEntity(pitch: Float, yaw: Float, roll: Float): Unit = {
+        rotation.translate(pitch, yaw, roll)
+    }
 
-	}
+    def rotateEntity(rotationVector: Vector3f): Unit = {
+        rotateEntity(rotationVector.getX, rotationVector.getY, rotationVector.getZ)
+    }
 
 }

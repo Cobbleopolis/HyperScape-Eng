@@ -18,7 +18,7 @@ class EntityPlayable(world: World) extends Entity(world) {
 		0.00f, 1.3f,
 		-0.3f, 0.3f)
 
-	var model = new RenderModel(ModelRegistry.getModel("player").getVertices)
+	val model = new RenderModel(ModelRegistry.getModel("player").getVertices)
 
 	val shaders = Array("terrain", "debug", "Panic! at the Disco", "plaid")
 
@@ -57,9 +57,9 @@ class EntityPlayable(world: World) extends Entity(world) {
 			}
 		}
 		if (Mouse.isGrabbed) {
-			val mouseDX = Mouse.getDX * mouseSpeed * 0.16f
-			val mouseDY = Mouse.getDY * mouseSpeed * 0.16f
-			rotateDeg(mouseDY, -mouseDX, 0)
+			val deltaX = Mouse.getDX * mouseSpeed * 0.16f
+			val deltaY = Mouse.getDY * mouseSpeed * 0.16f
+			rotateDeg(deltaY / 100, deltaX / 100, 0)
 		}
 		if (Mouse.isButtonDown(0) && !Mouse.isGrabbed) {
 			Mouse.setGrabbed(true)
@@ -102,22 +102,19 @@ class EntityPlayable(world: World) extends Entity(world) {
 		//        }
 	}
 
-	def render(): Unit = {
-		val renderModel = model.copy
+	override def render(): Unit = {
 		TextureRegistry.bindTexture("player")
-		HyperScape.uploadBuffer.clear()
-		val modelMat = new Matrix4f
-		val loc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
-		modelMat.translate(position)
-		//        modelMat.rotate(-rotation.getX + (MathUtil.PI / 2), new Vector3f(1, 0, 0))
-		modelMat.rotate(rotation.getZ, new Vector3f(0, 0, 1))
-		modelMat.rotate(rotation.getY, new Vector3f(0, 1, 0))
-		modelMat.store(HyperScape.uploadBuffer)
-		HyperScape.uploadBuffer.flip()
-		GL20.glUniformMatrix4(loc, false, HyperScape.uploadBuffer)
-		HyperScape.uploadBuffer.clear()
+//		HyperScape.uploadBuffer.clear()
+//		val modelMat = new Matrix4f
+//		val loc = ShaderRegistry.getCurrentShader.getUniformLocation("modelMatrix")
+//		modelMat.translate(position)
+//		//        modelMat.rotate(-rotation.getX + (MathUtil.PI / 2), new Vector3f(1, 0, 0))
+//		modelMat.store(HyperScape.uploadBuffer)
+//		HyperScape.uploadBuffer.flip()
+//		GL20.glUniformMatrix4(loc, false, HyperScape.uploadBuffer)
+//		HyperScape.uploadBuffer.clear()
 		val colorLoc = ShaderRegistry.getCurrentShader.getUniformLocation("chunkColor")
 		GL20.glUniform4f(colorLoc, 0, 0, 1, 1)
-		renderModel.render()
+        super.render()
 	}
 }
