@@ -85,7 +85,7 @@ class Chunk(xCoord: Int, zCoord: Int) {
 	def generate(): Unit = {
 		println("Generate Chunk | " + xCoord + " " + zCoord)
 		val size = 8
-		val opts = Array(Blocks.blank.blockID, Blocks.light.blockID, Blocks.model.blockID, Blocks.glass.blockID, Blocks.pillar.blockID)
+		val opts = Array(Blocks.blank, Blocks.light, Blocks.model, Blocks.glass, Blocks.pillar)
 		for (x <- 0 to 15) {
 			for (z <- 0 to 15) {
 				for (y <- 0 to 16) {
@@ -103,10 +103,10 @@ class Chunk(xCoord: Int, zCoord: Int) {
 	 * @param x X location of the block
 	 * @param y Y location of the block
 	 * @param z Z location of the block
-	 * @param blockID Sets the block at x, y, z (internal chunk coordinates) to block
+	 * @param block Sets the block at x, y, z (internal chunk coordinates) to block
 	 */
-	def setBlock(x: Int, y: Int, z: Int, blockID: Int): Unit = {
-		blocks(getBlockIndexFromXYZ(x, y, z)) = blockID
+	def setBlock(x: Int, y: Int, z: Int, block: Block): Unit = {
+		blocks(getBlockIndexFromXYZ(x, y, z)) = block.blockID
 		isDirty = true
 	}
 

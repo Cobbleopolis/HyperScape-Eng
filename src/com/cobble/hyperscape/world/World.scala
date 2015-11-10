@@ -30,7 +30,7 @@ abstract class World {
 	 * @param z Z Coordinate of block
 	 * @param block Block to set the location to
 	 */
-	def setBlock(x: Int, y: Int, z: Int, block: Int): Unit = {
+	def setBlock(x: Int, y: Int, z: Int, block: Block): Unit = {
 		chunks(WorldUtil.getChunkIndexFromXZ(x, z)).setBlock(x & 15, y, z & 15, block)
 	}
 
