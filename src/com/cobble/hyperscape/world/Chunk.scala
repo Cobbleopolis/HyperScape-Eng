@@ -3,7 +3,7 @@ package com.cobble.hyperscape.world
 import java.util.Random
 
 import com.cobble.hyperscape.block.Block
-import com.cobble.hyperscape.reference.Blocks
+import com.cobble.hyperscape.reference.{WorldRef, Blocks}
 import com.cobble.hyperscape.registry.BlockRegistry
 import com.cobble.hyperscape.render.RenderModel
 
@@ -14,7 +14,7 @@ import com.cobble.hyperscape.render.RenderModel
  */
 class Chunk(xCoord: Int, zCoord: Int) {
 	val rand = new Random
-	var blocks = new Array[Int](16384)
+	var blocks = new Array[Int](WorldRef.CHUNK_SIZE)
 	for ((block, i) <- blocks.zipWithIndex) {
 		blocks(i) = Blocks.air.blockID
 	}
