@@ -237,7 +237,8 @@ abstract class World {
 		//        newChunkMaterial.set(new TextureAttribute(TextureAttribute.Diffuse, TextureRegistry.getTexture("terrainMap")))
 		//        newChunkModel.materials.add(newChunkMaterial)
 		println("Number of Verts: " + verts.length)
-		newChunkModel.translate(chunk.getXCoord * 16, 0, chunk.getZCoord * 16)
+//		newChunkModel.translate(chunk.getXCoord * 16, 0, chunk.getZCoord * 16)
+		newChunkModel.modelMatrix.translate(new Vector3f(chunk.getXCoord * 16, 0, chunk.getZCoord * 16))
 		chunks(index).chunkModel = newChunkModel
 		chunks(index).isDirty = false
 	}

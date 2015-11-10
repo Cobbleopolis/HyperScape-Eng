@@ -2,6 +2,7 @@ package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.registry.ShaderRegistry
+import com.cobble.hyperscape.util.RenderUtil
 import org.lwjgl.opengl.{GL11, GL20, GL15, GL30}
 import org.lwjgl.util.vector.Matrix4f
 
@@ -37,6 +38,8 @@ class RenderModel(verts: Array[Float]) extends Model(verts) {
 		// Bind to the VAO that has all the information about the quad vertices
 		GL30.glBindVertexArray(vao)
 		ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
+
+        RenderUtil.uploadModelMatrix(modelMatrix)
 
 		// Draw the vertices
 		if (drawLines)
