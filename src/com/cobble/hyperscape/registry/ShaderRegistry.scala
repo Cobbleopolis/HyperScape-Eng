@@ -90,7 +90,7 @@ object ShaderRegistry {
 	 * @return Currently bound shader
 	 */
 	def getCurrentShader: Shader = {
-		programs(currShader)
+		programs.getOrElse(currShader, null)
 	}
 
 	def getShader(shaderName: String): Shader = {

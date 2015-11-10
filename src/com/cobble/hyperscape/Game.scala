@@ -36,7 +36,12 @@ object Game {
 		hyperScape = new HyperScape
 		hyperScape.init()
 
-		while (!Display.isCloseRequested) {
+		while (!Display.isCloseRequested && !HyperScape.isCloseRequested) {
+            if (Display.wasResized) {
+                GL11.glViewport(0, 0, Display.getWidth, Display.getHeight)
+                HyperScape.mainCamera.updatePerspective()
+                HyperScape.mainCamera.uploadPerspective()
+            }
 			hyperScape.tick()
 			// Map the internal OpenGL coordinate system to the entire screen
 			hyperScape.render()
@@ -83,7 +88,7 @@ object Game {
 
 			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT))
 			Display.setTitle(WINDOW_TITLE)
-			//            Display.setResizable(true)
+            Display.setResizable(true)
 			Display.create(pixelFormat, contextAtrributes)
 		} catch {
 			case e: LWJGLException => e.printStackTrace(); System.exit(-1)

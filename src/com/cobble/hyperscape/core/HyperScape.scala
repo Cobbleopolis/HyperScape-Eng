@@ -75,4 +75,6 @@ object HyperScape {
 	var shaderSelector = 0
 	var lines: Boolean = false
 	var debug = false
+
+    var isCloseRequested: Boolean = false
 }

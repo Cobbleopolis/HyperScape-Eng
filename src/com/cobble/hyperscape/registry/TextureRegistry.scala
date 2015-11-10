@@ -54,4 +54,8 @@ object TextureRegistry {
 	def destroyTexture(textureName: String): Unit = {
 		textures(textureName)
 	}
+
+    def destroyAllTextures(): Unit = {
+        textures.foreach(tex => destroyTexture(tex._1))
+    }
 }
