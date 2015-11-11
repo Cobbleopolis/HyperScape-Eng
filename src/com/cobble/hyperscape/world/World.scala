@@ -22,6 +22,10 @@ abstract class World {
 
 
 	def setBlock(x: Int, y: Int, z: Int, block: Block): Unit = {
+		if (x < 0 || x > 255 || y < 0 || y > 255 || z < 0 || z > 255) {
+			println("X, Y, and Z must all be between 0 and 255. Not setting Block | Attempted location: (" + x + ", " + y + ", " + z + ")")
+			return
+		}
 		val index: Int = getChunkIndexFromXZ(x, z)
 		if (!chunks.contains(index)) {
 			val (chunkX, chunkY) = getChunkXZFromIndex(index)
@@ -32,6 +36,10 @@ abstract class World {
 	}
 
 	def getBlock(x: Int, y: Int, z: Int): Block = {
+		if (x < 0 || x > 255 || y < 0 || y > 255 || z < 0 || z > 255) {
+			println("X, Y, and Z must all be between 0 and 255. Returning null | Attempted location: (" + x + ", " + y + ", " + z + ")")
+			return null
+		}
 		val chunk = getChunk(x, z)
 		if (chunk != null)
 			chunks(getChunkIndexFromXZ(x, z)).getBlock(x & 15, y, z & 15)
@@ -65,7 +73,6 @@ abstract class World {
 	 * @return Chunk at x, z null if the chunk at x, z does not exist
 	 */
 	def getChunk(x: Int, z: Int): Chunk = {
-		if (x > 255 || z > 255) throw new InvalidParameterException("X and Z must be between 0 and 255")
 		chunks(getChunkIndexFromXZ(x, z))
 	}
 
