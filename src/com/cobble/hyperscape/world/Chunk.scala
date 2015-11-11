@@ -33,12 +33,12 @@ class Chunk(xCoord: Int, zCoord: Int) {
 		model.translateUV(block.uv._1 * (1f / 16f), block.uv._2 * (1f / 16f))
 		worldModel.addVerts(model.getVertices)
 		isDirty = true
-		if (isEmpty) isEmpty = false
+		if (isEmpty) {isEmpty = false; generateModel(false)}
 	}
 
 	def getBlock(x: Int, y: Int, z: Int): Block = BlockRegistry.getBlock(blocks(getIndexFromXYZ(x, y, z)))
 
-	def generateModel(): Unit = {worldModel.uploadVerts(true); isDirty = false}
+	def generateModel(destroyOldModel: Boolean = true): Unit = {worldModel.uploadVerts(destroyOldModel); isDirty = false}
 
 	def render(): Unit = {
 		if (!isEmpty) {
