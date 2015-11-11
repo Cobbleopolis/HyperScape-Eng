@@ -30,6 +30,7 @@ class Chunk(xCoord: Int, zCoord: Int) {
 		blocks(getIndexFromXYZ(x, y, z)) = block.blockID
 		val model = ModelRegistry.getModel("cube")
 		model.translate(x, y, z)
+		model.translateUV(block.uv._1 * (1f / 16f), block.uv._2 * (1f / 16f))
 		worldModel.addVerts(model.getVertices)
 		isDirty = true
 		if (isEmpty) isEmpty = false

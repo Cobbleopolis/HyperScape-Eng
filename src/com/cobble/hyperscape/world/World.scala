@@ -4,20 +4,17 @@ import java.security.InvalidParameterException
 
 import com.cobble.hyperscape.block.Block
 import com.cobble.hyperscape.entity.EntityPlayer
+import com.cobble.hyperscape.reference.Reference
 import org.lwjgl.util.vector.Vector3f
+
+import scala.collection.mutable
 
 abstract class World {
 
 	var player: EntityPlayer = new EntityPlayer(this)
 	player.rotateEntity(0f, 0f, Math.toRadians(180).asInstanceOf[Float])
 
-//	var chunks = new mutable.HashMap[Int, Chunk]
-	var chunks = new Array[Chunk](526)
-	for(i <- 0 until 526) {
-		val (x, z) = getChunkXZFromIndex(i)
-		println("Adding chunk: " + "(" + x + ", " + z + ") | " + i)
-		chunks(i) = new Chunk(x, z)
-	}
+	var chunks = new mutable.HashMap[Int, Chunk]
 
 	val grav: Float
 
@@ -25,6 +22,11 @@ abstract class World {
 
 
 	def setBlock(x: Int, y: Int, z: Int, block: Block): Unit = {
+		val index: Int = getChunkIndexFromXZ(x, z)
+		if (!chunks.contains(index)) {
+			val (chunkX, chunkY) = getChunkXZFromIndex(index)
+			chunks.put(index, new Chunk(chunkX, chunkY))
+		}
 		chunks(getChunkIndexFromXZ(x, z)).setBlock(x & 15, y, z & 15, block)
 //		println(getChunkIndexFromXZ(x, z))
 	}
@@ -44,7 +46,7 @@ abstract class World {
 	 * @return The index of the chunk at x, z
 	 */
 	def getChunkIndexFromXZ(x: Int, z: Int): Int = {
-		(x / 16) << 4 | (z / 16)
+		((x / 16) & 15) << 4 | ((z / 16) & 15)
 	}
 
 	/**
@@ -53,7 +55,7 @@ abstract class World {
 	 * @return The x, z location of the chunk
 	 */
 	def getChunkXZFromIndex(index: Int): (Int, Int) = {
-		(index >> 4, (index & 16).toShort)
+		((index >> 4) & 15, index & 15)
 	}
 
 	/**
@@ -63,7 +65,7 @@ abstract class World {
 	 * @return Chunk at x, z null if the chunk at x, z does not exist
 	 */
 	def getChunk(x: Int, z: Int): Chunk = {
-		if (x > 255 || z > 255) throw new InvalidParameterException("X must be between 0 and 255")
+		if (x > 255 || z > 255) throw new InvalidParameterException("X and Z must be between 0 and 255")
 		chunks(getChunkIndexFromXZ(x, z))
 	}
 
@@ -103,7 +105,7 @@ abstract class World {
 	}
 
 	def destroy(): Unit = {
-		chunks.foreach(chunk => chunk.destroy())
+		chunks.foreach(chunk => chunk._2.destroy())
 	}
 
 }
