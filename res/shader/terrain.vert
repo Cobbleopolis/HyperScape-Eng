@@ -25,4 +25,7 @@ void main() {
     pass_Normal = in_Normal;
 
     pass_TextureCoord = in_TextureCoord;
+
+    float dist = length(worldPos);
+    fogPct = max(0.0, min((dist - begin) / range, 1.0));
 }
