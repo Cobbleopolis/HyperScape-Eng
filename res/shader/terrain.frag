@@ -3,7 +3,6 @@
 uniform sampler2D texture_diffuse;
 uniform vec4 chunkColor = vec4(1);
 
-in vec4 pass_Color;
 in vec2 pass_TextureCoord;
 in float fogPct;
 in vec3 pass_Normal;
@@ -13,7 +12,7 @@ out vec4 out_Color;
 const vec4 fogColor = vec4(0.67058823529411764705882352941176, 0.8078431372549019607843137254902, 1, 1);
 
 void main() {
-    out_Color = pass_Color * chunkColor * texture(texture_diffuse, pass_TextureCoord);
+    out_Color = chunkColor * texture(texture_diffuse, pass_TextureCoord);
     if (out_Color.a == 0.0) {
         discard;
     }
