@@ -9,7 +9,7 @@ in vec3 pass_Normal;
 
 out vec4 out_Color;
 
-const vec4 fogColor = vec4(0.67058823529411764705882352941176, 0.8078431372549019607843137254902, 1, 1);
+const vec4 fogColor = vec4(0.67058823529411764705882352941176, 0.8078431372549019607843137254902, 1.0, 1.0);
 
 void main() {
     out_Color = chunkColor * texture(texture_diffuse, pass_TextureCoord);
