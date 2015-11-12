@@ -13,7 +13,7 @@ class WorldMainMenu extends World {
 
 	for (z <- 0 until 255)
 		for (x <- 0 until 255) {
-			val period = MathUtil.TAU / 40
+			val period = MathUtil.TAU / 32
 			val amp = 3
 			val y = ((amp * Math.sin(x * period) + amp) + (amp * Math.cos(z * period) + amp)).toInt
 			setBlock(x, y, z, if (rand.nextBoolean()) Blocks.blank else Blocks.thing)
