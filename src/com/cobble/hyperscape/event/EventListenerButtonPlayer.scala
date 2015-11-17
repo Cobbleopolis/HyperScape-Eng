@@ -32,5 +32,8 @@ class EventListenerButtonPlayer extends EventListenerButton {
 			player.rotateEntity(0.0f, Math.toRadians(rotate).toFloat, 0.0f)
 
 		player.rotation.setX(Math.min(player.maxLookDown, Math.max(player.maxLookUp, player.rotation.getX)))
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_R))
+			println(player.position)
 	}
 }
