@@ -2,6 +2,7 @@
 
 uniform sampler2D texture_diffuse;
 uniform vec4 chunkColor = vec4(1);
+//uniform vec3 viewDirection;
 
 in vec2 pass_TextureCoord;
 in float fogPct;

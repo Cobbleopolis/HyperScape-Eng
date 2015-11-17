@@ -56,13 +56,10 @@ class WorldModel {
 			HyperScape.mainCamera.uploadView()
 			GLUtil.uploadModelMatrix(modelMatrix)
 			TextureRegistry.bindTexture("terrain")
+//			val viewDirectionLoc: Int = ShaderRegistry.getCurrentShader.getUniformLocation("viewDirection")
+//			val playerRotation: Vector3f = HyperScape.currentGameState.world.player.rotation
+//			GL20.glUniform3f(viewDirectionLoc, playerRotation.getX, playerRotation.getY, playerRotation.getZ)
 			// Bind to the VAO that has all the information about the quad vertices
-//			val loc = ShaderRegistry.getCurrentShader.getUniformLocation("chunkColor")
-//			if (xCoord % 2 == 0 && zCoord % 2 == 0) {
-//				GL20.glUniform4f(loc, .2f, 1f, 1f, 1f)
-//			} else {
-//				GL20.glUniform4f(loc, 1f, .2f, 1f, 1f)
-//			}
 			GL30.glBindVertexArray(vao)
 			ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
 			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
