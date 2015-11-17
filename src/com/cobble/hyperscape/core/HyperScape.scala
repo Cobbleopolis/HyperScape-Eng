@@ -40,6 +40,11 @@ class HyperScape {
 			EventRegistry.getButtonEventListeners.foreach(eventListener => {
 				eventListener.onButtonHold(character, characterVal)
 			})
+			if (characterVal == Keyboard.KEY_ESCAPE && (Mouse.isGrabbed || Mouse.isClipMouseCoordinatesToWindow)) {
+				Mouse.setGrabbed(false)
+				Mouse.setClipMouseCoordinatesToWindow(false)
+			}
+
 		}
 
 		EventRegistry.getButtonEventListeners.foreach(eventListener => eventListener.onTick())
@@ -51,26 +56,29 @@ class HyperScape {
 			val dy = Mouse.getDY
 			val mouseState = Mouse.getEventButton
 
-			EventRegistry.getMouseListeners.foreach(eventListener => {
-				eventListener.onMouseMove(x, y, dx, dy)
-			})
+			if (Mouse.isGrabbed)
+				EventRegistry.getMouseListeners.foreach(eventListener => {
+					eventListener.onMouseMove(x, y, dx, dy)
+				})
 
 			if (Mouse.getEventButtonState) {
 				if (Mouse.getEventButton != -1) {
-//					if (Mouse.isInsideWindow) {
-//						Mouse.setGrabbed(true)
-//						Mouse.setClipMouseCoordinatesToWindow(true)
-//					}
-					EventRegistry.getMouseListeners.foreach(eventListener => {
-						eventListener.onMouseDown(x, y, dx, dy, mouseState)
-					})
+					if (Mouse.isInsideWindow) {
+						Mouse.setGrabbed(true)
+						Mouse.setClipMouseCoordinatesToWindow(true)
+					}
+					if (Mouse.isGrabbed)
+						EventRegistry.getMouseListeners.foreach(eventListener => {
+							eventListener.onMouseDown(x, y, dx, dy, mouseState)
+						})
 					HyperScape.anyMouseButtonDown = true
 				}
 			} else {
 				if (Mouse.getEventButton != -1) {
-					EventRegistry.getMouseListeners.foreach(eventListener => {
-						eventListener.onMouseUp(x, y, dx, dy, mouseState)
-					})
+					if (Mouse.isGrabbed)
+						EventRegistry.getMouseListeners.foreach(eventListener => {
+							eventListener.onMouseUp(x, y, dx, dy, mouseState)
+						})
 					HyperScape.anyMouseButtonDown = false
 				}
 			}
