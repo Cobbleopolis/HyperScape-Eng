@@ -66,10 +66,10 @@ object Init {
 	 */
 	def registerEventListeners(): Unit = {
 		println("Registering Event Listeners...")
-		EventRegistry.registerMouseEventListener(new EventListenerMouseGui)
-		EventRegistry.registerButtonEventListener(new EventListenerButtonGui)
+//		EventRegistry.registerMouseEventListener(new EventListenerMouseGui)
+//		EventRegistry.registerButtonEventListener(new EventListenerButtonGui)
 		EventRegistry.registerButtonEventListener(new EventListenerButtonPlayer)
-//		EventRegistry.registerMouseEventListener(new EventListenerMousePlayer)
+		EventRegistry.registerMouseEventListener(new EventListenerMousePlayer)
 		println("Finished Registering Event Listeners")
 	}
 }
