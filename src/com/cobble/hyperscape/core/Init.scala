@@ -1,5 +1,6 @@
 package com.cobble.hyperscape.core
 
+import com.cobble.hyperscape.block.Blocks
 import com.cobble.hyperscape.event.{EventListenerMousePlayer, EventListenerButtonGui, EventListenerButtonPlayer, EventListenerMouseGui}
 import com.cobble.hyperscape.registry.{EventRegistry, ModelRegistry, ShaderRegistry, TextureRegistry}
 
@@ -13,6 +14,7 @@ object Init {
 		loadTextures()
 		registerEventListeners()
 		loadModels()
+		Blocks.registerBlocks()
 		println("Done Loading")
 	}
 
