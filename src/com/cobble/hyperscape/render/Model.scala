@@ -62,13 +62,13 @@ class Model(verts: Array[Float]) {
 
 	/**
 	 * Translates the model's UVs
-	 * @param x Amount of block textures to move on the x-axis
-	 * @param z Amount of block textures to move on the z-axis
+	 * @param u Amount of block textures to move on the x-axis
+	 * @param v Amount of block textures to move on the y-axis
 	 */
-	def translateUV(x: Float, z: Float): Unit = {
+	def translateUV(u: Float, v: Float): Unit = {
 		for (i <- 0 until verticies.length by Vertex.ELEMENT_COUNT) {
-			verticies.update(i + 3, verticies(i + 3) + x)
-			verticies.update(i + 4, verticies(i + 4) + z)
+			verticies.update(i + 3, verticies(i + 3) + u)
+			verticies.update(i + 4, verticies(i + 4) + v)
 		}
 	}
 
