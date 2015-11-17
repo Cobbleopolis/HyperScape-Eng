@@ -25,6 +25,10 @@ class WorldModel {
 		verts = verts ++ newVerts
 	}
 
+	def clearVerts(): Unit = {
+		verts = Array[Float]()
+	}
+
 	def uploadVerts(destroyCurrentModel: Boolean = true): Unit = {
 		println("Uploading...")
 		if (destroyCurrentModel) destroy()

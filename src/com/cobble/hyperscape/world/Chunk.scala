@@ -28,24 +28,41 @@ class Chunk(xCoord: Int, zCoord: Int) {
 
 	def setBlock(x: Int, y: Int, z: Int, block: Block): Unit = {
 		blocks(getIndexFromXYZ(x, y, z)) = block.blockID
-		val model = ModelRegistry.getModel("cube")
-		model.translate(x, y, z)
-		model.translateUV(block.uv._1 * (1f / 16f), block.uv._2 * (1f / 16f))
-		worldModel.addVerts(model.getVertices)
+//		val model = ModelRegistry.getModel("cube")
+//		model.translate(x, y, z)
+//		model.translateUV(block.uv._1 * (1f / 16f), block.uv._2 * (1f / 16f))
+//		worldModel.addVerts(model.getVertices)
 		isDirty = true
 		if (isEmpty) {isEmpty = false; generateModel(false)}
 	}
 
 	def getBlock(x: Int, y: Int, z: Int): Block = BlockRegistry.getBlock(blocks(getIndexFromXYZ(x, y, z)))
 
-	def generateModel(destroyOldModel: Boolean = true): Unit = {worldModel.uploadVerts(destroyOldModel); isDirty = false}
+	def generateModel(destroyOldModel: Boolean = true): Unit = {
+		worldModel.clearVerts()
+		val model = ModelRegistry.getModel("cube")
+		var i = 0
+		blocks.foreach(blockID => {
+			if (blockID != 0) {
+				val localModel = model.copy
+				val (x, y, z) = getXYZFromIndex(i)
+				localModel.translate(x, y, z)
+				val (u, v) = BlockRegistry.getBlock(blockID).uv
+				localModel.translateUV(u * (1f / 16f), v * (1f / 16f))
+				worldModel.addVerts(localModel.getVertices)
+			}
+			i += 1
+		})
+		worldModel.uploadVerts(destroyOldModel)
+		isDirty = false
+	}
 
 	def render(): Unit = {
-		if (!isEmpty) {
+//		if (!isEmpty) {
 			if (isDirty)
 				generateModel()
 			worldModel.render(xCoord, zCoord)
-		}
+//		}
 	}
 
 	def destroy(): Unit = {worldModel.destroy()}
