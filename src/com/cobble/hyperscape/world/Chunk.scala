@@ -4,6 +4,7 @@ import com.cobble.hyperscape.block.Block
 import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.{ShaderRegistry, ModelRegistry, BlockRegistry}
 import com.cobble.hyperscape.render.WorldModel
+import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.{Vector2f, Vector3f, Matrix4f}
 
@@ -33,13 +34,15 @@ class Chunk(xCoord: Int, zCoord: Int) {
 //		model.translateUV(block.uv._1 * (1f / 16f), block.uv._2 * (1f / 16f))
 //		worldModel.addVerts(model.getVertices)
 		isDirty = true
-		if (isEmpty) {isEmpty = false; generateModel(false)}
+		isEmpty = false
 	}
 
 	def getBlock(x: Int, y: Int, z: Int): Block = BlockRegistry.getBlock(blocks(getIndexFromXYZ(x, y, z)))
 
 	def generateModel(destroyOldModel: Boolean = true): Unit = {
-		worldModel.clearVerts()
+		worldModel.clearModel()
+		worldModel.destroy()
+//		GLUtil.checkGLError("(" + zCoord + ", " + zCoord + ")")
 		val model = ModelRegistry.getModel("cube")
 		var i = 0
 		blocks.foreach(blockID => {
@@ -53,16 +56,17 @@ class Chunk(xCoord: Int, zCoord: Int) {
 			}
 			i += 1
 		})
-		worldModel.uploadVerts(destroyOldModel)
 		isDirty = false
+		worldModel.uploadVerts(isEmpty)
+//		GLUtil.checkGLError("(" + zCoord + ", " + zCoord + ")_ | " + worldModel.vao + " | " + worldModel.vbo)
 	}
 
 	def render(): Unit = {
-//		if (!isEmpty) {
+		if (!isEmpty) {
 			if (isDirty)
-				generateModel()
+				generateModel(true)
 			worldModel.render(xCoord, zCoord)
-//		}
+		}
 	}
 
 	def destroy(): Unit = {worldModel.destroy()}

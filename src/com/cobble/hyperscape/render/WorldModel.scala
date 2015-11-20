@@ -25,8 +25,11 @@ class WorldModel {
 		verts = verts ++ newVerts
 	}
 
-	def clearVerts(): Unit = {
+	def clearModel(): Unit = {
+//		destroy()
 		verts = Array[Float]()
+		vao = -1
+		vbo = -1
 	}
 
 	def uploadVerts(destroyCurrentModel: Boolean = true): Unit = {
@@ -41,7 +44,7 @@ class WorldModel {
 
 		vbo = GL15.glGenBuffers()
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, vbo)
-		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, HyperScape.uploadBuffer, GL15.GL_STATIC_DRAW)
+		GL15.glBufferData(GL15.GL_ARRAY_BUFFER, HyperScape.uploadBuffer, GL15.GL_DYNAMIC_DRAW)
 
 		GL20.glVertexAttribPointer(0, Vertex.VERTEX_SIZE, GL11.GL_FLOAT, false, Vertex.SIZE_IN_BYTES, Vertex.VERTEX_OFFSET)
 		GL20.glVertexAttribPointer(1, Vertex.UV_SIZE, GL11.GL_FLOAT, false, Vertex.SIZE_IN_BYTES, Vertex.UV_OFFSET_IN_BYTES)
@@ -53,8 +56,7 @@ class WorldModel {
 	}
 
 	def render(xCoord: Int, zCoord: Int): Unit = {
-		if (!verts.isEmpty) {
-			GLUtil.checkGLError("Chunk Render")
+		if (!verts.isEmpty && vao != -1 && vbo != -1) {
 			ShaderRegistry.bindShader(shader)
 			HyperScape.mainCamera.uploadPerspective()
 			HyperScape.mainCamera.uploadView()
@@ -82,17 +84,19 @@ class WorldModel {
 	 * Destroys the model
 	 */
 	def destroy(): Unit = {
-		GL30.glBindVertexArray(vao)
-		// Disable the VBO index from the VAO attributes list
-		ShaderRegistry.getShader(shader).inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
+		if (vbo != -1 && vao != -1) {
+			GL30.glBindVertexArray(vao)
+			// Disable the VBO index from the VAO attributes list
+			ShaderRegistry.getShader(shader).inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
 
-		// Delete the VBO
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
-		GL15.glDeleteBuffers(vbo)
+			// Delete the VBO
+			GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0)
+			GL15.glDeleteBuffers(vbo)
 
-		// Delete the VAO
-		GL30.glBindVertexArray(0)
-		GL30.glDeleteVertexArrays(vao)
+			// Delete the VAO
+			GL30.glBindVertexArray(0)
+			GL30.glDeleteVertexArrays(vao)
+		}
 	}
 
 }

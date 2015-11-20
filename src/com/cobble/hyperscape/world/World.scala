@@ -76,10 +76,6 @@ abstract class World {
 		chunks(getChunkIndexFromXZ(x, z))
 	}
 
-	def generateModel(): Unit = {
-		activeChunks.filter(index => chunks(index).isDirty).foreach(index => {println("Gen"); chunks(index).generateModel()})
-	}
-
 	def getActiveChunks(position: Vector3f, radius: Int): Array[Int] = {
 		var chunks = Array[Int]()
 		for (x <- -radius to radius) {
