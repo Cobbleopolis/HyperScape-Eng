@@ -4,6 +4,7 @@ import java.io._
 
 import com.cobble.hyperscape.core.{HyperScape, Init}
 import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
+import com.cobble.hyperscape.util.GLUtil
 import org.lwjgl.input.Keyboard
 import org.lwjgl.opengl._
 import org.lwjgl.{LWJGLException, Sys}
@@ -18,6 +19,12 @@ object Game {
 	var lastFrame: Long = 0
 
 	var isFullscreen: Boolean = false
+
+	var displayModeFullScreen: DisplayMode = null
+
+	var displayModeNormal: DisplayMode = new DisplayMode(WIDTH, HEIGHT)
+
+	var fullscreen: Boolean = true
 
 	//    var firstRender: Boolean = true
 
@@ -106,7 +113,19 @@ object Game {
 					.withForwardCompatible(true)
 					.withProfileCore(true)
 
-			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT))
+			Display.setFullscreen(true)
+			displayModeFullScreen = Display.getDisplayMode
+			Display.setFullscreen(false)
+
+//			Display.getAvailableDisplayModes.foreach(dM => {
+//				if (dM.getWidth == WIDTH && dM.getHeight == HEIGHT && dM.isFullscreenCapable) {
+//					println("Mode")
+//					displayMode = dM
+//					return
+//				}
+//			})
+
+			Display.setDisplayModeAndFullscreen(if (fullscreen) displayModeFullScreen else displayModeNormal)
 			Display.setTitle(WINDOW_TITLE)
 			Display.setResizable(true)
 			Display.create(pixelFormat, contextAtrributes)
@@ -122,6 +141,14 @@ object Game {
 
 		//        GL11.glEnable(GL11.GL_BLEND)
 		//        GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+	}
+
+	def toggleFullScreen(): Unit = {
+		if (Display.isFullscreen == fullscreen) {
+			fullscreen = !fullscreen
+			Display.setDisplayModeAndFullscreen(if (fullscreen) displayModeFullScreen else new DisplayMode(WIDTH, HEIGHT))
+			GLUtil.checkGLError("Change Fullscreen")
+		}
 	}
 
 	/**

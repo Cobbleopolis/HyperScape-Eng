@@ -1,5 +1,6 @@
 package com.cobble.hyperscape.core
 
+import com.cobble.hyperscape.Game
 import com.cobble.hyperscape.core.gamestate.{GameState, GameStates}
 import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.{EventRegistry, GameStateRegistry}
@@ -44,6 +45,9 @@ class HyperScape {
 				Mouse.setGrabbed(false)
 				Mouse.setClipMouseCoordinatesToWindow(false)
 			}
+
+//			if (characterVal == Keyboard.KEY_F11)
+//				Game.toggleFullScreen()
 
 		}
 
