@@ -24,7 +24,7 @@ object Game {
 
 	var displayModeNormal: DisplayMode = new DisplayMode(WIDTH, HEIGHT)
 
-	var fullscreen: Boolean = true
+	var fullscreen: Boolean = false
 
 	//    var firstRender: Boolean = true
 
