@@ -28,8 +28,8 @@ abstract class Entity(worldObj: World) {
 		val yaw = rotation.getY
 		val sin = Math.sin(yaw).toFloat
 		val cos = Math.cos(yaw).toFloat
-		direction.translate(x * sin, y, x * cos)
-		direction.translate(z * -cos, 0, z * sin)
+		direction.translate(x * cos, y, x * sin)
+		direction.translate(z * sin, 0, z * -cos)
 		moveEntityAlongAxis(direction)
 	}
 

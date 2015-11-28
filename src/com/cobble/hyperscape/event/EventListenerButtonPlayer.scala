@@ -10,17 +10,24 @@ class EventListenerButtonPlayer extends EventListenerButton {
 	override def onTick(): Unit = {
 		val player = HyperScape.currentGameState.world.player
 		if (Keyboard.isKeyDown(Keyboard.KEY_W))
-			player.moveEntity(player.speed, 0, 0)
-		if (Keyboard.isKeyDown(Keyboard.KEY_S))
-			player.moveEntity(-player.speed, 0, 0)
-		if (Keyboard.isKeyDown(Keyboard.KEY_A))
 			player.moveEntity(0, 0, player.speed)
-		if (Keyboard.isKeyDown(Keyboard.KEY_D))
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_S))
 			player.moveEntity(0, 0, -player.speed)
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_A))
+			player.moveEntity(-player.speed, 0, 0)
+
+		if (Keyboard.isKeyDown(Keyboard.KEY_D))
+			player.moveEntity(player.speed, 0, 0)
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_SPACE))
 			player.moveEntity(0, player.speed, 0)
+
 		if (Keyboard.isKeyDown(Keyboard.KEY_LSHIFT))
 			player.moveEntity(0, -player.speed, 0)
+
+
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_UP))
 			player.rotateEntity(-Math.toRadians(rotate).toFloat, 0.0f, 0.0f)
@@ -35,5 +42,8 @@ class EventListenerButtonPlayer extends EventListenerButton {
 
 		if (Keyboard.isKeyDown(Keyboard.KEY_R))
 			println(player.position)
+
+        if (Keyboard.isKeyDown(Keyboard.KEY_E))
+            println(player.rotation)
 	}
 }

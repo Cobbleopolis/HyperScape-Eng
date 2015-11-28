@@ -18,8 +18,8 @@ class WorldModel {
 
 	var vbo: Int = -1
 
-	modelMatrix.rotate(Math.toRadians(180).asInstanceOf[Float], new Vector3f(0, 1, 0))
-	modelMatrix.translate(new Vector3f(0, -3, 0))
+//	modelMatrix.rotate(Math.toRadians(180).asInstanceOf[Float], new Vector3f(0, 1, 0))
+//	modelMatrix.translate(new Vector3f(0, -3, 0))
 
 	def addVerts(newVerts: Array[Float]): Unit = {
 		verts = verts ++ newVerts

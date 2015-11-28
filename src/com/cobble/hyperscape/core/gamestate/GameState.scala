@@ -4,6 +4,7 @@ import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.entity.EntityPlayer
 import com.cobble.hyperscape.gui.GuiScreen
 import com.cobble.hyperscape.registry.ShaderRegistry
+import com.cobble.hyperscape.util.MathUtil
 import com.cobble.hyperscape.world.World
 import org.lwjgl.util.vector.Vector3f
 
@@ -53,7 +54,7 @@ trait GameState {
 		HyperScape.mainCamera.view.rotate(world.player.rotation.getX, new Vector3f(1.0f, 0.0f, 0.0f))
 		HyperScape.mainCamera.view.rotate(world.player.rotation.getY, new Vector3f(0.0f, 1.0f, 0.0f))
 		HyperScape.mainCamera.view.rotate(world.player.rotation.getZ, new Vector3f(0.0f, 0.0f, 1.0f))
-		HyperScape.mainCamera.view.translate(world.player.position)
+		HyperScape.mainCamera.view.translate(MathUtil.getNegative(world.player.position))
 		world.render()
 	}
 

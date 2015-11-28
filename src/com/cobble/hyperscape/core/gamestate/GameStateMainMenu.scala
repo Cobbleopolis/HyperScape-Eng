@@ -8,18 +8,18 @@ class GameStateMainMenu extends GameState {
 
 	val defaultShader: String = "terrain"
 	val size: Float = 360f
-	val modelArray: Array[Float] = Array(
-		-size, -size, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		size, -size, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		size, size, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-
-		-size, -size, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-		size, size, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-		-size, size, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f
-	)
+//	val modelArray: Array[Float] = Array(
+//		-size, -size, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+//		size, -size, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+//		size, size, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+//
+//		-size, -size, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+//		size, size, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+//		-size, size, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f
+//	)
 	//    override var currentGui: GuiScreen = null
 	var count: Int = 60
-	var model: RenderModel = null
+//	var model: RenderModel = null
 
 	var offset: Float = 0.0f
 
@@ -29,8 +29,8 @@ class GameStateMainMenu extends GameState {
 
 	override def changeTo(): Unit = {
 		super.changeTo()
-		model = new RenderModel(modelArray)
-		changeGui(Guis.guiMainMenu)
+//		model = new RenderModel(modelArray)
+//		changeGui(Guis.guiMainMenu)
 		//        ShaderRegistry.getShader("font").inputs.foreach(input => println("(" + input._1 + ", " + input._2 + ")"))
 		//        println("Main Menu " + (currentGui == null))
 	}
@@ -65,7 +65,7 @@ class GameStateMainMenu extends GameState {
 
 	override def destroy(): Unit = {
 		super.destroy()
-		model.destroy()
+//		model.destroy()
 	}
 
 }

@@ -12,7 +12,7 @@ import scala.collection.mutable
 abstract class World {
 
 	var player: EntityPlayer = new EntityPlayer(this)
-	player.rotateEntity(0f, 0f, Math.toRadians(180).asInstanceOf[Float])
+//	player.rotateEntity(0f, Math.toRadians(180).asInstanceOf[Float], 0f)
 
 	var chunks = new mutable.HashMap[Int, Chunk]
 

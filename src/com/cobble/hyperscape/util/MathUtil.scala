@@ -27,6 +27,10 @@ object MathUtil {
 	def subtractVectors(vec1: Vector3f, vec2: Vector3f): Vector3f = {
 		new Vector3f(vec1.getX - vec2.getX, vec1.getY - vec2.getY, vec1.getZ - vec2.getZ)
 	}
+    
+    def getNegative(vector: Vector3f): Vector3f = {
+        new Vector3f(-vector.getX, -vector.getY, -vector.getZ)
+    }
 
 	/**
 	 * Returns the greatest integer less than or equal to the double argument
