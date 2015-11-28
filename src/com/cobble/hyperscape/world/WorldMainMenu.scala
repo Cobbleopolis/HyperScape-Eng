@@ -16,7 +16,9 @@ class WorldMainMenu extends World {
 
 	for (z <- 0 until 255)
 		for (x <- 0 until 255) {
-			val y = ((amp * Math.sin(x * period) + amp) + (amp * Math.cos(z * period) + amp)).toInt
-			setBlock(x, y, z, if (rand.nextBoolean()) Blocks.blank else Blocks.thing)
+            val offset = z / 16
+            for (y <- offset until (if (x % 16 > 8 && z % 16 > 8) offset + 5 else offset +1))
+//			val y = ((amp * Math.sin(x * period) + amp) + (amp * Math.cos(z * period) + amp)).toInt
+			    setBlock(x, y, z, if (rand.nextBoolean()) Blocks.blank else Blocks.thing)
 		}
 }
