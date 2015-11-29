@@ -20,11 +20,11 @@ class Chunk(xCoord: Int, zCoord: Int) {
 	var isEmpty: Boolean = true
 
 	def getXYZFromIndex(index: Int): (Int, Int, Int) = {
-		((index >> 5) & 31, (index >> 10) & 255, index & 31)
+		((index >> 4) & 15, (index >> 8) & 255, index & 15)
 	}
 
 	def getIndexFromXYZ(x: Int, y: Int, z: Int): Int = {
-		(y & 255) << 10 | (x & 31) << 5 | (z & 31)
+		(y & 255) << 8 | (x & 15) << 4 | (z & 15)
 	}
 
 	def setBlock(x: Int, y: Int, z: Int, block: Block): Unit = {
@@ -40,8 +40,8 @@ class Chunk(xCoord: Int, zCoord: Int) {
 	def getBlock(x: Int, y: Int, z: Int): Block = BlockRegistry.getBlock(blocks(getIndexFromXYZ(x, y, z)))
 
 	def generateModel(destroyOldModel: Boolean = true): Unit = {
-		worldModel.clearModel()
-		worldModel.destroy()
+        worldModel.destroy()
+        worldModel.clearModel()
 //		GLUtil.checkGLError("(" + zCoord + ", " + zCoord + ")")
 		val model = ModelRegistry.getModel("cube")
 		var i = 0
@@ -65,7 +65,15 @@ class Chunk(xCoord: Int, zCoord: Int) {
 		if (!isEmpty) {
 			if (isDirty)
 				generateModel(true)
-			worldModel.render(xCoord, zCoord)
+            ShaderRegistry.bindShader(worldModel.shader)
+            val (r: Float, g: Float, b: Float) =
+                if (xCoord % 2 == 0 && zCoord % 2 == 0)
+                    (1f, 0f, 0f)
+                else
+                    (0f, 1f, 0f)
+            val loc = ShaderRegistry.getCurrentShader.getUniformLocation("chunkColor")
+            GL20.glUniform4f(loc, r, g, b, 1f)
+			worldModel.render()
 		}
 	}
 
