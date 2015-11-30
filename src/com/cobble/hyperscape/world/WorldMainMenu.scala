@@ -12,16 +12,18 @@ class WorldMainMenu extends World {
 
     val rand: Random = new Random
 
-    val period = MathUtil.TAU / 32
-    val amp = 3
+    val period = MathUtil.TAU / 256
+    val amp = 32
 
     var i = 0
 
-
     for (x <- 0 until 256)
         for (z <- 0 until 256) {
-            val y = (x / 16) + (z / 16)
-                setBlock(x, y, z, if (rand.nextBoolean()) Blocks.blank else Blocks.thing)
+//            val y = ((amp * Math.sin(x * period) + amp) + (amp * Math.cos(z * period) + amp)).toInt
+            val xy = (amp * -Math.cos(x * period) + amp).toInt
+            val zy = (amp * -Math.cos(z * period) + amp).toInt
+            val y: Int = xy + zy
+            setBlock(x, y, z, if (rand.nextBoolean()) Blocks.blank else Blocks.thing)
         }
 
 
