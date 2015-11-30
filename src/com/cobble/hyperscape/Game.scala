@@ -20,9 +20,8 @@ object Game {
 
 	var isFullscreen: Boolean = false
 
-	var displayModeFullScreen: DisplayMode = null
-
-	var displayModeNormal: DisplayMode = new DisplayMode(WIDTH, HEIGHT)
+	var prevWidth: Int = WIDTH
+	var prevHeight: Int = HEIGHT
 
 	var fullscreen: Boolean = false
 
@@ -113,8 +112,6 @@ object Game {
 					.withForwardCompatible(true)
 					.withProfileCore(true)
 
-			Display.setFullscreen(true)
-			displayModeFullScreen = Display.getDisplayMode
 			Display.setFullscreen(false)
 
 //			Display.getAvailableDisplayModes.foreach(dM => {
@@ -125,7 +122,7 @@ object Game {
 //				}
 //			})
 
-			Display.setDisplayModeAndFullscreen(if (fullscreen) displayModeFullScreen else displayModeNormal)
+			Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT))
 			Display.setTitle(WINDOW_TITLE)
 			Display.setResizable(true)
 			Display.create(pixelFormat, contextAtrributes)
@@ -146,7 +143,20 @@ object Game {
 	def toggleFullScreen(): Unit = {
 		if (Display.isFullscreen == fullscreen) {
 			fullscreen = !fullscreen
-			Display.setDisplayModeAndFullscreen(if (fullscreen) displayModeFullScreen else new DisplayMode(WIDTH, HEIGHT))
+			if (fullscreen) {
+//				displayModeNormal = Display.getDisplayMode
+				prevWidth = Display.getWidth
+				prevHeight = Display.getHeight
+				Display.setDisplayMode(Display.getDesktopDisplayMode)
+				Display.setFullscreen(true)
+			} else {
+				Display.setDisplayMode(new DisplayMode(prevWidth, prevHeight))
+				Display.setFullscreen(false)
+				Display.setResizable(true)
+			}
+
+//			Display.setFullscreen(true)
+//			Display.setDisplayModeAndFullscreen(if (fullscreen) displayModeFullScreen else new DisplayMode(WIDTH, HEIGHT))
 			GLUtil.checkGLError("Change Fullscreen")
 		}
 	}
