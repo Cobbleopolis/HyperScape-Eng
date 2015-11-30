@@ -21,7 +21,7 @@ class Chunk(xCoord: Int, zCoord: Int) {
     }
 
     def getBlockXYZFromIndex(index: Int): (Int, Int, Int) = {
-        ((index >> 4) & 15, index >> 8, index & 15)
+        ((index >> 4) & 15, (index >> 8) & 255, index & 15)
     }
 
     def setBlock(x: Int, y: Int, z: Int, block: Block): Unit = {
@@ -49,7 +49,7 @@ class Chunk(xCoord: Int, zCoord: Int) {
 
                 println("(" + x + ", " + y + ", " + z + ")")
 
-                model.translate(x, Math.random().toFloat * 8, z)
+                model.translate(x, y, z)
                 model.translateUV(u * 0.0625f, v * 0.0625f)
 
                 chunkModel.addVerts(model.getVertices)

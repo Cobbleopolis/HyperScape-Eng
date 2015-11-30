@@ -27,8 +27,8 @@ abstract class World {
         val chunkIndex: Int = getChunkIndexFromXZ(x / 16, z / 16)
 
         if (!chunks.contains(chunkIndex)) {
-            val (chunkX, chunkZ) = getChunkXZFromIndex(chunkIndex)
-            chunks.put(chunkIndex, new Chunk(chunkX, chunkZ))
+//            val (chunkX, chunkZ) = getChunkXZFromIndex(chunkIndex)
+            chunks.put(chunkIndex, new Chunk(x / 16, z / 16))
         }
 
         if (chunks(chunkIndex).getBlock(x % 16, y, z % 16) != null)

@@ -64,7 +64,7 @@ class ChunkModel {
 
             ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
 
-            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.SIZE_IN_BYTES)
+            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.ELEMENT_COUNT)
 
             ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
 
