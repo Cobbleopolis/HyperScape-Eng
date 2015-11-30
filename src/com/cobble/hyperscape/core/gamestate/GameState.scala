@@ -70,5 +70,6 @@ trait GameState {
 	 */
 	def destroy(): Unit = {
 		if (currentGui != null) currentGui.destroy()
+        world.destroy()
 	}
 }
