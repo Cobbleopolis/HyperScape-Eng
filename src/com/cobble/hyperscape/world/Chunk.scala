@@ -1,6 +1,7 @@
 package com.cobble.hyperscape.world
 
 import com.cobble.hyperscape.block.Block
+import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.{ShaderRegistry, ModelRegistry, BlockRegistry}
 import com.cobble.hyperscape.render.ChunkModel
@@ -64,14 +65,17 @@ class Chunk(xCoord: Int, zCoord: Int) {
             generateModel()
 
         ShaderRegistry.bindShader("terrain")
-        val loc = ShaderRegistry.getCurrentShader.getUniformLocation("chunkColor")
+        val colorLoc = ShaderRegistry.getCurrentShader.getUniformLocation("chunkColor")
         val (r: Float, g: Float, b: Float) = {
             if ((xCoord + zCoord) % 2 == 0)
                 (1f, 0f, .3f)
             else
                 (0f, 1f, .3f)
         }
-        GL20.glUniform4f(loc, r, g, b, 1f)
+        GL20.glUniform4f(colorLoc, r, g, b, 1f)
+
+        val fogLoc = ShaderRegistry.getCurrentShader.getUniformLocation("drawFog")
+        GL20.glUniform1i(fogLoc, if (HyperScape.drawFog) 1 else 0)
 
         chunkModel.render()
     }

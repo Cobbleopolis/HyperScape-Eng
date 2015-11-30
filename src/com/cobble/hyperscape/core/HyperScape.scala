@@ -49,6 +49,10 @@ class HyperScape {
 //			if (characterVal == Keyboard.KEY_F11)
 //				Game.toggleFullScreen()
 
+            if (characterVal == Keyboard.KEY_F5)
+                HyperScape.drawFog = !HyperScape.drawFog
+
+
 		}
 
 		EventRegistry.getButtonEventListeners.foreach(eventListener => eventListener.onTick())
@@ -143,5 +147,7 @@ object HyperScape {
 		close = true
 	}
 
-	def isCloseRequested: Boolean = close
+	var isCloseRequested: Boolean = close
+
+    var drawFog: Boolean = true
 }

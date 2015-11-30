@@ -2,6 +2,7 @@
 
 uniform sampler2D texture_diffuse;
 uniform vec4 chunkColor = vec4(1);
+uniform int drawFog = 1;
 //uniform vec3 viewDirection;
 
 in vec2 pass_TextureCoord;
@@ -18,11 +19,12 @@ void main() {
         discard;
     }
 
-    if(fogPct > 0.0) {
-        if(fogPct == 1.0)
-            discard;
+    if (drawFog == 1)
+            if(fogPct > 0.0) {
+                if(fogPct == 1.0)
+                    discard;
 
-        out_Color = out_Color * (1.0 - fogPct) + fogColor * fogPct;
-    }
+                out_Color = out_Color * (1.0 - fogPct) + fogColor * fogPct;
+            }
     //gl_FragColor = outColor;
 }
