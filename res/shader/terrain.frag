@@ -18,11 +18,11 @@ void main() {
         discard;
     }
 
-//    if(fogPct > 0.0) {
-//        if(fogPct == 1.0)
-//            discard;
-//
-//        out_Color = out_Color * (1.0 - fogPct) + fogColor * fogPct;
-//    }
+    if(fogPct > 0.0) {
+        if(fogPct == 1.0)
+            discard;
+
+        out_Color = out_Color * (1.0 - fogPct) + fogColor * fogPct;
+    }
     //gl_FragColor = outColor;
 }
