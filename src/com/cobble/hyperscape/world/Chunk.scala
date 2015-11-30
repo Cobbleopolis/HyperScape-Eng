@@ -47,8 +47,6 @@ class Chunk(xCoord: Int, zCoord: Int) {
                 val (x: Int, y: Int, z: Int) = getBlockXYZFromIndex(i)
                 val (u: Float, v: Float) = BlockRegistry.getBlock(blockID).uv
 
-                println("(" + x + ", " + y + ", " + z + ")")
-
                 model.translate(x, y, z)
                 model.translateUV(u * 0.0625f, v * 0.0625f)
 
