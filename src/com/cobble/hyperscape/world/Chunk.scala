@@ -3,7 +3,7 @@ package com.cobble.hyperscape.world
 import com.cobble.hyperscape.block.Block
 import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.reference.Reference
-import com.cobble.hyperscape.registry.{ShaderRegistry, ModelRegistry, BlockRegistry}
+import com.cobble.hyperscape.registry.{BlockRegistry, ModelRegistry, ShaderRegistry}
 import com.cobble.hyperscape.render.ChunkModel
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector3f
@@ -17,14 +17,6 @@ class Chunk(xCoord: Int, zCoord: Int) {
 
     var isDirty: Boolean = false
 
-    def getBlockIndexFromXYZ(x: Int, y: Int, z: Int): Int = {
-        y << 8 | x << 4 | z
-    }
-
-    def getBlockXYZFromIndex(index: Int): (Int, Int, Int) = {
-        ((index >> 4) & 15, (index >> 8) & 255, index & 15)
-    }
-
     def setBlock(x: Int, y: Int, z: Int, block: Block): Unit = {
         blocks(getBlockIndexFromXYZ(x, y, z)) = block.blockID
         isDirty = true
@@ -32,6 +24,30 @@ class Chunk(xCoord: Int, zCoord: Int) {
 
     def getBlock(x: Int, y: Int, z: Int): Block = {
         BlockRegistry.getBlock(blocks(getBlockIndexFromXYZ(x, y, z)))
+    }
+
+    def getBlockIndexFromXYZ(x: Int, y: Int, z: Int): Int = {
+        y << 8 | x << 4 | z
+    }
+
+    def render(): Unit = {
+        if (isDirty)
+            generateModel()
+
+        ShaderRegistry.bindShader("terrain")
+        val colorLoc = ShaderRegistry.getCurrentShader.getUniformLocation("chunkColor")
+        val (r: Float, g: Float, b: Float) = {
+            if ((xCoord + zCoord) % 2 == 0)
+                (1f, 0f, .3f)
+            else
+                (0f, 1f, .3f)
+        }
+        GL20.glUniform4f(colorLoc, r, g, b, 1f)
+
+        val fogLoc = ShaderRegistry.getCurrentShader.getUniformLocation("drawFog")
+        GL20.glUniform1i(fogLoc, if (HyperScape.drawFog) 1 else 0)
+
+        chunkModel.render()
     }
 
     def generateModel(): Unit = {
@@ -60,24 +76,8 @@ class Chunk(xCoord: Int, zCoord: Int) {
         isDirty = false
     }
 
-    def render(): Unit = {
-        if (isDirty)
-            generateModel()
-
-        ShaderRegistry.bindShader("terrain")
-        val colorLoc = ShaderRegistry.getCurrentShader.getUniformLocation("chunkColor")
-        val (r: Float, g: Float, b: Float) = {
-            if ((xCoord + zCoord) % 2 == 0)
-                (1f, 0f, .3f)
-            else
-                (0f, 1f, .3f)
-        }
-        GL20.glUniform4f(colorLoc, r, g, b, 1f)
-
-        val fogLoc = ShaderRegistry.getCurrentShader.getUniformLocation("drawFog")
-        GL20.glUniform1i(fogLoc, if (HyperScape.drawFog) 1 else 0)
-
-        chunkModel.render()
+    def getBlockXYZFromIndex(index: Int): (Int, Int, Int) = {
+        ((index >> 4) & 15, (index >> 8) & 255, index & 15)
     }
 
     def destroy(): Unit = {

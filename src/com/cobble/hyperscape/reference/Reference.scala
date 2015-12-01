@@ -2,47 +2,47 @@ package com.cobble.hyperscape.reference
 
 object Reference {
 
-	object Camera {
+    object Camera {
 
-		val PERSPECTIVE_MODE: Int = 0
+        val PERSPECTIVE_MODE: Int = 0
 
-		val ORTHOGRAPHIC_MODE: Int = 1
-	}
+        val ORTHOGRAPHIC_MODE: Int = 1
+    }
 
-	object GameState {
+    object GameState {
 
-		val MAIN_MENU: String = "mainMenu"
-	}
+        val MAIN_MENU: String = "mainMenu"
+    }
 
-	object VirtualResolution {
+    object VirtualResolution {
 
-		val NORMAL_SCALE: Float = 1f
+        val NORMAL_SCALE: Float = 1f
 
-		val SMALL_SCALE: Float = .5f
+        val SMALL_SCALE: Float = .5f
 
-		val LARGE_SCALE: Float = 2f
+        val LARGE_SCALE: Float = 2f
 
-	}
+    }
 
-	object Font {
+    object Font {
 
-		val FONT_WIDTH = 6
+        val FONT_WIDTH = 6
 
-		val FONT_HEIGHT = 8
-	}
+        val FONT_HEIGHT = 8
+    }
 
-	object Mouse {
+    object Mouse {
 
-		val MOUSE_BUTTON_LEFT = 0
+        val MOUSE_BUTTON_LEFT = 0
 
-		val MOUSE_BUTTON_RIGHT = 1
-	}
+        val MOUSE_BUTTON_RIGHT = 1
+    }
 
-	object World {
+    object World {
 
-		val WORLD_SIZE = 16777215
+        val WORLD_SIZE = 16777215
 
-		val CHUNK_SIZE = 261648
-	}
+        val CHUNK_SIZE = 261648
+    }
 
 }

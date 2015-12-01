@@ -5,23 +5,23 @@ package com.cobble.hyperscape.gui
  */
 abstract class GuiElement {
 
-	var isDown: Boolean = false
+    var isDown: Boolean = false
 
-	/**
-	 * Detects if the point that is passed is contained within the element
-	 * @param x The x location of the position
-	 * @param y The y location of the position
-	 * @return True if the point is inside the element. False otherwise
-	 */
-	def containsPoint(x: Int, y: Int): Boolean
+    /**
+     * Detects if the point that is passed is contained within the element
+     * @param x The x location of the position
+     * @param y The y location of the position
+     * @return True if the point is inside the element. False otherwise
+     */
+    def containsPoint(x: Int, y: Int): Boolean
 
-	/**
-	 * Renders the Element
-	 */
-	def render(): Unit
+    /**
+     * Renders the Element
+     */
+    def render(): Unit
 
-	/**
-	 * Destories the Element from vRAM
-	 */
-	def destroy(): Unit
+    /**
+     * Destories the Element from vRAM
+     */
+    def destroy(): Unit
 }

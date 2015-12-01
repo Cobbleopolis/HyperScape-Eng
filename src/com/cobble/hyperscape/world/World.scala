@@ -15,10 +15,6 @@ abstract class World {
 
     var activeChunks: Array[Int] = Array[Int]()
 
-    def getChunkIndexFromXZ(chunkX: Int, chunkZ: Int): Int = {
-        chunkX << 4 | chunkZ
-    }
-
     def getChunkXZFromIndex(index: Int): (Int, Int) = {
         ((index >> 4) & 15, (index & 15).toShort)
     }
@@ -31,7 +27,7 @@ abstract class World {
         val chunkIndex: Int = getChunkIndexFromXZ(x / 16, z / 16)
 
         if (!chunks.contains(chunkIndex)) {
-//            val (chunkX, chunkZ) = getChunkXZFromIndex(chunkIndex)
+            //            val (chunkX, chunkZ) = getChunkXZFromIndex(chunkIndex)
             chunks.put(chunkIndex, new Chunk(x / 16, z / 16))
         }
 
@@ -39,6 +35,10 @@ abstract class World {
             println("Resetting a block")
 
         chunks(chunkIndex).setBlock(x % 16, y, z % 16, block)
+    }
+
+    def getChunkIndexFromXZ(chunkX: Int, chunkZ: Int): Int = {
+        chunkX << 4 | chunkZ
     }
 
     def getBlock(x: Int, y: Int, z: Int): Block = {
@@ -54,6 +54,10 @@ abstract class World {
             null
     }
     
+    def tick(): Unit = {
+        activeChunks = getActiveChunks(player.position, 5)
+    }
+
     def getActiveChunks(position: Vector3f, radius: Int): Array[Int] = {
         var activeChunks: Array[Int] = Array[Int]()
         for (x <- -radius to radius)
@@ -66,10 +70,6 @@ abstract class World {
                     activeChunks = activeChunks :+ index
             }
         activeChunks
-    }
-
-    def tick(): Unit = {
-        activeChunks = getActiveChunks(player.position, 5)
     }
 
     def render(): Unit = {

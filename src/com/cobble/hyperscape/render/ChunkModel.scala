@@ -1,19 +1,16 @@
 package com.cobble.hyperscape.render
 
 import com.cobble.hyperscape.core.HyperScape
-import com.cobble.hyperscape.registry.{TextureRegistry, ShaderRegistry}
+import com.cobble.hyperscape.registry.{ShaderRegistry, TextureRegistry}
 import com.cobble.hyperscape.util.GLUtil
-import org.lwjgl.opengl.{GL20, GL11, GL15, GL30}
+import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
 import org.lwjgl.util.vector.Matrix4f
 
 class ChunkModel {
 
-    var verts: Array[Float] = Array[Float]()
-
     val modelMatrix: Matrix4f = new Matrix4f()
-
     val shader = "terrain"
-
+    var verts: Array[Float] = Array[Float]()
     var vao: Int = -1
 
     var vbo: Int = -1
@@ -51,27 +48,6 @@ class ChunkModel {
         println("Uploaded")
     }
 
-    def render(): Unit = {
-        GLUtil.checkGLError("Chunk Render | " + vao + " | " + vbo)
-        if (vao != -1  && vbo != -1) {
-            ShaderRegistry.bindShader(shader)
-            HyperScape.mainCamera.uploadPerspective()
-            HyperScape.mainCamera.uploadView()
-            GLUtil.uploadModelMatrix(modelMatrix)
-            TextureRegistry.bindTexture("terrain")
-
-            GL30.glBindVertexArray(vao)
-
-            ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
-
-            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.ELEMENT_COUNT)
-
-            ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
-
-            GL30.glBindVertexArray(0)
-        }
-    }
-
     def destroy(): Unit = {
         if (vao != -1) {
             GL30.glBindVertexArray(vao)
@@ -90,6 +66,27 @@ class ChunkModel {
         }
 
 
+    }
+
+    def render(): Unit = {
+        GLUtil.checkGLError("Chunk Render | " + vao + " | " + vbo)
+        if (vao != -1 && vbo != -1) {
+            ShaderRegistry.bindShader(shader)
+            HyperScape.mainCamera.uploadPerspective()
+            HyperScape.mainCamera.uploadView()
+            GLUtil.uploadModelMatrix(modelMatrix)
+            TextureRegistry.bindTexture("terrain")
+
+            GL30.glBindVertexArray(vao)
+
+            ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glEnableVertexAttribArray(input._1))
+
+            GL11.glDrawArrays(GL11.GL_TRIANGLES, 0, verts.length / Vertex.ELEMENT_COUNT)
+
+            ShaderRegistry.getCurrentShader.inputs.foreach(input => GL20.glDisableVertexAttribArray(input._1))
+
+            GL30.glBindVertexArray(0)
+        }
     }
     
 }
