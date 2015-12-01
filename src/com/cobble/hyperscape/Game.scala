@@ -22,6 +22,8 @@ object Game {
 
     var prevWidth: Int = WIDTH
     var prevHeight: Int = HEIGHT
+    
+    var resize: Boolean = false
 
     var fullscreen: Boolean = false
 
@@ -59,10 +61,11 @@ object Game {
             //                HyperScape.mainCamera.uploadPerspective()
             //                firstRender = false
             //            }
-            if (Display.wasResized) {
+            if (Display.wasResized || resize) {
                 GL11.glViewport(0, 0, Display.getWidth, Display.getHeight)
                 HyperScape.mainCamera.updatePerspective()
                 HyperScape.mainCamera.uploadPerspective()
+                resize = false
             }
             hyperScape.tick()
             //            HyperScape.mainCamera.uploadPerspective()
@@ -159,6 +162,10 @@ object Game {
             //			Display.setDisplayModeAndFullscreen(if (fullscreen) displayModeFullScreen else new DisplayMode(WIDTH, HEIGHT))
             GLUtil.checkGLError("Change Fullscreen")
         }
+    }
+    
+    def requestResize(): Unit = {
+        resize = true
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.cobble.hyperscape.core
 
+import com.cobble.hyperscape.Game
 import com.cobble.hyperscape.core.gamestate.{GameState, GameStates}
 import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.{EventRegistry, GameStateRegistry}
@@ -31,6 +32,24 @@ class HyperScape {
             EventRegistry.getButtonEventListeners.foreach(eventListener => {
                 eventListener.onButtonTypingHold(character, characterVal)
             })
+            if (Keyboard.getEventKeyState) {
+                EventRegistry.getButtonEventListeners.foreach(eventListener => {
+                    eventListener.onButtonDown(character, characterVal)
+                })
+
+                if (characterVal == Keyboard.KEY_F11) {
+                    Game.toggleFullScreen()
+                    Game.requestResize()
+                }
+
+                if (characterVal == Keyboard.KEY_F5)
+                    HyperScape.drawFog = !HyperScape.drawFog
+
+            } else {
+                EventRegistry.getButtonEventListeners.foreach(eventListener => {
+                    eventListener.onButtonUp(character, characterVal)
+                })
+            }
         }
 
         if (Keyboard.getEventKeyState) {
@@ -44,12 +63,6 @@ class HyperScape {
                 Mouse.setGrabbed(false)
                 Mouse.setClipMouseCoordinatesToWindow(false)
             }
-
-            //			if (characterVal == Keyboard.KEY_F11)
-            //				Game.toggleFullScreen()
-
-            if (characterVal == Keyboard.KEY_F5)
-                HyperScape.drawFog = !HyperScape.drawFog
 
 
         }
