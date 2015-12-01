@@ -7,7 +7,7 @@ import org.lwjgl.opengl.{GL11, GL15, GL20, GL30}
 import org.lwjgl.util.vector.{Matrix4f, Vector2f, Vector3f}
 
 /**
- * The model useed in rendering GUI's. These models can not be manipulated after initialization
+ * The model used in rendering GUI's. These models can not be manipulated after initialization
  * @param verts an array of verts used to define the model for a GUI must be in format of (x, y, z, r, g, b, a)
  * @param x The default x location of the element
  * @param y The default y location of the element
