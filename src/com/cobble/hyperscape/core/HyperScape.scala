@@ -32,24 +32,18 @@ class HyperScape {
             EventRegistry.getButtonEventListeners.foreach(eventListener => {
                 eventListener.onButtonTypingHold(character, characterVal)
             })
+	        Keyboard.enableRepeatEvents(false)
             if (Keyboard.getEventKeyState) {
                 EventRegistry.getButtonEventListeners.foreach(eventListener => {
                     eventListener.onButtonDown(character, characterVal)
                 })
-
-                if (characterVal == Keyboard.KEY_F11) {
-                    Game.toggleFullScreen()
-                    Game.requestResize()
-                }
-
-                if (characterVal == Keyboard.KEY_F5)
-                    HyperScape.drawFog = !HyperScape.drawFog
 
             } else {
                 EventRegistry.getButtonEventListeners.foreach(eventListener => {
                     eventListener.onButtonUp(character, characterVal)
                 })
             }
+	        Keyboard.enableRepeatEvents(true)
         }
 
         if (Keyboard.getEventKeyState) {
