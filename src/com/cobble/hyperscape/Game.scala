@@ -35,13 +35,14 @@ object Game {
      */
     def main(args: Array[String]): Unit = {
         setNatives()
+	    HyperScape.debug = args.contains("--debug")
+	    fullscreen = args.contains("--fullscreen")
         initGL()
         Init.loadAssets()
         ShaderRegistry.bindShader("gui")
         //        TextureRegistry.bindTexture("terrain")
 
         lastFrame = getTime
-        HyperScape.debug = args.contains("--debug")
 
         hyperScape = new HyperScape
         hyperScape.init()
@@ -115,8 +116,6 @@ object Game {
                 .withForwardCompatible(true)
                 .withProfileCore(true)
 
-            Display.setFullscreen(false)
-
             //			Display.getAvailableDisplayModes.foreach(dM => {
             //				if (dM.getWidth == WIDTH && dM.getHeight == HEIGHT && dM.isFullscreenCapable) {
             //					println("Mode")
@@ -125,14 +124,15 @@ object Game {
             //				}
             //			})
 
-            Display.setDisplayMode(new DisplayMode(WIDTH, HEIGHT))
+            Display.setDisplayModeAndFullscreen(if (fullscreen) Display.getDesktopDisplayMode else new DisplayMode(WIDTH, HEIGHT))
             Display.setTitle(WINDOW_TITLE)
+
             Display.setResizable(true)
             Display.create(pixelFormat, contextAtrributes)
         } catch {
             case e: LWJGLException => e.printStackTrace(); System.exit(-1)
         }
-        GL11.glViewport(0, 0, WIDTH, HEIGHT)
+//        GL11.glViewport(0, 0, WIDTH, HEIGHT)
         GL11.glEnable(GL11.GL_CULL_FACE)
         GL11.glClearColor(0.67058823529411764705882352941176f, 0.8078431372549019607843137254902f, 1f, 1f)
         GL11.glEnable(GL11.GL_DEPTH_TEST)
@@ -150,12 +150,12 @@ object Game {
                 //				displayModeNormal = Display.getDisplayMode
                 prevWidth = Display.getWidth
                 prevHeight = Display.getHeight
-                Display.setDisplayMode(Display.getDesktopDisplayMode)
-                Display.setFullscreen(true)
+                Display.setDisplayModeAndFullscreen(Display.getDesktopDisplayMode)
+//                Display.setFullscreen(true)
             } else {
-                Display.setDisplayMode(new DisplayMode(prevWidth, prevHeight))
-                Display.setFullscreen(false)
-                Display.setResizable(true)
+	            Display.setFullscreen(false)
+	            Display.setDisplayModeAndFullscreen(new DisplayMode(prevWidth, prevHeight))
+	            Display.setResizable(true)
             }
 
             //			Display.setFullscreen(true)

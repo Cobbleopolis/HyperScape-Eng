@@ -13,11 +13,11 @@ class EventListenerButtonHotkey extends EventListenerButton {
     }
 
     override def onButtonDown(button: Char, charVal: Int): Unit = {
-	    if (charVal == Keyboard.KEY_F11 && fullscreenDelay == 0) {
-		    Game.toggleFullScreen()
-		    Game.requestResize()
-		    fullscreenDelay = 120
-	    }
+//	    if (charVal == Keyboard.KEY_F11 && fullscreenDelay == 0) {
+//		    Game.toggleFullScreen()
+//		    Game.requestResize()
+//		    fullscreenDelay = 120
+//	    }
 
 	    if (charVal == Keyboard.KEY_F5 && fogDelay == 0) {
 		    HyperScape.drawFog = !HyperScape.drawFog
