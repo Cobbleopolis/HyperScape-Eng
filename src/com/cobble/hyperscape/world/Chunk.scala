@@ -1,14 +1,14 @@
 package com.cobble.hyperscape.world
 
-import com.cobble.hyperscape.block.Block
+import com.cobble.hyperscape.block.{BlockSides, Block}
 import com.cobble.hyperscape.core.HyperScape
 import com.cobble.hyperscape.reference.Reference
 import com.cobble.hyperscape.registry.{BlockRegistry, ModelRegistry, ShaderRegistry}
-import com.cobble.hyperscape.render.ChunkModel
+import com.cobble.hyperscape.render.{BlockRenderType, ChunkModel}
 import org.lwjgl.opengl.GL20
 import org.lwjgl.util.vector.Vector3f
 
-class Chunk(xCoord: Int, zCoord: Int) {
+class Chunk(xCoord: Int, zCoord: Int, worldObj: World) {
 
     val blocks: Array[Int] = new Array[Int](Reference.World.CHUNK_SIZE)
 
@@ -58,19 +58,63 @@ class Chunk(xCoord: Int, zCoord: Int) {
 
         blocks.foreach(blockID => {
             if (BlockRegistry.getBlock(blockID) != null) {
+                val (model, modelRule) = ModelRegistry.getModelWithRule("cube")
+	            val (x: Int, y: Int, z: Int) = getBlockXYZFromIndex(i)
+	            val (u: Float, v: Float) = BlockRegistry.getBlock(blockID).uv
 
-                val model = ModelRegistry.getModel("cube")
+	            model.translate(x, y, z)
+	            model.translateUV(u * 0.0625f, v * 0.0625f)
 
-                val (x: Int, y: Int, z: Int) = getBlockXYZFromIndex(i)
-                val (u: Float, v: Float) = BlockRegistry.getBlock(blockID).uv
 
-                model.translate(x, y, z)
-                model.translateUV(u * 0.0625f, v * 0.0625f)
 
-                chunkModel.addVerts(model.getVertices)
+
+//	            surroundingBlocks.foreach(block => {
+//		            if (block == null) {
+//
+//		            }
+//	            })
+
+	            if (modelRule != null) {
+
+		            val surroundingBlocks = worldObj.getSurroundingBlocks(x + (xCoord * 16), y, z + (zCoord * 16))
+
+		            val print = x + (xCoord * 16) == 16 && y == 2 && z  + (zCoord * 16) == 0
+//			                    x + (xCoord * 16) == 15 && y == 2 && z  + (zCoord * 16) == 0
+
+//		            if (print) {
+//			            println(xCoord + " | " + zCoord)
+//			            worldObj.getSurroundingBlocks(16, 2, 0).foreach(block =>
+//				            println(if (block != null) block.blockID else 0)
+//			            )
+//		            }
+
+		            var side: Int = 0
+
+	                surroundingBlocks.foreach(block => {
+			            if (block == null) {
+				            val sidesToAdd: Array[Int] =
+					            side match {
+						            case 0 => modelRule.topFaces
+						            case 1 => modelRule.bottomFaces
+						            case 2 => modelRule.northFaces
+						            case 3 => modelRule.eastFaces
+						            case 4 => modelRule.southFaces
+						            case 5 => modelRule.westFaces
+						            case _ => Array[Int]()
+					            }
+
+				            sidesToAdd.foreach(side => {
+					            chunkModel.addVerts(model.getFace(side, modelRule.floatsPerFace))
+				            })
+			            }
+			            side += 1
+		            })
+	            } else
+		            chunkModel.addVerts(model.getVertices)
             }
             i += 1
         })
+
 
         chunkModel.uploadVerts()
         isDirty = false

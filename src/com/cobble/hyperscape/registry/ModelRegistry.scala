@@ -1,18 +1,18 @@
 package com.cobble.hyperscape.registry
 
-import com.cobble.hyperscape.render.{Model, OBJLoader}
+import com.cobble.hyperscape.render.{ModelRule, Model, OBJLoader}
 
 
 object ModelRegistry {
-    private var models: Map[String, Model] = Map()
+    private var models: Map[String, (Model, ModelRule)] = Map()
 
     /**
      * Loads a model into the game
-     * @param pathToObj Path to the OBJ folder
      * @param modelName Name of the model to store it with
+     * @param pathToObj Path to the OBJ folder
      */
-    def loadModel(pathToObj: String, modelName: String): Unit = {
-        models += (modelName -> OBJLoader.loadFromOBJFile(pathToObj))
+    def loadModel(modelName: String, pathToObj: String, modelRule: ModelRule = null): Unit = {
+        models += (modelName -> (OBJLoader.loadFromOBJFile(pathToObj), modelRule))
     }
 
     /**
@@ -21,8 +21,19 @@ object ModelRegistry {
      * @return The model with the corresponding name
      */
     def getModel(modelName: String): Model = {
-        models(modelName).copy
+        val (model, _) = models.getOrElse(modelName, (null, null))
+	    model.copy
     }
+
+	def getModelWithRule(modelName: String): (Model, ModelRule) = {
+		val (model, modelRule) = models.getOrElse(modelName, (null, null))
+		(model.copy, modelRule)
+	}
+
+	def getModelRule(modelName: String): ModelRule = {
+		val (_, modelRule) = models.getOrElse(modelName, (null, null))
+		modelRule
+	}
 
     //    val cube = OBJLoader.loadFromOBJFile("res/model/cube.obj")
     //    val model = OBJLoader.loadFromOBJFile("res/model/model.obj")

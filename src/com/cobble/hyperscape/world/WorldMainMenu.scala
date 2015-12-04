@@ -2,6 +2,7 @@ package com.cobble.hyperscape.world
 
 import com.cobble.hyperscape.block.Blocks
 import com.cobble.hyperscape.util.MathUtil
+import org.lwjgl.util.vector.Vector3f
 
 import scala.util.Random
 
@@ -24,6 +25,10 @@ class WorldMainMenu extends World {
             val y: Int = xy + zy
             setBlock(x, y, z, if (rand.nextBoolean()) Blocks.blank else Blocks.thing)
         }
+
+	getSurroundingBlocks(16, 2, 0).foreach(block =>
+		println(if (block != null) block.blockID else 0)
+	)
 
 
     //    override def tick(): Unit = {

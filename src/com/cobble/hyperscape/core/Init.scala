@@ -3,6 +3,7 @@ package com.cobble.hyperscape.core
 import com.cobble.hyperscape.block.Blocks
 import com.cobble.hyperscape.event.{EventListenerButtonHotkey, EventListenerButtonPlayer, EventListenerMousePlayer}
 import com.cobble.hyperscape.registry.{EventRegistry, ModelRegistry, ShaderRegistry, TextureRegistry}
+import com.cobble.hyperscape.render.ModelRuleCube
 
 object Init {
 
@@ -51,7 +52,7 @@ object Init {
      */
     def loadModels(): Unit = {
         println("Loading Models...")
-        ModelRegistry.loadModel("res/model/cube.obj", "cube")
+        ModelRegistry.loadModel("cube", "res/model/cube.obj", new ModelRuleCube)
         println("Finished Loading Models")
     }
 

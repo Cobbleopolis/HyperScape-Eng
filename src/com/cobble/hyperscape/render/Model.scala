@@ -72,6 +72,11 @@ class Model(verts: Array[Float]) {
         }
     }
 
+	def getFace(faceIndex: Int, floatsPerFace: Int): Array[Float] = {
+		val faces = verticies.grouped(floatsPerFace * 3).toArray
+		faces(faceIndex)
+	}
+
     /**
      * Gets the model's vertices
      * @return The model's vertices
